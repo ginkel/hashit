@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Site Tag"></TextView>
+	<TableLayout android:id="@+id/TableLayout02"
+		android:layout_height="wrap_content" android:layout_width="fill_parent"
+		android:stretchColumns="0">
+		<TableRow android:id="@+id/TableRow04" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:layout_gravity="fill">
+			<EditText android:layout_height="wrap_content"
+				android:visibility="visible" android:inputType="textUri"
+				android:layout_width="fill_parent" android:id="@+id/SiteTag"></EditText>
+			<Button android:layout_height="fill_parent" android:text="Bump"
+				android:layout_gravity="right" android:layout_width="fill_parent"
+				android:id="@+id/Bump"></Button>
+		</TableRow>
+	</TableLayout>
+	<TableLayout android:id="@+id/TableLayout03"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:stretchColumns="0">
+		<TextView android:id="@+id/TextView02" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="Master Key"></TextView>
+		<TableRow android:id="@+id/TableRow05" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+			<EditText android:layout_height="wrap_content"
+				android:inputType="textPassword" android:layout_width="fill_parent"
+				android:id="@+id/MasterKey"></EditText>
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="Hash Password"
+				android:id="@+id/Calculate"></Button>
+		</TableRow>
+	</TableLayout>
+	<TextView android:id="@+id/TextView03" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Hash Word"></TextView>
+	<EditText android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/HashWord"
+		android:inputType="none"></EditText>
+	<TableLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:stretchColumns="0" android:layout_marginTop="4px" android:id="@+id/UsageInformation">
+		<TableRow android:id="@+id/TableRow06" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:padding="2px" android:background="#191919">
+			<ImageView android:id="@+id/ImageView01"
+				android:focusable="false" android:src="@android:drawable/ic_dialog_info" android:adjustViewBounds="true" android:clickable="false" android:layout_gravity="left" android:layout_marginRight="4px"></ImageView>
+			<TextView android:id="@+id/TextView04" android:text="Usage Information"
+				android:textStyle="bold" android:linksClickable="true" android:layout_gravity="center_vertical|fill_horizontal" android:layout_width="500px"></TextView>
+		</TableRow>
+		<TextView android:id="@+id/TextView04" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="You seem to have invoked Password Genie from your home screen. There is nothing wrong with that, but there is an even more convenient method available, which will automatically pre-populate the Site Tag for you. From the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Password Genie&quot; entry from the list."
+			android:layout_marginTop="4px"></TextView>
+	</TableLayout>
+</LinearLayout>

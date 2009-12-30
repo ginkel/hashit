@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="AppName">Password Genie</string>
+	<string name="Message_HashCopiedToClipboard">The hash word has been copied to the clipboard.
+	</string>
+	<string name="Message_SiteTagEmpty">The Site Tag must not be empty.</string>
+	<string name="Message_MasterKeyEmpty">The Master Key must not be empty.</string>
+	<string name="Message_SiteTagFailure">Failed to extract Site Tag from URI.</string>
+	<string name="Message_InvalidSiteTag">The specified Site Tag is invalid and thus cannot
+		be bumped.</string>
+	<string name="MenuItem_Settings">Defaults</string>
+	<string name="MenuItem_About">About</string>
+	<string name="Title_About">About Password Genie</string>
+	<string name="Header_Requirements">Requirements</string>
+	<string name="CheckBox_Digits">Digits</string>
+	<string name="CheckBox_Punctuation">Punctuation</string>
+	<string name="CheckBox_MixedCase">Mixed Case</string>
+	<string name="Header_Restrictions">Restrictions</string>
+	<string name="CheckBox_NoSpecialChars">No Special Chars</string>
+	<string name="CheckBox_DigitsOnly">Digits Only</string>
+	<string name="Header_HashWordSize">Hash Word Size</string>
+	<string name="Label_Size">Hash Word Size</string>
+	<string name="Title_Settings">Password Genie - Defaults</string>
+	<string-array name="Array_Sizes">
+		<item>4 characters</item>
+		<item>6 characters</item>
+		<item>8 characters</item>
+		<item>10 characters</item>
+		<item>12 characters</item>
+		<item>14 characters</item>
+		<item>16 characters</item>
+		<item>18 characters</item>
+		<item>20 characters</item>
+		<item>22 characters</item>
+		<item>24 characters</item>
+		<item>26 characters</item>
+	</string-array>
+	<string-array name="Array_Sizes_Values">
+		<item>4</item>
+		<item>6</item>
+		<item>8</item>
+		<item>10</item>
+		<item>12</item>
+		<item>14</item>
+		<item>16</item>
+		<item>18</item>
+		<item>20</item>
+		<item>22</item>
+		<item>24</item>
+		<item>26</item>
+	</string-array>
+	<string name="Text_Introduction">Welcome to <b>Password Genie</b>!</string>
+</resources>

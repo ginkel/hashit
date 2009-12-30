@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android" android:orderingFromXml="true">
+<PreferenceCategory android:title="@string/Header_Requirements"><CheckBoxPreference android:title="@string/CheckBox_Digits" android:key="RequireDigits" android:defaultValue="true"></CheckBoxPreference>
+<CheckBoxPreference android:title="@string/CheckBox_Punctuation" android:defaultValue="true" android:key="RequirePunctuation"></CheckBoxPreference>
+<CheckBoxPreference android:title="@string/CheckBox_MixedCase" android:defaultValue="true" android:key="RequireMixedCase"></CheckBoxPreference>
+<ListPreference android:title="@string/Label_Size" android:entries="@array/Array_Sizes" android:dialogTitle="@string/Header_HashWordSize" android:key="HashWordSize" android:defaultValue="8" android:entryValues="@array/Array_Sizes_Values"></ListPreference></PreferenceCategory>
+<PreferenceCategory android:title="@string/Header_Restrictions"><CheckBoxPreference android:title="@string/CheckBox_NoSpecialChars" android:defaultValue="false" android:key="RestrictSpecialChars"></CheckBoxPreference>
+<CheckBoxPreference android:title="@string/CheckBox_DigitsOnly" android:defaultValue="false" android:key="RestrictDigits"></CheckBoxPreference>
+
+</PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:layout_width="fill_parent">
+	<LinearLayout android:id="@+id/LinearLayout01"
+		android:layout_height="wrap_content" android:layout_width="fill_parent">
+		<TabWidget android:id="@android:id/tabs"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"></TabWidget>
+		<FrameLayout android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@android:id/tabcontent">
+			<include android:id="@+id/include01" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" layout="@layout/main"></include>
+		
+</FrameLayout>
+	</LinearLayout>
+</TabHost>
