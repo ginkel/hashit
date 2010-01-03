@@ -40,16 +40,17 @@ public class TabbedMainActivity extends TabActivity {
 		mainIntent.fillIn(getIntent(), Intent.FILL_IN_DATA
 				| Intent.FILL_IN_ACTION);
 		tab.setContent(mainIntent);
-		tab.setIndicator(null, resources.getDrawable(R.drawable.tabicon));
+		tab.setIndicator(resources.getText(R.string.Label_Password), resources
+				.getDrawable(R.drawable.padlock_tab));
 		tabHost.addTab(tab);
 
-		/* Create contact tab */
-		tab = tabHost.newTabSpec("contact");
+		/* Create settings tab */
+		tab = tabHost.newTabSpec("settings");
 		Intent hiddenAgenda = new Intent(this, SettingsActivity.class);
 		hiddenAgenda.setAction(Constants.ACTION_SITE_PREFS);
 		tab.setContent(hiddenAgenda);
-		tab.setIndicator(null, resources
-				.getDrawable(android.R.drawable.ic_menu_preferences));
+		tab.setIndicator(resources.getText(R.string.Label_Settings), resources
+				.getDrawable(R.drawable.wrench_tab));
 		tabHost.addTab(tab);
 	}
 }

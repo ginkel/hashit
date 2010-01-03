@@ -20,6 +20,8 @@
 	<string name="CheckBox_DigitsOnly">Digits Only</string>
 	<string name="Header_HashWordSize">Hash Word Size</string>
 	<string name="Label_Size">Hash Word Size</string>
+	<string name="Label_Password">Password</string>
+	<string name="Label_Settings">Parameters</string>
 	<string name="Title_Settings">Password Genie - Defaults</string>
 	<string-array name="Array_Sizes">
 		<item>4 characters</item>

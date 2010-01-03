@@ -16,7 +16,13 @@ public final class R {
     }
     public static final class drawable {
         public static final int icon=0x7f020000;
-        public static final int tabicon=0x7f020001;
+        public static final int padlock_tab=0x7f020001;
+        public static final int padlock_tab_active=0x7f020002;
+        public static final int padlock_tab_inactive=0x7f020003;
+        public static final int tabicon=0x7f020004;
+        public static final int wrench_tab=0x7f020005;
+        public static final int wrench_tab_active=0x7f020006;
+        public static final int wrench_tab_inactive=0x7f020007;
     }
     public static final class id {
         public static final int Bump=0x7f080004;
@@ -70,6 +76,8 @@ public final class R {
         public static final int Header_HashWordSize=0x7f050010;
         public static final int Header_Requirements=0x7f050009;
         public static final int Header_Restrictions=0x7f05000d;
+        public static final int Label_Password=0x7f050012;
+        public static final int Label_Settings=0x7f050013;
         public static final int Label_Size=0x7f050011;
         public static final int MenuItem_About=0x7f050007;
         public static final int MenuItem_Settings=0x7f050006;
@@ -78,9 +86,9 @@ public final class R {
         public static final int Message_MasterKeyEmpty=0x7f050003;
         public static final int Message_SiteTagEmpty=0x7f050002;
         public static final int Message_SiteTagFailure=0x7f050004;
-        public static final int Text_Introduction=0x7f050013;
+        public static final int Text_Introduction=0x7f050015;
         public static final int Title_About=0x7f050008;
-        public static final int Title_Settings=0x7f050012;
+        public static final int Title_Settings=0x7f050014;
     }
     public static final class xml {
         public static final int preferences=0x7f040000;
