@@ -1,23 +1,23 @@
 /*
- * This file is part of Password Genie.
+ * This file is part of Hash It!.
  * 
- * Copyright (C) 2009 Thilo-Alexander Ginkel.
+ * Copyright (C) 2009-2010 Thilo-Alexander Ginkel.
  * 
  * Based upon the Password Hasher JavaScript implementation by Steve Cooper.
  * Copyright (C) 2006 Steve Cooper.
  * 
- * Password Genie is free software: you can redistribute it and/or modify
+ * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * Password Genie is distributed in the hope that it will be useful,
+ * Hash It! is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with Password Genie.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.ginkel.passwordhasher;
@@ -47,6 +47,11 @@ public class PasswordHasher {
 	private static final Pattern SITE_TAG_PATTERN = Pattern
 			.compile("^(.*):([0-9]+)?$");
 
+	/**
+	 * The password hashing function. Takes the site tag and master key as input
+	 * and returns the hash word (dependenent on additional parameters that
+	 * specify the domain of the hash word).
+	 */
 	public static String hashPassword(String siteTag, String masterKey,
 			int hashWordSize, boolean requireDigit, boolean requirePunctuation,
 			boolean requireMixedCase, boolean restrictSpecial,
@@ -94,18 +99,10 @@ public class PasswordHasher {
 		}
 	}
 
-	// This is a very specialized method to inject a character chosen from a
-	// range of character codes into a block at the front of a string if one of
-	// those characters is not already present.
-	// Parameters:
-	// sInput = input string
-	// offset = offset for position of injected character
-	// reserved = # of offsets reserved for special characters
-	// seed = seed for pseudo-randomizing the position and injected character
-	// lenOut = length of head of string that will eventually survive
-	// truncation.
-	// cStart = character code for first valid injected character.
-	// cNum = number of valid character codes starting from cStart.
+	/**
+	 * Inject a character chosen from a range of character codes into a block at
+	 * the front of a string if one of those characters is not already present.
+	 */
 	private static String injectSpecialCharacter(String sInput, int offset,
 			int reserved, int seed, int lenOut, char cStart, int cNum) {
 		int pos0 = seed % lenOut;
@@ -130,13 +127,9 @@ public class PasswordHasher {
 		return result.toString();
 	}
 
-	// Another specialized method to replace a class of character, e.g.
-	// punctuation, with plain letters and numbers.
-	// Parameters:
-	// sInput = input string
-	// seed = seed for pseudo-randomizing the position and injected character
-	// lenOut = length of head of string that will eventually survive
-	// truncation.
+	/**
+	 * Replace special characters by digits and numbers.
+	 */
 	private static String removeSpecialCharacters(String sInput, int seed,
 			int lenOut) {
 		StringBuilder s = new StringBuilder(lenOut);
@@ -156,12 +149,9 @@ public class PasswordHasher {
 		return s.toString();
 	}
 
-	// Convert input string to digits-only.
-	// Parameters:
-	// sInput = input string
-	// seed = seed for pseudo-randomizing the position and injected character
-	// lenOut = length of head of string that will eventually survive
-	// truncation.
+	/**
+	 * Converts the input string to a digits-only representation.
+	 */
 	private static String convertToDigits(String sInput, int seed, int lenOut) {
 		StringBuilder s = new StringBuilder(lenOut);
 		int ii = 0;
