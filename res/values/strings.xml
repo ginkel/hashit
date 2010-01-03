@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="AppName">Password Genie</string>
+	<string name="AppName">Hash It!</string>
 	<string name="Message_HashCopiedToClipboard">The hash word has been copied to the clipboard.
 	</string>
 	<string name="Message_SiteTagEmpty">The Site Tag must not be empty.</string>
@@ -10,7 +10,7 @@
 		be bumped.</string>
 	<string name="MenuItem_Settings">Defaults</string>
 	<string name="MenuItem_About">About</string>
-	<string name="Title_About">About Password Genie</string>
+	<string name="Title_About">About Hash It!</string>
 	<string name="Header_Requirements">Requirements</string>
 	<string name="CheckBox_Digits">Digits</string>
 	<string name="CheckBox_Punctuation">Punctuation</string>
@@ -22,7 +22,7 @@
 	<string name="Label_Size">Hash Word Size</string>
 	<string name="Label_Password">Password</string>
 	<string name="Label_Settings">Parameters</string>
-	<string name="Title_Settings">Password Genie - Defaults</string>
+	<string name="Title_Settings">Hash It! - Defaults</string>
 	<string-array name="Array_Sizes">
 		<item>4 characters</item>
 		<item>6 characters</item>
@@ -51,5 +51,5 @@
 		<item>24</item>
 		<item>26</item>
 	</string-array>
-	<string name="Text_Introduction">Welcome to <b>Password Genie</b>!</string>
+	<string name="Text_Introduction">Welcome to <b>Hash It!</b>!</string>
 </resources>
