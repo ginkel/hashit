@@ -26,11 +26,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -41,6 +41,7 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.BufferType;
 
@@ -50,8 +51,6 @@ public class MainActivity extends Activity {
 	private EditText hashWord;
 
 	private CharSequence originalHost;
-
-	private CharSequence version = "<unknown>";
 
 	/** A pattern used to extract a site tag from a host name */
 	private static final Pattern SITE_PATTERN = Pattern
@@ -148,13 +147,6 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
-
-		// get version number from APK
-		try {
-			version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-		} catch (NameNotFoundException e) {
-			Log.e(Constants.LOG_TAG, "Could not determine app version", e);
-		}
 	}
 
 	@Override
@@ -222,11 +214,19 @@ public class MainActivity extends Activity {
 				new OnMenuItemClickListener() {
 
 					public boolean onMenuItemClick(MenuItem item) {
-						new AlertDialog.Builder(MainActivity.this).setTitle(
-								R.string.Title_About).setMessage(
-								getResources().getText(R.string.about))
+						View view = View.inflate(MainActivity.this,
+								R.layout.about, null);
+						TextView textView = (TextView) view.findViewById(
+								R.id.scrollView).findViewById(R.id.message);
+						textView.setMovementMethod(LinkMovementMethod
+								.getInstance());
+						textView.setText(R.string.about);
+						AlertDialog dlg = new AlertDialog.Builder(
+								MainActivity.this).setTitle(
+								R.string.Title_About).setView(view)
 								.setPositiveButton(android.R.string.ok, null)
-								.setIcon(R.drawable.icon).show();
+								.setIcon(R.drawable.icon).create();
+						dlg.show();
 						return true;
 					}
 				});

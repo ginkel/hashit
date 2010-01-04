@@ -24,35 +24,38 @@ public final class R {
         public static final int wrench_tab_light=0x7f020006;
     }
     public static final class id {
-        public static final int Bump=0x7f080001;
-        public static final int Calculate=0x7f080004;
-        public static final int HashWord=0x7f080005;
-        public static final int LinearLayout01=0x7f080014;
-        public static final int MasterKey=0x7f080003;
-        public static final int MenuItemAbout=0x7f080016;
-        public static final int MenuItemSettings=0x7f080017;
-        public static final int RequirementDigits=0x7f08000a;
-        public static final int RequirementMixedCase=0x7f08000d;
-        public static final int RequirementPunctuation=0x7f08000b;
-        public static final int RestrictionDigitsOnly=0x7f080011;
-        public static final int RestrictionNoSpecialChars=0x7f080010;
-        public static final int SiteTag=0x7f080000;
-        public static final int SizeSpinner=0x7f080013;
-        public static final int TableLayout01=0x7f080007;
-        public static final int TableLayout03=0x7f080002;
-        public static final int TableRow01=0x7f080009;
-        public static final int TableRow02=0x7f08000c;
-        public static final int TableRow03=0x7f08000f;
-        public static final int TextView04=0x7f080008;
-        public static final int TextView05=0x7f08000e;
-        public static final int TextView06=0x7f080012;
-        public static final int UsageInformation=0x7f080006;
-        public static final int include01=0x7f080015;
+        public static final int Bump=0x7f080003;
+        public static final int Calculate=0x7f080006;
+        public static final int HashWord=0x7f080007;
+        public static final int LinearLayout01=0x7f080016;
+        public static final int MasterKey=0x7f080005;
+        public static final int MenuItemAbout=0x7f080018;
+        public static final int MenuItemSettings=0x7f080019;
+        public static final int RequirementDigits=0x7f08000c;
+        public static final int RequirementMixedCase=0x7f08000f;
+        public static final int RequirementPunctuation=0x7f08000d;
+        public static final int RestrictionDigitsOnly=0x7f080013;
+        public static final int RestrictionNoSpecialChars=0x7f080012;
+        public static final int SiteTag=0x7f080002;
+        public static final int SizeSpinner=0x7f080015;
+        public static final int TableLayout01=0x7f080009;
+        public static final int TableLayout03=0x7f080004;
+        public static final int TableRow01=0x7f08000b;
+        public static final int TableRow02=0x7f08000e;
+        public static final int TableRow03=0x7f080011;
+        public static final int TextView04=0x7f08000a;
+        public static final int TextView05=0x7f080010;
+        public static final int TextView06=0x7f080014;
+        public static final int UsageInformation=0x7f080008;
+        public static final int include01=0x7f080017;
+        public static final int message=0x7f080001;
+        public static final int scrollView=0x7f080000;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
-        public static final int settings=0x7f030001;
-        public static final int tabui=0x7f030002;
+        public static final int about=0x7f030000;
+        public static final int main=0x7f030001;
+        public static final int settings=0x7f030002;
+        public static final int tabui=0x7f030003;
     }
     public static final class menu {
         public static final int menu=0x7f070000;
