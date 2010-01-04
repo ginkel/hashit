@@ -22,19 +22,18 @@ package com.ginkel.hashit;
 import android.app.Application;
 
 /**
- * The Hash It! Application. Used to sync the site tag between different
- * activities.
+ * The Hash It! Application. Used to sync the site tag between different activities.
  * 
  * @author Thilo-Alexander Ginkel
  */
 public class HashItApplication extends Application {
-	private String siteTag;
+    private String siteTag;
 
-	protected String getSiteTag() {
-		return siteTag;
-	}
+    protected String getSiteTag() {
+        return siteTag;
+    }
 
-	protected void setSiteTag(String newSiteTag) {
-		siteTag = newSiteTag;
-	}
+    protected void setSiteTag(String newSiteTag) {
+        siteTag = newSiteTag;
+    }
 }

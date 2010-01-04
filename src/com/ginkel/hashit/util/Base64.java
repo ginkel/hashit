@@ -27,24 +27,23 @@ import android.text.SpannableStringBuilder;
  * @author Thilo-Alexander Ginkel
  */
 public class Base64 {
-	/** The padding character */
-	private static final char PAD = '=';
+    /** The padding character */
+    private static final char PAD = '=';
 
-	/**
-	 * Converts a byte array into its base64 representation (skipping any
-	 * trailing padding).
-	 * 
-	 * @param data
-	 *            the data to convert
-	 * @return the data's base64 representation as a string
-	 */
-	public static final String toBase64(byte[] data) {
-		SpannableStringBuilder result = new SpannableStringBuilder(new String(
-				org.apache.commons.codec.binary.Base64.encodeBase64(data)));
-		// remove trailing padding
-		while (result.length() > 0 && result.charAt(result.length() - 1) == PAD) {
-			result.replace(result.length() - 1, result.length(), "");
-		}
-		return result.toString();
-	}
+    /**
+     * Converts a byte array into its base64 representation (skipping any trailing padding).
+     * 
+     * @param data
+     *            the data to convert
+     * @return the data's base64 representation as a string
+     */
+    public static final String toBase64(byte[] data) {
+        SpannableStringBuilder result = new SpannableStringBuilder(new String(
+                org.apache.commons.codec.binary.Base64.encodeBase64(data)));
+        // remove trailing padding
+        while (result.length() > 0 && result.charAt(result.length() - 1) == PAD) {
+            result.replace(result.length() - 1, result.length(), "");
+        }
+        return result.toString();
+    }
 }

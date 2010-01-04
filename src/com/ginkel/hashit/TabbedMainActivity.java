@@ -28,41 +28,38 @@ import android.widget.TabHost.TabSpec;
 
 public class TabbedMainActivity extends TabActivity {
 
-	protected void onCreate(android.os.Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    protected void onCreate(android.os.Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		/* Hide title bar for small screens */
-		final Window win = getWindow();
-		final int screenHeight = win.getWindowManager().getDefaultDisplay()
-				.getHeight();
-		final int screenWidth = win.getWindowManager().getDefaultDisplay()
-				.getWidth();
-		if ((screenHeight <= 240 && screenWidth <= 320)
-				|| (screenHeight <= 320 && screenWidth <= 240)) {
-			requestWindowFeature(Window.FEATURE_NO_TITLE);
-		}
+        /* Hide title bar for small screens */
+        final Window win = getWindow();
+        final int screenHeight = win.getWindowManager().getDefaultDisplay().getHeight();
+        final int screenWidth = win.getWindowManager().getDefaultDisplay().getWidth();
+        if ((screenHeight <= 240 && screenWidth <= 320)
+                || (screenHeight <= 320 && screenWidth <= 240)) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+        }
 
-		/* Create tabs */
-		Resources resources = getResources();
-		TabHost tabHost = getTabHost();
+        /* Create tabs */
+        Resources resources = getResources();
+        TabHost tabHost = getTabHost();
 
-		/* Create home tab */
-		TabSpec tab = tabHost.newTabSpec("home");
-		Intent mainIntent = new Intent(this, MainActivity.class);
-		mainIntent.fillIn(getIntent(), Intent.FILL_IN_DATA
-				| Intent.FILL_IN_ACTION);
-		tab.setContent(mainIntent);
-		tab.setIndicator(resources.getText(R.string.Label_Password), resources
-				.getDrawable(R.drawable.padlock_tab));
-		tabHost.addTab(tab);
+        /* Create home tab */
+        TabSpec tab = tabHost.newTabSpec("home");
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.fillIn(getIntent(), Intent.FILL_IN_DATA | Intent.FILL_IN_ACTION);
+        tab.setContent(mainIntent);
+        tab.setIndicator(resources.getText(R.string.Label_Password), resources
+                .getDrawable(R.drawable.padlock_tab));
+        tabHost.addTab(tab);
 
-		/* Create settings tab */
-		tab = tabHost.newTabSpec("settings");
-		Intent hiddenAgenda = new Intent(this, SettingsActivity.class);
-		hiddenAgenda.setAction(Constants.ACTION_SITE_PREFS);
-		tab.setContent(hiddenAgenda);
-		tab.setIndicator(resources.getText(R.string.Label_Settings), resources
-				.getDrawable(R.drawable.wrench_tab));
-		tabHost.addTab(tab);
-	}
+        /* Create settings tab */
+        tab = tabHost.newTabSpec("settings");
+        Intent hiddenAgenda = new Intent(this, SettingsActivity.class);
+        hiddenAgenda.setAction(Constants.ACTION_SITE_PREFS);
+        tab.setContent(hiddenAgenda);
+        tab.setIndicator(resources.getText(R.string.Label_Settings), resources
+                .getDrawable(R.drawable.wrench_tab));
+        tabHost.addTab(tab);
+    }
 }

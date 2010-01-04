@@ -20,19 +20,19 @@
 package com.ginkel.hashit;
 
 public interface Constants {
-	final String HASH_WORD_SIZE = "HashWordSize";
+    final String HASH_WORD_SIZE = "HashWordSize";
 
-	final String RESTRICT_SPECIAL_CHARS = "RestrictSpecialChars";
-	final String RESTRICT_DIGITS = "RestrictDigits";
+    final String RESTRICT_SPECIAL_CHARS = "RestrictSpecialChars";
+    final String RESTRICT_DIGITS = "RestrictDigits";
 
-	final String REQUIRE_MIXED_CASE = "RequireMixedCase";
-	final String REQUIRE_DIGITS = "RequireDigits";
-	final String REQUIRE_PUNCTUATION = "RequirePunctuation";
+    final String REQUIRE_MIXED_CASE = "RequireMixedCase";
+    final String REQUIRE_DIGITS = "RequireDigits";
+    final String REQUIRE_PUNCTUATION = "RequirePunctuation";
 
-	final String SITE_MAP = "Site:%s";
+    final String SITE_MAP = "Site:%s";
 
-	final String ACTION_GLOBAL_PREFS = "com.ginkel.hashit.GLOBAL_PREFS";
-	final String ACTION_SITE_PREFS = "com.ginkel.hashit.SITE_PREFS";
+    final String ACTION_GLOBAL_PREFS = "com.ginkel.hashit.GLOBAL_PREFS";
+    final String ACTION_SITE_PREFS = "com.ginkel.hashit.SITE_PREFS";
 
-	final String LOG_TAG = "HashIt";
+    final String LOG_TAG = "HashIt";
 }
