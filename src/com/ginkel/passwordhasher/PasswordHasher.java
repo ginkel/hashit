@@ -186,8 +186,9 @@ public class PasswordHasher {
 		if (m.matches()) {
 			return m.replaceFirst(String.format("$1:%d", Integer.parseInt(m
 					.group(2)) + 1));
-		} else {
+		} else if (siteTag.length() > 0) {
 			return String.format("%s:1", siteTag);
 		}
+		return siteTag.toString();
 	}
 }
