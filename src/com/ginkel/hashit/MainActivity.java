@@ -220,8 +220,8 @@ public class MainActivity extends Activity {
 					public boolean onMenuItemClick(MenuItem item) {
 						View view = View.inflate(MainActivity.this,
 								R.layout.about, null);
-						TextView textView = (TextView) view.findViewById(
-								R.id.scrollView).findViewById(R.id.message);
+						TextView textView = (TextView) view
+								.findViewById(R.id.message);
 						textView.setMovementMethod(LinkMovementMethod
 								.getInstance());
 						textView.setText(R.string.Text_About);
