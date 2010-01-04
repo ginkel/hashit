@@ -17,7 +17,7 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ginkel.passwordhasher.util;
+package com.ginkel.hashit.util;
 
 import android.text.SpannableStringBuilder;
 

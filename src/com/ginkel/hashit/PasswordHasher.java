@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.ginkel.passwordhasher.util.Base64;
+import com.ginkel.hashit.util.Base64;
 
 public class PasswordHasher {
 	/** The MAC to be used for hashing the site tag */
