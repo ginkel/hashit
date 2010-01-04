@@ -30,6 +30,8 @@ import java.util.regex.Pattern;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import android.util.Log;
+
 import com.ginkel.hashit.util.Base64;
 
 public class PasswordHasher {
@@ -49,7 +51,7 @@ public class PasswordHasher {
 
 	/**
 	 * The password hashing function. Takes the site tag and master key as input
-	 * and returns the hash word (dependenent on additional parameters that
+	 * and returns the hash word (dependent on additional parameters that
 	 * specify the domain of the hash word).
 	 */
 	public static String hashPassword(String siteTag, String masterKey,
@@ -92,9 +94,11 @@ public class PasswordHasher {
 			// Trim it to size.
 			return hash.substring(0, hashWordSize);
 		} catch (NoSuchAlgorithmException e) {
+			Log.e(Constants.LOG_TAG, HMAC_SHA1_ALGORITHM + " not present", e);
 			throw new IllegalStateException(HMAC_SHA1_ALGORITHM
 					+ " not present");
 		} catch (InvalidKeyException e) {
+			Log.e(Constants.LOG_TAG, "Failed to hash secret", e);
 			throw new IllegalStateException(e);
 		}
 	}

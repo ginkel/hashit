@@ -158,11 +158,11 @@ public class MainActivity extends Activity {
 		originalHost = null;
 
 		Intent intent = getIntent();
-		Log.i(Constants.LOG_TAG, "intent = " + intent);
+		Log.d(Constants.LOG_TAG, "intent = " + intent);
 		if (intent != null && Intent.ACTION_SEND.equals(intent.getAction())) {
 			// we have been called via Chrome's "Send to" feature
 			String uriCandidate = intent.getStringExtra(Intent.EXTRA_TEXT);
-			Log.i(Constants.LOG_TAG, "uriCandidate = " + uriCandidate);
+			Log.d(Constants.LOG_TAG, "uriCandidate = " + uriCandidate);
 			if (uriCandidate != null) {
 				try {
 					Uri uri = Uri.parse(uriCandidate);
@@ -179,10 +179,9 @@ public class MainActivity extends Activity {
 						publishSiteTag(this, site);
 						masterKey.requestFocus();
 					} else {
-						Log.i(Constants.LOG_TAG, "host = " + host);
+						Log.d(Constants.LOG_TAG, "host = " + host);
 						Matcher siteExtractor = SITE_PATTERN.matcher(host);
 						if (siteExtractor.matches()) {
-							Log.i(Constants.LOG_TAG, "siteExtractor.matches()");
 							site = siteExtractor.group(1);
 							siteTag.setText(site);
 							publishSiteTag(this, site);
