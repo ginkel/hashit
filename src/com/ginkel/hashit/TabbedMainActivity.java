@@ -22,6 +22,7 @@ package com.ginkel.hashit;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -29,6 +30,17 @@ public class TabbedMainActivity extends TabActivity {
 
 	protected void onCreate(android.os.Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		/* Hide title bar for small screens */
+		final Window win = getWindow();
+		final int screenHeight = win.getWindowManager().getDefaultDisplay()
+				.getHeight();
+		final int screenWidth = win.getWindowManager().getDefaultDisplay()
+				.getWidth();
+		if ((screenHeight <= 240 && screenWidth <= 320)
+				|| (screenHeight <= 320 && screenWidth <= 240)) {
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+		}
 
 		/* Create tabs */
 		Resources resources = getResources();

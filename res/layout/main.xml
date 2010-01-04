@@ -54,7 +54,7 @@
 		</TableRow>
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="You seem to have invoked Hash It! from your home screen. There is nothing wrong with that, but there is an even more convenient method available, which will automatically pre-populate the Site Tag for you. From the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list."
+			android:text="You have invoked Hash It! from your home screen. There is nothing wrong with that, but there is a more convenient method available, which will automatically pre-populate the Site Tag for you. From the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list."
 			android:layout_marginTop="4px"></TextView>
 	</TableLayout>
 </LinearLayout>

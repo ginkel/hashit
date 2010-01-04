@@ -9,7 +9,6 @@
 			android:layout_height="wrap_content" android:id="@android:id/tabcontent">
 			<include android:id="@+id/include01" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" layout="@layout/main"></include>
-		
-</FrameLayout>
+		</FrameLayout>
 	</LinearLayout>
 </TabHost>
