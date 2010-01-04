@@ -52,4 +52,24 @@
 		<item>26</item>
 	</string-array>
 	<string name="Text_Introduction">Welcome to <b>Hash It!</b>!</string>
+	<string name="about"><b>Hash It! for Android</b>
+\n<small>Version 1.0
+\n
+\nCopyright © 2009-2010\nThilo-Alexander Ginkel.
+\n
+\nPortions based upon Password Hasher by Steve Cooper.
+\nCopyright © 2006 Steve Cooper.
+\n
+\nHash It! eases using a different password per web site without overloading your brain. It is compatible with the hashing algorithm used by the Password Hasher Firefox extension. 
+\n
+\n<b>Further Information</b>
+\n<a href="http://android.ginkel.com/hashit/">http://android.ginkel.com/hashit/</a>
+\n
+\n<b>Found a bug or would like to provide feedback?</b>
+\n<a href="mailto:android+hashit@ginkel.com">android+hashit@ginkel.com</a>
+\n</small>
+\n<b>License</b>
+\n<small>Hash It! is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+\n
+\nHash It! is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the <a href="http://www.gnu.org/licenses/">GNU General Public License</a> for more details.</small>\n</string>
 </resources>

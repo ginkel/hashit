@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -49,6 +50,8 @@ public class MainActivity extends Activity {
 	private EditText hashWord;
 
 	private CharSequence originalHost;
+
+	private CharSequence version = "<unknown>";
 
 	/** A pattern used to extract a site tag from a host name */
 	private static final Pattern SITE_PATTERN = Pattern
@@ -145,6 +148,13 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+
+		// get version number from APK
+		try {
+			version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+		} catch (NameNotFoundException e) {
+			Log.e(Constants.LOG_TAG, "Could not determine app version", e);
+		}
 	}
 
 	@Override
@@ -211,10 +221,10 @@ public class MainActivity extends Activity {
 
 					public boolean onMenuItemClick(MenuItem item) {
 						new AlertDialog.Builder(MainActivity.this).setTitle(
-								R.string.Title_About).setMessage("Blah")
+								R.string.Title_About).setMessage(
+								getResources().getText(R.string.about))
 								.setPositiveButton(android.R.string.ok, null)
-								.setIcon(android.R.drawable.ic_dialog_info)
-								.show();
+								.setIcon(R.drawable.icon).show();
 						return true;
 					}
 				});

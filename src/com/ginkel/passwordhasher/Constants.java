@@ -31,6 +31,8 @@ public interface Constants {
 
 	final String SITE_MAP = "Site:%s";
 
-	final String ACTION_GLOBAL_PREFS = "com.ginkel.passwordgenie.GLOBAL_PREFS";
-	final String ACTION_SITE_PREFS = "com.ginkel.passwordgenie.SITE_PREFS";
+	final String ACTION_GLOBAL_PREFS = "com.ginkel.hashit.GLOBAL_PREFS";
+	final String ACTION_SITE_PREFS = "com.ginkel.hashit.SITE_PREFS";
+
+	final String LOG_TAG = "HashIt";
 }

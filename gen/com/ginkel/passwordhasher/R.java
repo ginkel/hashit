@@ -80,6 +80,7 @@ public final class R {
         public static final int Text_Introduction=0x7f050015;
         public static final int Title_About=0x7f050008;
         public static final int Title_Settings=0x7f050014;
+        public static final int about=0x7f050016;
     }
     public static final class xml {
         public static final int preferences=0x7f040000;
