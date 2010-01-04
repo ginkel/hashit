@@ -95,9 +95,20 @@ public class SettingsActivity extends PreferenceActivity {
 				R.string.CheckBox_Punctuation, defaults, true);
 		addCheckBoxPreference(requirements, Constants.REQUIRE_MIXED_CASE,
 				R.string.CheckBox_MixedCase, defaults, true);
-		addListPreference(requirements, Constants.HASH_WORD_SIZE,
-				R.string.Label_Size, R.string.Header_HashWordSize,
-				R.array.Array_Sizes, R.array.Array_Sizes_Values, defaults, 8);
+		ListPreference hashWordSize = addListPreference(requirements,
+				Constants.HASH_WORD_SIZE, R.string.Label_Size,
+				R.string.Header_HashWordSize, R.array.Array_Sizes,
+				R.array.Array_Sizes_Values, defaults, 8);
+		hashWordSize
+				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+					public boolean onPreferenceChange(Preference preference,
+							Object newValue) {
+						updateSummary((ListPreference) preference, newValue);
+						return true;
+					}
+				});
+		updateSummary(hashWordSize, hashWordSize.getValue());
 
 		// Restrictions
 		PreferenceCategory restrictions = new PreferenceCategory(this);
@@ -156,6 +167,19 @@ public class SettingsActivity extends PreferenceActivity {
 		pref.setDefaultValue(def);
 		parent.addPreference(pref);
 		return pref;
+	}
+
+	/**
+	 * Updates the summary associated with a list preference.
+	 */
+	private void updateSummary(ListPreference pref, Object value) {
+		CharSequence[] values = pref.getEntryValues();
+		for (int ii = 0; ii < values.length; ii++) {
+			if (String.valueOf(value).equals(values[ii])) {
+				pref.setSummary(pref.getEntries()[ii]);
+				break;
+			}
+		}
 	}
 
 	/**
