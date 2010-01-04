@@ -17,11 +17,11 @@ public final class R {
     public static final class drawable {
         public static final int icon=0x7f020000;
         public static final int padlock_tab=0x7f020001;
-        public static final int padlock_tab_active=0x7f020002;
-        public static final int padlock_tab_inactive=0x7f020003;
+        public static final int padlock_tab_dark=0x7f020002;
+        public static final int padlock_tab_light=0x7f020003;
         public static final int wrench_tab=0x7f020004;
-        public static final int wrench_tab_active=0x7f020005;
-        public static final int wrench_tab_inactive=0x7f020006;
+        public static final int wrench_tab_dark=0x7f020005;
+        public static final int wrench_tab_light=0x7f020006;
     }
     public static final class id {
         public static final int Bump=0x7f080001;
