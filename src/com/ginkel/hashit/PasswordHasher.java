@@ -20,7 +20,7 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ginkel.passwordhasher;
+package com.ginkel.hashit;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

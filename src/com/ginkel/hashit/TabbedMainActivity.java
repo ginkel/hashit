@@ -17,7 +17,7 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ginkel.passwordhasher;
+package com.ginkel.hashit;
 
 import android.app.TabActivity;
 import android.content.Intent;

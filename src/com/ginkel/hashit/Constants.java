@@ -17,7 +17,7 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ginkel.passwordhasher;
+package com.ginkel.hashit;
 
 public interface Constants {
 	final String HASH_WORD_SIZE = "HashWordSize";

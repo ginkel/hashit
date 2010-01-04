@@ -17,7 +17,7 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ginkel.passwordhasher;
+package com.ginkel.hashit;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 		siteTag.setOnKeyListener(new OnKeyListener() {
 
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				GenieApplication app = (GenieApplication) v.getContext()
+				HashItApplication app = (HashItApplication) v.getContext()
 						.getApplicationContext();
 				app.setSiteTag(((EditText) v).getText().toString());
 				return false;
@@ -164,11 +164,11 @@ public class MainActivity extends Activity {
 		originalHost = null;
 
 		Intent intent = getIntent();
-		Log.i("PasswordGenie", "intent = " + intent);
+		Log.i(Constants.LOG_TAG, "intent = " + intent);
 		if (intent != null && Intent.ACTION_SEND.equals(intent.getAction())) {
 			// we have been called via Chrome's "Send to" feature
 			String uriCandidate = intent.getStringExtra(Intent.EXTRA_TEXT);
-			Log.i("PasswordGenie", "uriCandidate = " + uriCandidate);
+			Log.i(Constants.LOG_TAG, "uriCandidate = " + uriCandidate);
 			if (uriCandidate != null) {
 				try {
 					Uri uri = Uri.parse(uriCandidate);
@@ -184,10 +184,10 @@ public class MainActivity extends Activity {
 						siteTag.setText(site);
 						masterKey.requestFocus();
 					} else {
-						Log.i("PasswordGenie", "host = " + host);
+						Log.i(Constants.LOG_TAG, "host = " + host);
 						Matcher siteExtractor = SITE_PATTERN.matcher(host);
 						if (siteExtractor.matches()) {
-							Log.i("PasswordGenie", "siteExtractor.matches()");
+							Log.i(Constants.LOG_TAG, "siteExtractor.matches()");
 							site = siteExtractor.group(1);
 							siteTag.setText(site);
 							masterKey.requestFocus();
@@ -198,7 +198,9 @@ public class MainActivity extends Activity {
 						}
 					}
 				} catch (Exception e) {
-					Log.e("PasswordGenie", "Failed to retrieve intent URI", e);
+					Log
+							.e(Constants.LOG_TAG,
+									"Failed to retrieve intent URI", e);
 					Toast.makeText(getBaseContext(),
 							R.string.Message_SiteTagFailure, Toast.LENGTH_LONG)
 							.show();

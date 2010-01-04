@@ -17,7 +17,7 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ginkel.passwordhasher;
+package com.ginkel.hashit;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -64,7 +64,7 @@ public class SettingsActivity extends PreferenceActivity {
 
 		Intent intent = getIntent();
 		if (Constants.ACTION_SITE_PREFS.equals(intent.getAction())) {
-			GenieApplication app = (GenieApplication) getApplication();
+			HashItApplication app = (HashItApplication) getApplication();
 			prefManager.setSharedPreferencesName(app.getSiteTag());
 		}
 

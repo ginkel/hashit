@@ -17,17 +17,17 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.ginkel.passwordhasher;
+package com.ginkel.hashit;
 
 import android.app.Application;
 
 /**
- * The Password Genie Application. Used to sync the site tag between different
+ * The Hash It! Application. Used to sync the site tag between different
  * activities.
  * 
  * @author Thilo-Alexander Ginkel
  */
-public class GenieApplication extends Application {
+public class HashItApplication extends Application {
 	private String siteTag;
 
 	protected String getSiteTag() {

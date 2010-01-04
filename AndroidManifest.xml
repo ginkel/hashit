@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.ginkel.passwordhasher"
+      package="com.ginkel.hashit"
       android:versionCode="2"
       android:versionName="1.0">
-    <application android:icon="@drawable/icon" android:label="@string/AppName" android:name=".GenieApplication">
+    <application android:icon="@drawable/icon" android:label="@string/AppName" android:name=".HashItApplication">
         <activity android:name=".TabbedMainActivity"
                   android:label="@string/AppName">
             <intent-filter>
