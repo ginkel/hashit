@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ * This file is part of Hash It!.
+ * 
+ * Copyright (C) 2009-2010 Thilo-Alexander Ginkel.
+ * 
+ * Hash It! is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Hash It! is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
+ -->
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="wrap_content" android:layout_width="fill_parent">
-	<LinearLayout android:id="@+id/LinearLayout01"
-		android:layout_height="wrap_content" android:layout_width="fill_parent">
+	<LinearLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent">
 		<TabWidget android:id="@android:id/tabs"
 			android:layout_height="wrap_content" android:layout_width="fill_parent"></TabWidget>
 		<FrameLayout android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@android:id/tabcontent">
-			<include android:id="@+id/include01" android:layout_width="wrap_content"
+			<include android:layout_width="wrap_content"
 				android:layout_height="wrap_content" layout="@layout/main"></include>
 		</FrameLayout>
 	</LinearLayout>

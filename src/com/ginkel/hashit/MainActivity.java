@@ -220,7 +220,7 @@ public class MainActivity extends Activity {
 								R.id.scrollView).findViewById(R.id.message);
 						textView.setMovementMethod(LinkMovementMethod
 								.getInstance());
-						textView.setText(R.string.about);
+						textView.setText(R.string.Text_About);
 						AlertDialog dlg = new AlertDialog.Builder(
 								MainActivity.this).setTitle(
 								R.string.Title_About).setView(view)
