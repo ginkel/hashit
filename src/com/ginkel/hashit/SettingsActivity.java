@@ -75,10 +75,11 @@ public class SettingsActivity extends PreferenceActivity {
 		PreferenceScreen prefScreen = getPreferenceScreen();
 		if (prefScreen != null) {
 			prefScreen.removeAll();
-		} else {
-			prefScreen = prefManager.createPreferenceScreen(this);
-			setPreferenceScreen(prefScreen);
 		}
+
+		/* make sure our preferences are based on the current site tag */
+		prefScreen = prefManager.createPreferenceScreen(this);
+		setPreferenceScreen(prefScreen);
 
 		SharedPreferences defaults = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
