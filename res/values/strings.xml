@@ -78,6 +78,9 @@
 \nPortions based upon Password Hasher by Steve Cooper.
 \nCopyright © 2006 Steve Cooper.
 \n
+\nThis product includes software developed by <a href="http://www.apache.org/">The Apache Software Foundation</a>.
+\nCopyright © 2002-2009 The Apache Software Foundation.
+\n
 \nHash It! eases using unique passwords per web site without overloading your brain. It is compatible with the hashing algorithm used by the Password Hasher Firefox extension. 
 \n
 \n<b>Further Information</b>
@@ -89,7 +92,14 @@
 \n<b>License</b>
 \n<small>Hash It! is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 \n
-\nHash It! is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the <a href="http://www.gnu.org/licenses/">GNU General Public License</a> for more details.</small>\n</string>
+\nHash It! is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the <a href="http://www.gnu.org/licenses/">GNU General Public License</a> for more details.
+\n</small>
+\n<b>Apache Commons Codec</b>
+\n<small>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+\n
+\nYou may obtain a copy of the License at: <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+\n
+\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</small>\n</string>
 	<string name="Text_Welcome"><b>Welcome to Hash It!</b>
 \n<small>
 \nHash It! eases using unique passwords per web site without overloading your brain by generating site-specific passwords derived from a secret Master Key. You will only have to remember a single or few Master Keys whereas Hash It! will make sure that no two web sites will use the same password.
