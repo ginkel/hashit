@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -66,9 +67,8 @@ public class MainActivity extends Activity {
 		siteTag.setOnKeyListener(new OnKeyListener() {
 
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				HashItApplication app = (HashItApplication) v.getContext()
-						.getApplicationContext();
-				app.setSiteTag(((EditText) v).getText().toString());
+				publishSiteTag(v.getContext(), ((EditText) v).getText()
+						.toString());
 				return false;
 			}
 		});
@@ -139,7 +139,9 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				String tag = siteTag.getText().toString();
 				try {
-					siteTag.setText(PasswordHasher.bumpSiteTag(tag));
+					CharSequence newSiteTag = PasswordHasher.bumpSiteTag(tag);
+					siteTag.setText(newSiteTag);
+					publishSiteTag(v.getContext(), newSiteTag.toString());
 				} catch (NumberFormatException e) {
 					Toast.makeText(getBaseContext(),
 							R.string.Message_InvalidSiteTag, Toast.LENGTH_LONG)
@@ -174,6 +176,7 @@ public class MainActivity extends Activity {
 
 					if (site != null) {
 						siteTag.setText(site);
+						publishSiteTag(this, site);
 						masterKey.requestFocus();
 					} else {
 						Log.i(Constants.LOG_TAG, "host = " + host);
@@ -182,6 +185,7 @@ public class MainActivity extends Activity {
 							Log.i(Constants.LOG_TAG, "siteExtractor.matches()");
 							site = siteExtractor.group(1);
 							siteTag.setText(site);
+							publishSiteTag(this, site);
 							masterKey.requestFocus();
 						} else {
 							Toast.makeText(getBaseContext(),
@@ -221,12 +225,10 @@ public class MainActivity extends Activity {
 						textView.setMovementMethod(LinkMovementMethod
 								.getInstance());
 						textView.setText(R.string.Text_About);
-						AlertDialog dlg = new AlertDialog.Builder(
-								MainActivity.this).setTitle(
+						new AlertDialog.Builder(MainActivity.this).setTitle(
 								R.string.Title_About).setView(view)
 								.setPositiveButton(android.R.string.ok, null)
-								.setIcon(R.drawable.icon).create();
-						dlg.show();
+								.setIcon(R.drawable.icon).show();
 						return true;
 					}
 				});
@@ -261,5 +263,13 @@ public class MainActivity extends Activity {
 			SharedPreferences defaults, int def) {
 		return Integer.valueOf(prefs.getString(key, defaults.getString(key,
 				String.valueOf(def))));
+	}
+
+	/**
+	 * A convenience method to forward the current site tag to the application.
+	 */
+	private static void publishSiteTag(Context ctx, String siteTag) {
+		HashItApplication app = (HashItApplication) ctx.getApplicationContext();
+		app.setSiteTag(siteTag);
 	}
 }
