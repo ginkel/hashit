@@ -201,8 +201,7 @@ public class MainActivity extends Activity {
                 textView.setMovementMethod(LinkMovementMethod.getInstance());
                 textView.setText(R.string.Text_About);
                 new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_About).setView(
-                        view).setPositiveButton(android.R.string.ok, null).setIcon(R.drawable.icon)
-                        .show();
+                        view).setIcon(R.drawable.icon).show();
                 return true;
             }
         });
