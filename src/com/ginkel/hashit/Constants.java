@@ -31,6 +31,10 @@ public interface Constants {
 
     final String SITE_MAP = "Site:%s";
 
+    final String HIDE_WELCOME_SCREEN = "HideWelcomeScreen";
+
+    final String STATE_WELCOME_DISPLAYED = "WelcomeScreenDisplayed";
+
     final String ACTION_GLOBAL_PREFS = "com.ginkel.hashit.GLOBAL_PREFS";
     final String ACTION_SITE_PREFS = "com.ginkel.hashit.SITE_PREFS";
 

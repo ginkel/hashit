@@ -25,8 +25,11 @@ import java.util.regex.Pattern;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -41,6 +44,7 @@ import android.view.View;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +56,8 @@ public class MainActivity extends Activity {
     private EditText hashWord;
 
     private CharSequence originalHost;
+
+    private boolean welcomeDisplayed;
 
     /** A pattern used to extract a site tag from a host name */
     private static final Pattern SITE_PATTERN = Pattern.compile("^.*?([\\w\\d\\-]+)\\.\\w+$");
@@ -137,6 +143,21 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(Constants.STATE_WELCOME_DISPLAYED, welcomeDisplayed);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        welcomeDisplayed = savedInstanceState.getBoolean(Constants.STATE_WELCOME_DISPLAYED,
+                welcomeDisplayed);
+    }
+
+    @Override
     protected void onResume() {
         super.onStart();
 
@@ -186,6 +207,8 @@ public class MainActivity extends Activity {
         } else {
             findViewById(R.id.UsageInformation).setVisibility(View.VISIBLE);
         }
+
+        displayWelcomeScreen();
     }
 
     @Override
@@ -242,5 +265,49 @@ public class MainActivity extends Activity {
     private static void publishSiteTag(Context ctx, String siteTag) {
         HashItApplication app = (HashItApplication) ctx.getApplicationContext();
         app.setSiteTag(siteTag);
+    }
+
+    private void displayWelcomeScreen() {
+        if (!welcomeDisplayed) {
+            final SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getBaseContext());
+
+            Integer hideUpToVersion = prefs.getInt(Constants.HIDE_WELCOME_SCREEN, 0);
+            PackageInfo packageInfo = null;
+            try {
+                packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            } catch (NameNotFoundException e) {
+                Log.e(Constants.LOG_TAG, "Could not retrieve package info", e);
+            }
+            final int versionCode = packageInfo == null ? Integer.MAX_VALUE
+                    : packageInfo.versionCode;
+
+            if (hideUpToVersion == null || packageInfo == null
+                    || hideUpToVersion < packageInfo.versionCode) {
+                View view = View.inflate(MainActivity.this, R.layout.welcome, null);
+                TextView textView = (TextView) view.findViewById(R.id.message);
+                textView.setMovementMethod(LinkMovementMethod.getInstance());
+                textView.setText(R.string.Text_Welcome);
+                final CheckBox dontShowAgain = (CheckBox) view
+                        .findViewById(R.id.CheckBox_DoNotShowAgain);
+                /*
+                 * we can't reliably store the current version if we could not determine the package
+                 * version code
+                 */
+                dontShowAgain.setEnabled(packageInfo != null);
+                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_Welcome)
+                        .setView(view).setPositiveButton(android.R.string.ok,
+                                new DialogInterface.OnClickListener() {
+
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (dontShowAgain.isChecked()) {
+                                            prefs.edit().putInt(Constants.HIDE_WELCOME_SCREEN,
+                                                    versionCode).commit();
+                                        }
+                                    }
+                                }).setIcon(R.drawable.icon).show();
+                welcomeDisplayed = true;
+            }
+        }
     }
 }
