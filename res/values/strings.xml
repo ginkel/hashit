@@ -71,7 +71,7 @@
 	</string-array>
 	<string name="Text_Introduction">Welcome to <b>Hash It!</b>!</string>
 	<string name="Text_About"><b>Hash It! for Android</b>
-\n<small>Version 1.0.0
+\n<small>Version 1.0.1
 \n
 \nCopyright © 2009-2010\nThilo-Alexander Ginkel.
 \n
@@ -83,7 +83,7 @@
 \n
 \nHash It! eases using unique passwords per web site without overloading your brain. It is compatible with the hashing algorithm used by the Password Hasher Firefox extension. 
 \n
-\n<b>Further Information</b>
+\n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a>
 \n
 \n<b>Found a bug or would like to provide feedback?</b>
@@ -110,8 +110,8 @@
 \n<b>Compatibility</b>
 \nHash It! is designed to be compatible with the hashing algorithm used by the Password Hasher Firefox extension. 
 \n
-\n<b>Further Information</b>
+\n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
 	<string name="Title_Welcome"><b>Hash It! for Android</b>
-\n<small>Version 1.0.0</small></string>
+\n<small>Version 1.0.1</small></string>
 </resources>

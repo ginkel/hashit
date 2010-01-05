@@ -18,8 +18,8 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.ginkel.hashit" android:versionCode="5"
-	android:versionName="1.0.0">
+	package="com.ginkel.hashit" android:versionCode="6"
+	android:versionName="1.0.1">
 	<application android:icon="@drawable/icon" android:label="@string/AppName"
 		android:name=".HashItApplication" android:allowClearUserData="true"
 		android:allowBackup="true">
