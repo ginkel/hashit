@@ -33,10 +33,15 @@ public interface Constants {
 
     final String HIDE_WELCOME_SCREEN = "HideWelcomeScreen";
 
+    final String STATE_SITE_TAG = "SiteTag";
     final String STATE_WELCOME_DISPLAYED = "WelcomeScreenDisplayed";
 
     final String ACTION_GLOBAL_PREFS = "com.ginkel.hashit.GLOBAL_PREFS";
     final String ACTION_SITE_PREFS = "com.ginkel.hashit.SITE_PREFS";
 
     final String LOG_TAG = "HashIt";
+
+    enum FocusRequest {
+        NONE, SITE_TAG, MASTER_KEY
+    }
 }

@@ -50,6 +50,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.BufferType;
 
+import com.ginkel.hashit.Constants.FocusRequest;
+
 public class MainActivity extends Activity {
     private EditText siteTag;
     private EditText masterKey;
@@ -57,7 +59,11 @@ public class MainActivity extends Activity {
 
     private CharSequence originalHost;
 
+    private boolean restoredState;
+    private boolean restoredSiteTag;
     private boolean welcomeDisplayed;
+
+    private FocusRequest focus = FocusRequest.NONE;
 
     /** A pattern used to extract a site tag from a host name */
     private static final Pattern SITE_PATTERN = Pattern.compile("^.*?([\\w\\d\\-]+)\\.\\w+$");
@@ -140,66 +146,54 @@ public class MainActivity extends Activity {
                 }
             }
         });
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putBoolean(Constants.STATE_WELCOME_DISPLAYED, welcomeDisplayed);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        welcomeDisplayed = savedInstanceState.getBoolean(Constants.STATE_WELCOME_DISPLAYED,
-                welcomeDisplayed);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onStart();
 
         originalHost = null;
+
+        focus = FocusRequest.SITE_TAG;
 
         Intent intent = getIntent();
         Log.d(Constants.LOG_TAG, "intent = " + intent);
         if (intent != null && Intent.ACTION_SEND.equals(intent.getAction())) {
             // we have been called via Chrome's "Send to" feature
-            String uriCandidate = intent.getStringExtra(Intent.EXTRA_TEXT);
-            Log.d(Constants.LOG_TAG, "uriCandidate = " + uriCandidate);
-            if (uriCandidate != null) {
-                try {
-                    Uri uri = Uri.parse(uriCandidate);
-                    String host = uri.getHost();
-                    originalHost = host;
 
-                    SharedPreferences prefs = PreferenceManager
-                            .getDefaultSharedPreferences(getBaseContext());
-                    String site = prefs.getString(String.format(Constants.SITE_MAP, host), null);
+            if (!restoredSiteTag) {
+                /* we did not just switch back and forth between the password and the parameters tab */
 
-                    if (site != null) {
-                        siteTag.setText(site);
-                        publishSiteTag(this, site);
-                        masterKey.requestFocus();
-                    } else {
-                        Log.d(Constants.LOG_TAG, "host = " + host);
-                        Matcher siteExtractor = SITE_PATTERN.matcher(host);
-                        if (siteExtractor.matches()) {
-                            site = siteExtractor.group(1);
+                String uriCandidate = intent.getStringExtra(Intent.EXTRA_TEXT);
+                Log.d(Constants.LOG_TAG, "uriCandidate = " + uriCandidate);
+                if (uriCandidate != null) {
+                    try {
+                        Uri uri = Uri.parse(uriCandidate);
+                        String host = uri.getHost();
+                        originalHost = host;
+
+                        SharedPreferences prefs = PreferenceManager
+                                .getDefaultSharedPreferences(getBaseContext());
+                        String site = prefs
+                                .getString(String.format(Constants.SITE_MAP, host), null);
+
+                        if (site != null) {
                             siteTag.setText(site);
                             publishSiteTag(this, site);
-                            masterKey.requestFocus();
+                            focus = FocusRequest.MASTER_KEY;
                         } else {
-                            Toast.makeText(getBaseContext(), R.string.Message_SiteTagFailure,
-                                    Toast.LENGTH_LONG).show();
+                            Log.d(Constants.LOG_TAG, "host = " + host);
+                            Matcher siteExtractor = SITE_PATTERN.matcher(host);
+                            if (siteExtractor.matches()) {
+                                site = siteExtractor.group(1);
+                                siteTag.setText(site);
+                                publishSiteTag(this, site);
+                                focus = FocusRequest.MASTER_KEY;
+                            } else {
+                                Toast.makeText(getBaseContext(), R.string.Message_SiteTagFailure,
+                                        Toast.LENGTH_LONG).show();
+                            }
                         }
+                    } catch (Exception e) {
+                        Log.e(Constants.LOG_TAG, "Failed to retrieve intent URI", e);
+                        Toast.makeText(getBaseContext(), R.string.Message_SiteTagFailure,
+                                Toast.LENGTH_LONG).show();
                     }
-                } catch (Exception e) {
-                    Log.e(Constants.LOG_TAG, "Failed to retrieve intent URI", e);
-                    Toast.makeText(getBaseContext(), R.string.Message_SiteTagFailure,
-                            Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -209,6 +203,51 @@ public class MainActivity extends Activity {
         }
 
         displayWelcomeScreen();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(Constants.STATE_WELCOME_DISPLAYED, welcomeDisplayed);
+        outState.putCharSequence(Constants.STATE_SITE_TAG, siteTag.getText());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        welcomeDisplayed = savedInstanceState.getBoolean(Constants.STATE_WELCOME_DISPLAYED,
+                welcomeDisplayed);
+
+        CharSequence savedSiteTag = savedInstanceState.getCharSequence(Constants.STATE_SITE_TAG);
+        if (savedSiteTag != null) {
+            siteTag.setText(savedSiteTag);
+            restoredSiteTag = true;
+        } else {
+            restoredSiteTag = false;
+        }
+
+        restoredState = true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!restoredState) {
+            /* do not mess with input focus if we restored the state */
+
+            /* focus changes do not seem to work in onCreate */
+            switch (focus) {
+                case SITE_TAG:
+                    siteTag.requestFocus();
+                    break;
+                case MASTER_KEY:
+                    masterKey.requestFocus();
+                    break;
+            }
+        }
     }
 
     @Override
