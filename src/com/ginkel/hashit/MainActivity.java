@@ -44,11 +44,13 @@ import android.view.View;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.BufferType;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.ginkel.hashit.Constants.FocusRequest;
 
@@ -56,6 +58,7 @@ public class MainActivity extends Activity {
     private EditText siteTag;
     private EditText masterKey;
     private EditText hashWord;
+    private Button hashPassword;
 
     private CharSequence originalHost;
 
@@ -84,51 +87,25 @@ public class MainActivity extends Activity {
         });
 
         masterKey = (EditText) findViewById(R.id.MasterKey);
+        masterKey.setOnEditorActionListener(new OnEditorActionListener() {
+
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    hashPassword();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         hashWord = (EditText) findViewById(R.id.HashWord);
         hashWord.setEnabled(false);
 
-        findViewById(R.id.Calculate).setOnClickListener(new OnClickListener() {
+        hashPassword = (Button) findViewById(R.id.Calculate);
+        hashPassword.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                String tag = siteTag.getText().toString();
-                String key = masterKey.getText().toString();
-
-                if (tag.length() == 0) {
-                    Toast.makeText(getBaseContext(), R.string.Message_SiteTagEmpty,
-                            Toast.LENGTH_LONG).show();
-                    siteTag.requestFocus();
-                } else if (key.length() == 0) {
-                    Toast.makeText(getBaseContext(), R.string.Message_MasterKeyEmpty,
-                            Toast.LENGTH_LONG).show();
-                    masterKey.requestFocus();
-                } else {
-                    SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
-                    SharedPreferences defaults = PreferenceManager
-                            .getDefaultSharedPreferences(getBaseContext());
-
-                    String hash = PasswordHasher.hashPassword(tag, key, //
-                            getStringAsInt(Constants.HASH_WORD_SIZE, prefs, defaults, 8), //
-                            getBool(Constants.REQUIRE_DIGITS, prefs, defaults, true), //
-                            getBool(Constants.REQUIRE_PUNCTUATION, prefs, defaults, true), //
-                            getBool(Constants.REQUIRE_MIXED_CASE, prefs, defaults, true), //
-                            getBool(Constants.RESTRICT_SPECIAL_CHARS, prefs, defaults, false), //
-                            getBool(Constants.RESTRICT_DIGITS, prefs, defaults, false));
-
-                    hashWord.setText(hash, BufferType.NORMAL);
-
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                    clipboard.setText(hash);
-
-                    if (originalHost != null) {
-                        // save site tag for host name
-                        defaults.edit().putString(String.format(Constants.SITE_MAP, originalHost),
-                                tag).commit();
-                    }
-
-                    Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard,
-                            Toast.LENGTH_LONG).show();
-                }
+                hashPassword();
             }
         });
 
@@ -347,6 +324,47 @@ public class MainActivity extends Activity {
                                 }).setIcon(R.drawable.icon).show();
                 welcomeDisplayed = true;
             }
+        }
+    }
+
+    private void hashPassword() {
+        String tag = siteTag.getText().toString();
+        String key = masterKey.getText().toString();
+
+        if (tag.length() == 0) {
+            Toast.makeText(getBaseContext(), R.string.Message_SiteTagEmpty, Toast.LENGTH_LONG)
+                    .show();
+            siteTag.requestFocus();
+        } else if (key.length() == 0) {
+            Toast.makeText(getBaseContext(), R.string.Message_MasterKeyEmpty, Toast.LENGTH_LONG)
+                    .show();
+            masterKey.requestFocus();
+        } else {
+            SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
+            SharedPreferences defaults = PreferenceManager
+                    .getDefaultSharedPreferences(getBaseContext());
+
+            String hash = PasswordHasher.hashPassword(tag, key, //
+                    getStringAsInt(Constants.HASH_WORD_SIZE, prefs, defaults, 8), //
+                    getBool(Constants.REQUIRE_DIGITS, prefs, defaults, true), //
+                    getBool(Constants.REQUIRE_PUNCTUATION, prefs, defaults, true), //
+                    getBool(Constants.REQUIRE_MIXED_CASE, prefs, defaults, true), //
+                    getBool(Constants.RESTRICT_SPECIAL_CHARS, prefs, defaults, false), //
+                    getBool(Constants.RESTRICT_DIGITS, prefs, defaults, false));
+
+            hashWord.setText(hash, BufferType.NORMAL);
+
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            clipboard.setText(hash);
+
+            if (originalHost != null) {
+                // save site tag for host name
+                defaults.edit().putString(String.format(Constants.SITE_MAP, originalHost), tag)
+                        .commit();
+            }
+
+            Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard,
+                    Toast.LENGTH_LONG).show();
         }
     }
 }
