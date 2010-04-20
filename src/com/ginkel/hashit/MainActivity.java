@@ -53,6 +53,7 @@ import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.ginkel.hashit.Constants.FocusRequest;
+import com.ginkel.hashit.util.VersionHelper;
 
 public class MainActivity extends Activity {
     private EditText siteTag;
@@ -225,6 +226,17 @@ public class MainActivity extends Activity {
                     break;
             }
         }
+
+        /* Work around a bug in Android 1.5 */
+        if (VersionHelper.getSdkVersion() < 4) {
+            String tag = retrieveSiteTag(this);
+            if (tag != null) {
+                siteTag.setText(tag);
+                if (focus == FocusRequest.SITE_TAG && !restoredState) {
+                    siteTag.setSelection(tag.length(), tag.length());
+                }
+            }
+        }
     }
 
     @Override
@@ -281,6 +293,14 @@ public class MainActivity extends Activity {
     private static void publishSiteTag(Context ctx, String siteTag) {
         HashItApplication app = (HashItApplication) ctx.getApplicationContext();
         app.setSiteTag(siteTag);
+    }
+
+    /**
+     * A convenience method to retrieve the current site tag from the application.
+     */
+    private static String retrieveSiteTag(Context ctx) {
+        HashItApplication app = (HashItApplication) ctx.getApplicationContext();
+        return app.getSiteTag();
     }
 
     private void displayWelcomeScreen() {
