@@ -34,6 +34,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -43,7 +45,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -79,11 +80,16 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main);
 
         siteTag = (EditText) findViewById(R.id.SiteTag);
-        siteTag.setOnKeyListener(new OnKeyListener() {
+        siteTag.addTextChangedListener(new TextWatcher() {
 
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                publishSiteTag(v.getContext(), ((EditText) v).getText().toString());
-                return false;
+            public void onTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                publishSiteTag(MainActivity.this, s.toString());
             }
         });
 
@@ -132,7 +138,7 @@ public class MainActivity extends Activity {
         Intent intent = getIntent();
         Log.d(Constants.LOG_TAG, "intent = " + intent);
         if (intent != null && Intent.ACTION_SEND.equals(intent.getAction())) {
-            // we have been called via Chrome's "Send to" feature
+            // we have been called via the "Send to" intent
 
             if (!restoredSiteTag) {
                 /* we did not just switch back and forth between the password and the parameters tab */
