@@ -71,7 +71,7 @@
 	</string-array>
 	<string name="Text_Introduction">Welcome to <b>Hash It!</b>!</string>
 	<string name="Text_About"><b>Hash It! for Android</b>
-\n<small>Version 1.0.2
+\n<small>Version 1.1.0
 \n
 \nCopyright © 2009-2010\nThilo-Alexander Ginkel.
 \n
@@ -104,6 +104,9 @@
 \n<small>
 \nHash It! eases using unique passwords per web site without overloading your brain by generating site-specific passwords derived from a secret Master Key. You will only have to remember a single or few Master Keys whereas Hash It! will make sure that no two web sites will use the same password.
 \n
+\n<b>What\'s New?</b>
+\n<ul><li>Support for country code second-level domains (e.g., .co.uk)</li></ul>
+\n
 \n<b>Usage</b>
 \nFrom the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list. After calculating the Hash Word, the password will have been placed on the clipboard. Just hit the back button to return to the web site and paste the clipboard to the password entry field.
 \n
@@ -113,5 +116,5 @@
 \n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
 	<string name="Title_Welcome"><b>Hash It! for Android</b>
-\n<small>Version 1.0.2</small></string>
+\n<small>Version 1.1.0</small></string>
 </resources>
