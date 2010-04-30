@@ -71,7 +71,8 @@ public class MainActivity extends Activity {
     private FocusRequest focus = FocusRequest.NONE;
 
     /** A pattern used to extract a site tag from a host name */
-    private static final Pattern SITE_PATTERN = Pattern.compile("^.*?([\\w\\d\\-]+)\\.\\w+$");
+    private static final Pattern SITE_PATTERN = Pattern
+            .compile("^.*?([\\w\\d\\-]+)\\.((co|com|net|org|ac)\\.)?\\w+$");
 
     /** Called when the activity is first created. */
     @Override
