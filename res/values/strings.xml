@@ -71,7 +71,7 @@
 	</string-array>
 	<string name="Text_Introduction">Welcome to <b>Hash It!</b>!</string>
 	<string name="Text_About"><b>Hash It! for Android</b>
-\n<small>Version 1.1.0
+\n<small>Version 1.1.1
 \n
 \nCopyright © 2009-2010\nThilo-Alexander Ginkel.
 \n
@@ -116,5 +116,5 @@
 \n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
 	<string name="Title_Welcome"><b>Hash It! for Android</b>
-\n<small>Version 1.1.0</small></string>
+\n<small>Version 1.1.1</small></string>
 </resources>

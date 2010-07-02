@@ -18,8 +18,8 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.ginkel.hashit" android:versionCode="9"
-	android:versionName="1.1.0">
+	package="com.ginkel.hashit" android:versionCode="10"
+	android:versionName="1.1.1" android:installLocation="auto">
 	<application android:icon="@drawable/icon" android:label="@string/AppName"
 		android:name=".HashItApplication" android:allowClearUserData="true"
 		android:allowBackup="true">
@@ -41,7 +41,7 @@
 		<activity android:name=".SettingsActivity" android:label="@string/Title_Settings">
 		</activity>
 	</application>
-	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="6" />
+	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="8" />
 	<supports-screens android:smallScreens="true"
 		android:normalScreens="true" android:largeScreens="true"
 		android:anyDensity="true" />
