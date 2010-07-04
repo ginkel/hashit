@@ -45,6 +45,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -54,10 +55,12 @@ import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.ginkel.hashit.Constants.FocusRequest;
+import com.ginkel.hashit.util.HistoryManager;
+import com.ginkel.hashit.util.NullAdapter;
 import com.ginkel.hashit.util.VersionHelper;
 
 public class MainActivity extends Activity {
-    private EditText siteTag;
+    private AutoCompleteTextView siteTag;
     private EditText masterKey;
     private EditText hashWord;
     private Button hashPassword;
@@ -80,7 +83,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        siteTag = (EditText) findViewById(R.id.SiteTag);
+        siteTag = (AutoCompleteTextView) findViewById(R.id.SiteTag);
         siteTag.addTextChangedListener(new TextWatcher() {
 
             public void onTextChanged(CharSequence s, int start, int count, int after) {
@@ -227,6 +230,7 @@ public class MainActivity extends Activity {
             switch (focus) {
                 case SITE_TAG:
                     siteTag.requestFocus();
+                    siteTag.dismissDropDown();
                     break;
                 case MASTER_KEY:
                     masterKey.requestFocus();
@@ -243,6 +247,33 @@ public class MainActivity extends Activity {
                     siteTag.setSelection(tag.length(), tag.length());
                 }
             }
+        }
+
+        if (HashItApplication.SUPPORTS_HISTORY) {
+            // Site Tag history
+            siteTag.setThreshold(1);
+            HistoryManager siteTagHistory;
+            if ((siteTagHistory = HashItApplication.getApp(this).getHistoryManager()) == null) {
+                HashItApplication.getApp(this).setHistoryManager(
+                        siteTagHistory = new HistoryManager(this, Constants.SITE_TAGS,
+                                R.layout.autocomplete_list));
+            }
+            if (getBool(Constants.ENABLE_HISTORY, PreferenceManager
+                    .getDefaultSharedPreferences(getBaseContext()), null, true)) {
+                siteTag.setAdapter(siteTagHistory.getAdapter());
+            } else {
+                siteTag.setAdapter(new NullAdapter<String>(this, R.layout.autocomplete_list));
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (HashItApplication.SUPPORTS_HISTORY) {
+            // back up history
+            HashItApplication.getApp(this).getHistoryManager().save();
         }
     }
 
@@ -281,7 +312,7 @@ public class MainActivity extends Activity {
 
     private static boolean getBool(String key, SharedPreferences prefs, SharedPreferences defaults,
             boolean def) {
-        return prefs.getBoolean(key, defaults.getBoolean(key, def));
+        return prefs.getBoolean(key, defaults != null ? defaults.getBoolean(key, def) : def);
     }
 
     /**
@@ -298,16 +329,14 @@ public class MainActivity extends Activity {
      * A convenience method to forward the current site tag to the application.
      */
     private static void publishSiteTag(Context ctx, String siteTag) {
-        HashItApplication app = (HashItApplication) ctx.getApplicationContext();
-        app.setSiteTag(siteTag);
+        HashItApplication.getApp(ctx).setSiteTag(siteTag);
     }
 
     /**
      * A convenience method to retrieve the current site tag from the application.
      */
     private static String retrieveSiteTag(Context ctx) {
-        HashItApplication app = (HashItApplication) ctx.getApplicationContext();
-        return app.getSiteTag();
+        return HashItApplication.getApp(ctx).getSiteTag();
     }
 
     private void displayWelcomeScreen() {
@@ -388,6 +417,12 @@ public class MainActivity extends Activity {
                 // save site tag for host name
                 defaults.edit().putString(String.format(Constants.SITE_MAP, originalHost), tag)
                         .commit();
+            }
+
+            if (HashItApplication.SUPPORTS_HISTORY
+                    && getBool(Constants.ENABLE_HISTORY, PreferenceManager
+                            .getDefaultSharedPreferences(getBaseContext()), null, true)) {
+                HashItApplication.getApp(this).getHistoryManager().add(tag);
             }
 
             Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard,

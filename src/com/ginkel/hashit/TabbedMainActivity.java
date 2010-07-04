@@ -53,9 +53,9 @@ public class TabbedMainActivity extends TabActivity {
                 .getDrawable(R.drawable.padlock_tab));
         tabHost.addTab(tab);
 
-        /* Create settings tab */
+        /* Create parameters tab */
         tab = tabHost.newTabSpec("settings");
-        Intent hiddenAgenda = new Intent(this, SettingsActivity.class);
+        Intent hiddenAgenda = new Intent(this, ParametersActivity.class);
         hiddenAgenda.setAction(Constants.ACTION_SITE_PREFS);
         tab.setContent(hiddenAgenda);
         tab.setIndicator(resources.getText(R.string.Label_Settings), resources

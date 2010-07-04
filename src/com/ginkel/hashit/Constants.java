@@ -36,6 +36,9 @@ public interface Constants {
     final String STATE_SITE_TAG = "SiteTag";
     final String STATE_WELCOME_DISPLAYED = "WelcomeScreenDisplayed";
 
+    final String SITE_TAGS = "SiteTags";
+    final String ENABLE_HISTORY = "EnableHistory";
+
     final String ACTION_GLOBAL_PREFS = "com.ginkel.hashit.GLOBAL_PREFS";
     final String ACTION_SITE_PREFS = "com.ginkel.hashit.SITE_PREFS";
 
