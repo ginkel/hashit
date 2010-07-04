@@ -24,7 +24,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 
 /**
- * An {@link Adapter}, which never return any data.
+ * An {@link Adapter}, which never returns any data.
  * 
  * @author Thilo-Alexander Ginkel
  */
