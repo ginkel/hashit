@@ -106,7 +106,7 @@
 \nHash It! eases using unique passwords per web site without overloading your brain by generating site-specific passwords derived from a secret Master Key. You will only have to remember a single or few Master Keys whereas Hash It! will make sure that no two web sites will use the same password.
 \n
 \n<b>What\'s New?</b>
-\n<ul><li>Apps2SD support for Android 2.2</li>\n<li>Site Tag history (Android 1.6 and above)</li></ul>
+\n<ul><li>Apps2SD support for Android 2.2</li>\n<li>Site Tag history (Android 1.6 and above) [can be disabled in Settings]</li></ul>
 \n
 \n<b>Usage</b>
 \nFrom the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list. After calculating the Hash Word, the password will have been placed on the clipboard. Just hit the back button to return to the web site and paste the clipboard to the password entry field.
