@@ -25,15 +25,15 @@ public final class R {
     }
     public static final class id {
         public static final int Bump=0x7f070003;
-        public static final int Calculate=0x7f070005;
+        public static final int Calculate=0x7f070006;
         public static final int CheckBox_DoNotShowAgain=0x7f070009;
-        public static final int HashWord=0x7f070006;
-        public static final int MasterKey=0x7f070004;
+        public static final int HashWord=0x7f070007;
+        public static final int MasterKey=0x7f070005;
         public static final int MenuItemAbout=0x7f07000a;
         public static final int MenuItemSettings=0x7f07000b;
         public static final int SiteTag=0x7f070002;
-        public static final int TableLayout03=0x7f070008;
-        public static final int UsageInformation=0x7f070007;
+        public static final int TableLayout03=0x7f070004;
+        public static final int UsageInformation=0x7f070008;
         public static final int message=0x7f070001;
         public static final int scrollView=0x7f070000;
     }
