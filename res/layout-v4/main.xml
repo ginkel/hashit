@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ * This file is part of Hash It!.
+ * 
+ * Copyright (C) 2009-2010 Thilo-Alexander Ginkel.
+ * 
+ * Hash It! is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Hash It! is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="wrap_content">
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:paddingRight="6dip">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="Site Tag"></TextView>
+		<TableLayout android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:stretchColumns="0">
+			<TableRow android:layout_height="wrap_content"
+				android:layout_width="fill_parent" android:layout_gravity="fill">
+				<AutoCompleteTextView android:layout_height="wrap_content"
+					android:visibility="visible" android:inputType="textUri"
+					android:layout_width="fill_parent" android:id="@+id/SiteTag"></AutoCompleteTextView>
+				<Button android:layout_height="fill_parent" android:text="Bump"
+					android:layout_gravity="right" android:layout_width="fill_parent"
+					android:id="@+id/Bump"></Button>
+			</TableRow>
+		</TableLayout>
+		<TableLayout android:id="@+id/TableLayout03"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:stretchColumns="0">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="Master Key"></TextView>
+			<TableRow android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+				<EditText android:layout_height="wrap_content"
+					android:inputType="textPassword" android:layout_width="fill_parent"
+					android:id="@+id/MasterKey"></EditText>
+				<Button android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:text="Hash Password"
+					android:id="@+id/Calculate"></Button>
+			</TableRow>
+		</TableLayout>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="Hash Word"></TextView>
+		<EditText android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:id="@+id/HashWord"
+			android:inputType="none"></EditText>
+		<TableLayout android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:stretchColumns="0"
+			android:layout_marginTop="4px" android:id="@+id/UsageInformation">
+			<TableRow android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:padding="2px"
+				android:background="#191919">
+				<ImageView android:focusable="false"
+					android:src="@android:drawable/ic_dialog_info"
+					android:adjustViewBounds="true" android:clickable="false"
+					android:layout_gravity="left" android:layout_marginRight="4px"></ImageView>
+				<TextView android:text="Usage Information"
+					android:textStyle="bold" android:linksClickable="true"
+					android:layout_gravity="center_vertical|fill_horizontal"
+					android:layout_width="500px"></TextView>
+			</TableRow>
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="You have invoked Hash It! from your home screen. There is nothing wrong with that, but there is a more convenient method available, which will automatically pre-populate the Site Tag for you. From the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list."
+				android:layout_marginTop="4px"></TextView>
+		</TableLayout>
+	</LinearLayout>
+</ScrollView>
