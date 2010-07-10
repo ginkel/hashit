@@ -57,10 +57,12 @@ import android.widget.TextView.OnEditorActionListener;
 import com.ginkel.hashit.Constants.FocusRequest;
 import com.ginkel.hashit.util.HistoryManager;
 import com.ginkel.hashit.util.NullAdapter;
-import com.ginkel.hashit.util.VersionHelper;
 
 public class MainActivity extends Activity {
-    private AutoCompleteTextView siteTag;
+    private EditText siteTag;
+    private AutoCompleteTextView autoCompleteSiteTag;
+    private boolean ignoreTagChange;
+
     private EditText masterKey;
     private EditText hashWord;
     private Button hashPassword;
@@ -83,7 +85,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        siteTag = (AutoCompleteTextView) findViewById(R.id.SiteTag);
+        siteTag = (EditText) findViewById(R.id.SiteTag);
         siteTag.addTextChangedListener(new TextWatcher() {
 
             public void onTextChanged(CharSequence s, int start, int count, int after) {
@@ -93,9 +95,18 @@ public class MainActivity extends Activity {
             }
 
             public void afterTextChanged(Editable s) {
-                publishSiteTag(MainActivity.this, s.toString());
+                synchronized (MainActivity.this) {
+                    if (!ignoreTagChange) {
+                        publishSiteTag(MainActivity.this, s.toString());
+                    }
+                }
             }
         });
+
+        if (HashItApplication.SUPPORTS_HISTORY) {
+            // Android 1.6 and higher
+            autoCompleteSiteTag = (AutoCompleteTextView) siteTag;
+        }
 
         masterKey = (EditText) findViewById(R.id.MasterKey);
         masterKey.setOnEditorActionListener(new OnEditorActionListener() {
@@ -230,7 +241,9 @@ public class MainActivity extends Activity {
             switch (focus) {
                 case SITE_TAG:
                     siteTag.requestFocus();
-                    siteTag.dismissDropDown();
+                    if (HashItApplication.SUPPORTS_HISTORY) {
+                        autoCompleteSiteTag.dismissDropDown();
+                    }
                     break;
                 case MASTER_KEY:
                     masterKey.requestFocus();
@@ -238,20 +251,9 @@ public class MainActivity extends Activity {
             }
         }
 
-        /* Work around a bug in Android 1.5 */
-        if (VersionHelper.getSdkVersion() < 4) {
-            String tag = retrieveSiteTag(this);
-            if (tag != null) {
-                siteTag.setText(tag);
-                if (focus == FocusRequest.SITE_TAG && !restoredState) {
-                    siteTag.setSelection(tag.length(), tag.length());
-                }
-            }
-        }
-
         if (HashItApplication.SUPPORTS_HISTORY) {
             // Site Tag history
-            siteTag.setThreshold(1);
+            autoCompleteSiteTag.setThreshold(1);
             HistoryManager siteTagHistory;
             if ((siteTagHistory = HashItApplication.getApp(this).getHistoryManager()) == null) {
                 HashItApplication.getApp(this).setHistoryManager(
@@ -260,9 +262,10 @@ public class MainActivity extends Activity {
             }
             if (getBool(Constants.ENABLE_HISTORY, PreferenceManager
                     .getDefaultSharedPreferences(getBaseContext()), null, true)) {
-                siteTag.setAdapter(siteTagHistory.getAdapter());
+                autoCompleteSiteTag.setAdapter(siteTagHistory.getAdapter());
             } else {
-                siteTag.setAdapter(new NullAdapter<String>(this, R.layout.autocomplete_list));
+                autoCompleteSiteTag.setAdapter(new NullAdapter<String>(this,
+                        R.layout.autocomplete_list));
             }
         }
     }
@@ -330,13 +333,6 @@ public class MainActivity extends Activity {
      */
     private static void publishSiteTag(Context ctx, String siteTag) {
         HashItApplication.getApp(ctx).setSiteTag(siteTag);
-    }
-
-    /**
-     * A convenience method to retrieve the current site tag from the application.
-     */
-    private static String retrieveSiteTag(Context ctx) {
-        return HashItApplication.getApp(ctx).getSiteTag();
     }
 
     private void displayWelcomeScreen() {
@@ -423,6 +419,7 @@ public class MainActivity extends Activity {
                     && getBool(Constants.ENABLE_HISTORY, PreferenceManager
                             .getDefaultSharedPreferences(getBaseContext()), null, true)) {
                 HashItApplication.getApp(this).getHistoryManager().add(tag);
+                masterKey.requestFocus();
             }
 
             Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard,

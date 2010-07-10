@@ -106,7 +106,7 @@ public class PreferenceListStorage implements ListSharedPreferences {
             result.add(value);
         }
 
-        return Collections.unmodifiableList(result);
+        return result;
     }
 
     public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
