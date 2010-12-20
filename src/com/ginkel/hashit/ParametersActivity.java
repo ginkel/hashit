@@ -26,12 +26,12 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 
 /**
  * An {@link Activity} for the site-specific hash settings.
@@ -137,11 +137,26 @@ public class ParametersActivity extends PreferenceActivity {
                     }
                 });
 
+        // Security
+        PreferenceCategory security = new PreferenceCategory(this);
+        security.setTitle(R.string.Header_Security);
+        prefScreen.addPreference(security);
+        populateSecurityCategory(security, defaults);
+
         // disable mutually exclusive preferences
         disableConflictingPreferences(Constants.RESTRICT_DIGITS, DEPS_RESTRICT_DIGITS_ONLY);
         disableConflictingPreferences(Constants.RESTRICT_SPECIAL_CHARS, DEPS_RESTRICT_SPECIAL_CHARS);
 
         super.onResume();
+    }
+
+    protected void populateSecurityCategory(PreferenceCategory security, SharedPreferences defaults) {
+        Preference pref = addCheckBoxPreference(security, Constants.COMPATIBILITY_MODE,
+                R.string.CheckBox_CompatibilityMode, defaults, true);
+        if (defaults.getBoolean(Constants.COMPATIBILITY_MODE, true)) {
+            pref.setEnabled(false);
+            pref.setSummary(R.string.Summary_GlobalCompatibilityMode);
+        }
     }
 
     private ListPreference addListPreference(PreferenceCategory parent, String key, int labelResId,

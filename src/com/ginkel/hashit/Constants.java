@@ -39,6 +39,10 @@ public interface Constants {
     final String SITE_TAGS = "SiteTags";
     final String ENABLE_HISTORY = "EnableHistory";
 
+    final String COMPATIBILITY_MODE = "CompatibilityMode";
+    final String COMPATIBILITY_PREFIX = "compatible:";
+    final String SEED = "Seed";
+
     final String ACTION_GLOBAL_PREFS = "com.ginkel.hashit.GLOBAL_PREFS";
     final String ACTION_SITE_PREFS = "com.ginkel.hashit.SITE_PREFS";
 

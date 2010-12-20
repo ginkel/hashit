@@ -19,15 +19,21 @@
 
 package com.ginkel.hashit;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.preference.Preference.OnPreferenceClickListener;
+import android.view.View;
+import android.widget.EditText;
 
 import com.ginkel.hashit.util.HistoryManager;
+import com.ginkel.hashit.util.SeedHelper;
 
 /**
  * An activity for the global application preferences (including default hash parameters, which are
@@ -53,16 +59,16 @@ public class SettingsActivity extends ParametersActivity {
         super.onResume();
 
         final HistoryManager historyManager = HashItApplication.getApp(this).getHistoryManager();
-        PreferenceScreen prefScreen = getPreferenceScreen();
+        final PreferenceScreen prefScreen = getPreferenceScreen();
 
-        SharedPreferences defaults = PreferenceManager
+        final SharedPreferences defaults = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
 
         // History
-        PreferenceCategory history = new PreferenceCategory(this);
+        final PreferenceCategory history = new PreferenceCategory(this);
         history.setTitle(R.string.Header_History);
         prefScreen.addPreference(history);
-        Preference enableHistory = addCheckBoxPreference(history, Constants.ENABLE_HISTORY,
+        final Preference enableHistory = addCheckBoxPreference(history, Constants.ENABLE_HISTORY,
                 R.string.CheckBox_EnableHistory, defaults, HashItApplication.SUPPORTS_HISTORY);
         if (HashItApplication.SUPPORTS_HISTORY) {
             enableHistory.setSummary(R.string.Summary_EnableHistory);
@@ -70,8 +76,8 @@ public class SettingsActivity extends ParametersActivity {
             enableHistory.setSummary(R.string.Summary_EnableHistory_Cupcake);
             enableHistory.setEnabled(false);
         }
-        boolean enableClear = historyManager != null && !historyManager.isEmpty();
-        Preference clear = addActionPreference(history, R.string.Action_ClearHistory,
+        final boolean enableClear = historyManager != null && !historyManager.isEmpty();
+        final Preference clear = addActionPreference(history, R.string.Action_ClearHistory,
                 new OnPreferenceClickListener() {
 
                     public boolean onPreferenceClick(Preference pref) {
@@ -83,5 +89,58 @@ public class SettingsActivity extends ParametersActivity {
                 }, enableClear);
         clear.setSummary(enableClear ? R.string.Summary_ClearHistory
                 : R.string.Summary_ClearHistory_Empty);
+    }
+
+    @Override
+    protected void populateSecurityCategory(final PreferenceCategory security,
+            final SharedPreferences defaults) {
+        final Preference compatibilityMode = addCheckBoxPreference(security,
+                Constants.COMPATIBILITY_MODE, R.string.CheckBox_CompatibilityMode, defaults, true);
+        compatibilityMode.setSummary(R.string.Summary_CompatibilityMode);
+        compatibilityMode.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+            public boolean onPreferenceChange(final Preference pref, final Object newValue) {
+                if (Boolean.FALSE == newValue) {
+                    new AlertDialog.Builder(SettingsActivity.this)
+                            .setTitle(R.string.Title_SeedWarning)
+                            .setMessage(R.string.Message_SeedWarning)
+                            .setPositiveButton(android.R.string.ok, new DummyOnClickListener())
+                            .setIcon(R.drawable.icon).show();
+                }
+
+                return true;
+            }
+        });
+        final Preference setPrivateKey = addActionPreference(security, R.string.Action_ChangeSeed,
+                new OnPreferenceClickListener() {
+                    public boolean onPreferenceClick(Preference pref) {
+                        final View view = View.inflate(SettingsActivity.this, R.layout.seed_entry,
+                                null);
+
+                        final EditText seed = (EditText) view.findViewById(R.id.Edit_SeedEntry);
+                        seed.setText(SeedHelper.getSeed(defaults));
+
+                        new AlertDialog.Builder(SettingsActivity.this)
+                                .setTitle(R.string.Title_ChangeSeed)
+                                .setView(view)
+                                .setPositiveButton(android.R.string.ok,
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                SeedHelper.storeSeed(seed.getText().toString(),
+                                                        defaults);
+                                            }
+                                        })
+                                .setNegativeButton(android.R.string.cancel,
+                                        new DummyOnClickListener()).setCancelable(true)
+                                .setIcon(R.drawable.icon).show();
+                        return true;
+                    }
+                }, true);
+        setPrivateKey.setSummary(R.string.Summary_ChangeSeed);
+    }
+
+    private static class DummyOnClickListener implements DialogInterface.OnClickListener {
+        public void onClick(DialogInterface dialog, int which) {
+        }
     }
 }
