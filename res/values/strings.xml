@@ -153,4 +153,13 @@
 		<item>720</item>
 		<item>1440</item>
 	</string-array>
+	<string name="Header_Security">Security</string>
+	<string name="CheckBox_CompatibilityMode">Use Compatibility Mode</string>
+	<string name="Summary_CompatibilityMode">Disables Private Key mode, which is not compatible with the original Password Hasher Firefox extension.</string>
+	<string name="Action_ChangeSeed">Change Private Key</string>
+	<string name="Summary_ChangeSeed">Changes the private key. Note that this invalidates any passwords that were generated with the previous Private Key.</string>
+	<string name="Title_ChangeSeed"><b>Change Private Key</b></string>
+	<string name="Title_SeedWarning"><b>Disable Compatibility Mode</b></string>
+	<string name="Message_SeedWarning">You have chosen to disable Compatibility Mode. Note that this mode is only compatible with the Password Hasher Plus extension for Google Chrome, but <b>not</b> with the original Password Hasher extension for Firefox.\n\nIf you want this to work correctly, also make sure that you use the same Private Key on all your devices.</string>
+	<string name="Summary_GlobalCompatibilityMode">Compatibility Mode is globally enabled. Change this in the settings.</string>
 </resources>

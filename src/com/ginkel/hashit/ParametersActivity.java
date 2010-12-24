@@ -137,11 +137,26 @@ public class ParametersActivity extends PreferenceActivity {
                     }
                 });
 
+        // Security
+        PreferenceCategory security = new PreferenceCategory(this);
+        security.setTitle(R.string.Header_Security);
+        prefScreen.addPreference(security);
+        populateSecurityCategory(security, defaults);
+
         // disable mutually exclusive preferences
         disableConflictingPreferences(Constants.RESTRICT_DIGITS, DEPS_RESTRICT_DIGITS_ONLY);
         disableConflictingPreferences(Constants.RESTRICT_SPECIAL_CHARS, DEPS_RESTRICT_SPECIAL_CHARS);
 
         super.onResume();
+    }
+
+    protected void populateSecurityCategory(PreferenceCategory security, SharedPreferences defaults) {
+        Preference pref = addCheckBoxPreference(security, Constants.COMPATIBILITY_MODE,
+                R.string.CheckBox_CompatibilityMode, defaults, true);
+        if (defaults.getBoolean(Constants.COMPATIBILITY_MODE, true)) {
+            pref.setEnabled(false);
+            pref.setSummary(R.string.Summary_GlobalCompatibilityMode);
+        }
     }
 
     protected ListPreference addListPreference(PreferenceCategory parent, String key,

@@ -60,6 +60,7 @@ import android.widget.Toast;
 import com.ginkel.hashit.Constants.FocusRequest;
 import com.ginkel.hashit.util.HistoryManager;
 import com.ginkel.hashit.util.NullAdapter;
+import com.ginkel.hashit.util.SeedHelper;
 import com.ginkel.hashit.util.cache.MemoryCacheService;
 import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
 
@@ -409,7 +410,7 @@ public class MainActivity extends Activity {
     }
 
     private void hashPassword() {
-        final String tag = siteTag.getText().toString();
+        String tag = siteTag.getText().toString();
         final String key = masterKey.getText().toString();
 
         if (tag.length() == 0) {
@@ -424,6 +425,33 @@ public class MainActivity extends Activity {
             SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
             SharedPreferences defaults = PreferenceManager
                     .getDefaultSharedPreferences(getBaseContext());
+
+            boolean compatibility = tag.startsWith(Constants.COMPATIBILITY_PREFIX);
+            if (compatibility) {
+                tag = tag.substring(Constants.COMPATIBILITY_PREFIX.length());
+            } else {
+                /*
+                 * Assume compatibility mode to be the default iff some prefs have already been
+                 * stored for a given tag
+                 */
+                compatibility = prefs.getBoolean(Constants.COMPATIBILITY_MODE, prefs.getAll()
+                        .size() > 0)
+                        || defaults.getBoolean(Constants.COMPATIBILITY_MODE, true);
+            }
+
+            Log.i(Constants.LOG_TAG,
+                    String.format("Compatibility mode %s", compatibility ? "enabled" : "disabled"));
+
+            if (!compatibility) {
+                tag = PasswordHasher.hashPassword(SeedHelper.getSeed(defaults), tag, //
+                        24, //
+                        true, // require digits
+                        true, // require punctuation
+                        true, // require mixed case
+                        false, // no special chars
+                        false // only digits
+                        );
+            }
 
             String hash = PasswordHasher.hashPassword(tag, key, //
                     getStringAsInt(Constants.HASH_WORD_SIZE, prefs, defaults, 8), //
