@@ -127,4 +127,30 @@
 	<string name="Summary_ClearHistory_Empty">The Site Tag history is empty.</string>
 	<string name="CheckBox_AutoExit">Return to Browser</string>
 	<string name="Summary_AutoExit">Automatically return to the web browser after hashing the password (only works if Hash It! was invoked via the browser\'s Share feature).</string>
+	<string name="Label_CacheMasterKey">Cache Master Key</string>
+	<string name="Header_CacheDuration">Caching Duration</string>
+	<string-array name="Array_CacheDuration">
+		<item>Never</item>
+		<item>5 minutes</item>
+		<item>15 minutes</item>
+		<item>30 minutes</item>
+		<item>1 hour</item>
+		<item>2 hours</item>
+		<item>4 hours</item>
+		<item>8 hours</item>
+		<item>12 hours</item>
+		<item>24 hours</item>
+	</string-array>
+	<string-array name="Array_CacheDuration_Values">
+		<item>-1</item>
+		<item>5</item>
+		<item>15</item>
+		<item>30</item>
+		<item>60</item>
+		<item>120</item>
+		<item>240</item>
+		<item>480</item>
+		<item>720</item>
+		<item>1440</item>
+	</string-array>
 </resources>

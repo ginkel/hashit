@@ -21,13 +21,16 @@ package com.ginkel.hashit;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 
 import com.ginkel.hashit.util.HistoryManager;
+import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
 
 /**
  * An activity for the global application preferences (including default hash parameters, which are
@@ -58,10 +61,11 @@ public class SettingsActivity extends ParametersActivity {
         SharedPreferences defaults = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
 
-        // History
+        // Convenience
         PreferenceCategory convenience = new PreferenceCategory(this);
         convenience.setTitle(R.string.Header_Convenience);
         prefScreen.addPreference(convenience);
+
         Preference enableHistory = addCheckBoxPreference(convenience, Constants.ENABLE_HISTORY,
                 R.string.CheckBox_EnableHistory, defaults, HashItApplication.SUPPORTS_HISTORY);
         if (HashItApplication.SUPPORTS_HISTORY) {
@@ -70,6 +74,7 @@ public class SettingsActivity extends ParametersActivity {
             enableHistory.setSummary(R.string.Summary_EnableHistory_Cupcake);
             enableHistory.setEnabled(false);
         }
+
         boolean enableClear = historyManager != null && !historyManager.isEmpty();
         Preference clear = addActionPreference(convenience, R.string.Action_ClearHistory,
                 new OnPreferenceClickListener() {
@@ -83,8 +88,24 @@ public class SettingsActivity extends ParametersActivity {
                 }, enableClear);
         clear.setSummary(enableClear ? R.string.Summary_ClearHistory
                 : R.string.Summary_ClearHistory_Empty);
+
         Preference autoExit = addCheckBoxPreference(convenience, Constants.AUTO_EXIT,
                 R.string.CheckBox_AutoExit, defaults, false);
         autoExit.setSummary(R.string.Summary_AutoExit);
+
+        ListPreference cacheDuration = addListPreference(convenience, Constants.CACHE_DURATION,
+                R.string.Label_CacheMasterKey, R.string.Header_CacheDuration,
+                R.array.Array_CacheDuration, R.array.Array_CacheDuration_Values, defaults, -1);
+        cacheDuration.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                updateSummary((ListPreference) preference, newValue);
+                if (Integer.parseInt((String) newValue) <= 0) {
+                    MemoryCacheServiceImpl.stopService(SettingsActivity.this);
+                }
+                return true;
+            }
+        });
+        updateSummary(cacheDuration, cacheDuration.getValue());
     }
 }

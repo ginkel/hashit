@@ -9,6 +9,8 @@ package com.ginkel.hashit;
 
 public final class R {
     public static final class array {
+        public static final int Array_CacheDuration=0x7f050002;
+        public static final int Array_CacheDuration_Values=0x7f050003;
         public static final int Array_Sizes=0x7f050000;
         public static final int Array_Sizes_Values=0x7f050001;
     }
@@ -57,10 +59,12 @@ public final class R {
         public static final int CheckBox_MixedCase=0x7f04000c;
         public static final int CheckBox_NoSpecialChars=0x7f04000e;
         public static final int CheckBox_Punctuation=0x7f04000b;
+        public static final int Header_CacheDuration=0x7f040024;
         public static final int Header_Convenience=0x7f04001a;
         public static final int Header_HashWordSize=0x7f040010;
         public static final int Header_Requirements=0x7f040009;
         public static final int Header_Restrictions=0x7f04000d;
+        public static final int Label_CacheMasterKey=0x7f040023;
         public static final int Label_Password=0x7f040012;
         public static final int Label_Settings=0x7f040013;
         public static final int Label_Size=0x7f040011;

@@ -26,12 +26,12 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 
 /**
  * An {@link Activity} for the site-specific hash settings.
@@ -144,9 +144,9 @@ public class ParametersActivity extends PreferenceActivity {
         super.onResume();
     }
 
-    private ListPreference addListPreference(PreferenceCategory parent, String key, int labelResId,
-            int dialogTitleResId, int entriesResId, int valuesResId, SharedPreferences defaults,
-            int defaultValue) {
+    protected ListPreference addListPreference(PreferenceCategory parent, String key,
+            int labelResId, int dialogTitleResId, int entriesResId, int valuesResId,
+            SharedPreferences defaults, int defaultValue) {
         ListPreference pref = new ListPreference(this);
         pref.setKey(key);
         pref.setTitle(labelResId);
@@ -165,7 +165,7 @@ public class ParametersActivity extends PreferenceActivity {
     /**
      * Updates the summary associated with a list preference.
      */
-    private void updateSummary(ListPreference pref, Object value) {
+    protected void updateSummary(ListPreference pref, Object value) {
         CharSequence[] values = pref.getEntryValues();
         for (int ii = 0; ii < values.length; ii++) {
             if (String.valueOf(value).equals(values[ii])) {

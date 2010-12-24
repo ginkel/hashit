@@ -24,14 +24,17 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
 import android.text.Editable;
@@ -57,6 +60,8 @@ import android.widget.Toast;
 import com.ginkel.hashit.Constants.FocusRequest;
 import com.ginkel.hashit.util.HistoryManager;
 import com.ginkel.hashit.util.NullAdapter;
+import com.ginkel.hashit.util.cache.MemoryCacheService;
+import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
 
 public class MainActivity extends Activity {
     private EditText siteTag;
@@ -268,6 +273,26 @@ public class MainActivity extends Activity {
                         R.layout.autocomplete_list));
             }
         }
+
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+        if (getStringAsInt(Constants.CACHE_DURATION, prefs, null, -1) > 0) {
+            final Context ctx = getApplicationContext();
+            ctx.bindService(new Intent(ctx, MemoryCacheServiceImpl.class), new ServiceConnection() {
+
+                public void onServiceDisconnected(ComponentName name) {
+                }
+
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    final String cachedKey = ((MemoryCacheService.Binder) service).getService()
+                            .getEntry(Constants.MASTER_KEY_CACHE);
+
+                    if (cachedKey != null) {
+                        masterKey.setText(cachedKey);
+                    }
+                }
+            }, BIND_AUTO_CREATE);
+        }
     }
 
     @Override
@@ -320,12 +345,13 @@ public class MainActivity extends Activity {
 
     /**
      * Works around issue 2096.
-     * 
-     * @param def
      */
     private static int getStringAsInt(String key, SharedPreferences prefs,
             SharedPreferences defaults, int def) {
-        return Integer.valueOf(prefs.getString(key, defaults.getString(key, String.valueOf(def))));
+        return Integer.valueOf(prefs.getString(
+                key,
+                defaults != null ? defaults.getString(key, String.valueOf(def)) : String
+                        .valueOf(def)));
     }
 
     /**
@@ -383,8 +409,8 @@ public class MainActivity extends Activity {
     }
 
     private void hashPassword() {
-        String tag = siteTag.getText().toString();
-        String key = masterKey.getText().toString();
+        final String tag = siteTag.getText().toString();
+        final String key = masterKey.getText().toString();
 
         if (tag.length() == 0) {
             Toast.makeText(getBaseContext(), R.string.Message_SiteTagEmpty, Toast.LENGTH_LONG)
@@ -419,11 +445,26 @@ public class MainActivity extends Activity {
             }
 
             if (HashItApplication.SUPPORTS_HISTORY
-                    && getBool(Constants.ENABLE_HISTORY,
-                            PreferenceManager.getDefaultSharedPreferences(getBaseContext()), null,
-                            true)) {
+                    && defaults.getBoolean(Constants.ENABLE_HISTORY, true)) {
                 HashItApplication.getApp(this).getHistoryManager().add(tag);
                 masterKey.requestFocus();
+            }
+
+            final int cacheDuration = getStringAsInt(Constants.CACHE_DURATION, defaults, null, -1);
+            if (cacheDuration > 0) {
+                final Context ctx = getApplicationContext();
+                MemoryCacheServiceImpl.ensureStarted(ctx);
+                ctx.bindService(new Intent(ctx, MemoryCacheServiceImpl.class),
+                        new ServiceConnection() {
+
+                            public void onServiceDisconnected(ComponentName name) {
+                            }
+
+                            public void onServiceConnected(ComponentName name, IBinder service) {
+                                ((MemoryCacheService.Binder) service).getService().putEntry(
+                                        Constants.MASTER_KEY_CACHE, key, cacheDuration * 60 * 1000);
+                            }
+                        }, 0);
             }
 
             Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard,
