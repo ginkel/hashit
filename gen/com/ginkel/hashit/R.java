@@ -50,14 +50,15 @@ public final class R {
     public static final class string {
         public static final int Action_ClearHistory=0x7f04001e;
         public static final int AppName=0x7f040000;
+        public static final int CheckBox_AutoExit=0x7f040021;
         public static final int CheckBox_Digits=0x7f04000a;
         public static final int CheckBox_DigitsOnly=0x7f04000f;
         public static final int CheckBox_EnableHistory=0x7f04001b;
         public static final int CheckBox_MixedCase=0x7f04000c;
         public static final int CheckBox_NoSpecialChars=0x7f04000e;
         public static final int CheckBox_Punctuation=0x7f04000b;
+        public static final int Header_Convenience=0x7f04001a;
         public static final int Header_HashWordSize=0x7f040010;
-        public static final int Header_History=0x7f04001a;
         public static final int Header_Requirements=0x7f040009;
         public static final int Header_Restrictions=0x7f04000d;
         public static final int Label_Password=0x7f040012;
@@ -70,6 +71,7 @@ public final class R {
         public static final int Message_MasterKeyEmpty=0x7f040003;
         public static final int Message_SiteTagEmpty=0x7f040002;
         public static final int Message_SiteTagFailure=0x7f040004;
+        public static final int Summary_AutoExit=0x7f040022;
         public static final int Summary_ClearHistory=0x7f04001f;
         public static final int Summary_ClearHistory_Empty=0x7f040020;
         public static final int Summary_EnableHistory=0x7f04001c;

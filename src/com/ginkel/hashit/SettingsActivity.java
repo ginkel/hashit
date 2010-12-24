@@ -22,10 +22,10 @@ package com.ginkel.hashit;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.preference.Preference.OnPreferenceClickListener;
 
 import com.ginkel.hashit.util.HistoryManager;
 
@@ -59,10 +59,10 @@ public class SettingsActivity extends ParametersActivity {
                 .getDefaultSharedPreferences(getBaseContext());
 
         // History
-        PreferenceCategory history = new PreferenceCategory(this);
-        history.setTitle(R.string.Header_History);
-        prefScreen.addPreference(history);
-        Preference enableHistory = addCheckBoxPreference(history, Constants.ENABLE_HISTORY,
+        PreferenceCategory convenience = new PreferenceCategory(this);
+        convenience.setTitle(R.string.Header_Convenience);
+        prefScreen.addPreference(convenience);
+        Preference enableHistory = addCheckBoxPreference(convenience, Constants.ENABLE_HISTORY,
                 R.string.CheckBox_EnableHistory, defaults, HashItApplication.SUPPORTS_HISTORY);
         if (HashItApplication.SUPPORTS_HISTORY) {
             enableHistory.setSummary(R.string.Summary_EnableHistory);
@@ -71,7 +71,7 @@ public class SettingsActivity extends ParametersActivity {
             enableHistory.setEnabled(false);
         }
         boolean enableClear = historyManager != null && !historyManager.isEmpty();
-        Preference clear = addActionPreference(history, R.string.Action_ClearHistory,
+        Preference clear = addActionPreference(convenience, R.string.Action_ClearHistory,
                 new OnPreferenceClickListener() {
 
                     public boolean onPreferenceClick(Preference pref) {
@@ -83,5 +83,8 @@ public class SettingsActivity extends ParametersActivity {
                 }, enableClear);
         clear.setSummary(enableClear ? R.string.Summary_ClearHistory
                 : R.string.Summary_ClearHistory_Empty);
+        Preference autoExit = addCheckBoxPreference(convenience, Constants.AUTO_EXIT,
+                R.string.CheckBox_AutoExit, defaults, false);
+        autoExit.setSummary(R.string.Summary_AutoExit);
     }
 }

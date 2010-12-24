@@ -38,6 +38,7 @@ public interface Constants {
 
     final String SITE_TAGS = "SiteTags";
     final String ENABLE_HISTORY = "EnableHistory";
+    final String AUTO_EXIT = "AutoExit";
 
     final String ACTION_GLOBAL_PREFS = "com.ginkel.hashit.GLOBAL_PREFS";
     final String ACTION_SITE_PREFS = "com.ginkel.hashit.SITE_PREFS";

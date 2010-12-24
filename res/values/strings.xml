@@ -118,11 +118,13 @@
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
 	<string name="Title_Welcome"><b>Hash It! for Android</b>
 \n<small>Version 1.2.1</small></string>
-<string name="Header_History">History</string>
-<string name="CheckBox_EnableHistory">Enable History</string>
-<string name="Summary_EnableHistory">Keep a history of entered Site Tags.</string>
-<string name="Summary_EnableHistory_Cupcake">Requires Android 1.6 or higher.</string>
-<string name="Action_ClearHistory">Clear History</string>
-<string name="Summary_ClearHistory">Clear the Site Tag history.</string>
-<string name="Summary_ClearHistory_Empty">The Site Tag history is empty.</string>
+	<string name="Header_Convenience">Convenience</string>
+	<string name="CheckBox_EnableHistory">Enable History</string>
+	<string name="Summary_EnableHistory">Keep a history of entered Site Tags.</string>
+	<string name="Summary_EnableHistory_Cupcake">Requires Android 1.6 or higher.</string>
+	<string name="Action_ClearHistory">Clear History</string>
+	<string name="Summary_ClearHistory">Clear the Site Tag history.</string>
+	<string name="Summary_ClearHistory_Empty">The Site Tag history is empty.</string>
+	<string name="CheckBox_AutoExit">Return to Browser</string>
+	<string name="Summary_AutoExit">Automatically return to the web browser after hashing the password (only works if Hash It! was invoked via the browser\'s Share feature).</string>
 </resources>
