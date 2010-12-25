@@ -48,6 +48,7 @@ import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -118,7 +119,9 @@ public class MainActivity extends Activity {
         masterKey.setOnEditorActionListener(new OnEditorActionListener() {
 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                if (event != null
+                        && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getAction() == KeyEvent.ACTION_DOWN)
+                        || actionId == EditorInfo.IME_ACTION_NEXT) {
                     hashPassword();
                     return true;
                 }
