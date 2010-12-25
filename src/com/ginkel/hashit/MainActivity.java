@@ -117,12 +117,19 @@ public class MainActivity extends Activity {
 
         masterKey = (EditText) findViewById(R.id.MasterKey);
         masterKey.setOnEditorActionListener(new OnEditorActionListener() {
+            private long lastProcessedEvent;
 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (event != null
-                        && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER || event.getAction() == KeyEvent.ACTION_DOWN)
+                if (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
                         || actionId == EditorInfo.IME_ACTION_NEXT) {
-                    hashPassword();
+                    /*
+                     * the type and number of events depends on the soft keyboard in use, so
+                     * debounce the event and make sure that only the first one triggers an action
+                     */
+                    if (System.currentTimeMillis() - lastProcessedEvent > 1000) {
+                        hashPassword();
+                        lastProcessedEvent = System.currentTimeMillis();
+                    }
                     return true;
                 }
                 return false;
