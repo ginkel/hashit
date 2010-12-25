@@ -1,7 +1,7 @@
 /*
  * This file is part of Hash It!.
  * 
- * Copyright (C) 2009-2010 Thilo-Alexander Ginkel.
+ * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,8 +42,8 @@ public class HistoryManager {
                 Context.MODE_PRIVATE));
         this.prefsKey = prefsKey;
         List<String> list;
-        adapter = new ArrayAdapter<String>(context, textViewResourceId, list = prefs
-                .getStringList(prefsKey));
+        adapter = new ArrayAdapter<String>(context, textViewResourceId,
+                list = prefs.getStringList(prefsKey));
         listAdapter = new ArrayAdapterToListAdapter<String>(adapter);
         empty = list.isEmpty();
     }

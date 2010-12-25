@@ -1,7 +1,7 @@
 /*
  * This file is part of Hash It!.
  * 
- * Copyright (C) 2009-2010 Thilo-Alexander Ginkel.
+ * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
  * 
  * Based upon the Password Hasher JavaScript implementation by Steve Cooper.
  * Copyright (C) 2006 Steve Cooper.

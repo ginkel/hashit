@@ -1,7 +1,7 @@
 /*
  * This file is part of Hash It!.
  * 
- * Copyright (C) 2009-2010 Thilo-Alexander Ginkel.
+ * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,15 +31,17 @@ import android.util.Log;
 
 import com.ginkel.hashit.Constants;
 
+/**
+ * The implementation of the memory cache service declared in the {@link MemoryCacheService}
+ * interface.
+ * 
+ * @author Thilo-Alexander Ginkel
+ */
 public class MemoryCacheServiceImpl extends Service implements MemoryCacheService {
     private IBinder binder = new LocalBinder();
     private Map<String, CacheEntry<String>> cache = new HashMap<String, CacheEntry<String>>();
     private Handler handler;
 
-    /**
-     * Class for clients to access. Because we know this service always runs in the same process as
-     * its clients, we don't need to deal with IPC.
-     */
     public class LocalBinder extends android.os.Binder implements MemoryCacheService.Binder {
 
         public MemoryCacheService getService() {
@@ -145,10 +147,16 @@ public class MemoryCacheServiceImpl extends Service implements MemoryCacheServic
         }, retentionPeriod);
     }
 
+    /**
+     * Ensures that the service is running.
+     */
     public static void ensureStarted(Context ctx) {
         ctx.startService(new Intent(ctx, MemoryCacheServiceImpl.class));
     }
 
+    /**
+     * Forcefully terminates the service.
+     */
     public static void stopService(Context ctx) {
         ctx.stopService(new Intent(ctx, MemoryCacheServiceImpl.class));
     }

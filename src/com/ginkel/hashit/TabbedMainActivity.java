@@ -1,7 +1,7 @@
 /*
  * This file is part of Hash It!.
  * 
- * Copyright (C) 2009-2010 Thilo-Alexander Ginkel.
+ * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,8 +49,8 @@ public class TabbedMainActivity extends TabActivity {
         Intent mainIntent = new Intent(this, MainActivity.class);
         mainIntent.fillIn(getIntent(), Intent.FILL_IN_DATA | Intent.FILL_IN_ACTION);
         tab.setContent(mainIntent);
-        tab.setIndicator(resources.getText(R.string.Label_Password), resources
-                .getDrawable(R.drawable.padlock_tab));
+        tab.setIndicator(resources.getText(R.string.Label_Password),
+                resources.getDrawable(R.drawable.padlock_tab));
         tabHost.addTab(tab);
 
         /* Create parameters tab */
@@ -58,8 +58,8 @@ public class TabbedMainActivity extends TabActivity {
         Intent hiddenAgenda = new Intent(this, ParametersActivity.class);
         hiddenAgenda.setAction(Constants.ACTION_SITE_PREFS);
         tab.setContent(hiddenAgenda);
-        tab.setIndicator(resources.getText(R.string.Label_Settings), resources
-                .getDrawable(R.drawable.wrench_tab));
+        tab.setIndicator(resources.getText(R.string.Label_Settings),
+                resources.getDrawable(R.drawable.wrench_tab));
         tabHost.addTab(tab);
     }
 }

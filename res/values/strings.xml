@@ -2,7 +2,7 @@
 <!-- 
  * This file is part of Hash It!.
  * 
- * Copyright (C) 2009-2010 Thilo-Alexander Ginkel.
+ * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,9 +72,9 @@
 	</string-array>
 	<string name="Text_Introduction">Welcome to <b>Hash It!</b>!</string>
 	<string name="Text_About"><b>Hash It! for Android</b>
-\n<small>Version 1.2.1
+\n<small>Version 1.3.0
 \n
-\nCopyright © 2009-2010\nThilo-Alexander Ginkel.
+\nCopyright © 2009-2011\nThilo-Alexander Ginkel.
 \n
 \nPortions based upon Password Hasher by Steve Cooper.
 \nCopyright © 2006 Steve Cooper.
@@ -106,18 +106,18 @@
 \nHash It! eases using unique passwords per web site without overloading your brain by generating site-specific passwords derived from a secret Master Key. You will only have to remember a single or few Master Keys whereas Hash It! will make sure that no two web sites will use the same password.
 \n
 \n<b>What\'s New?</b>
-\n<ul><li>Fixed Force Close (UnsupportedOperationException) when hashing password with site tag history enabled</li>\n<li>Fixed Force Close (StackOverflowError) on Android 1.5 when switching tabs</li></ul>
+\n<ul><li>Added support for Password Hasher Plus &quot;Private Key&quot; extension</li>\n<li>Configurable Master Key caching (enable in settings)</li>\n<li>Automatically return to browser after hashing (enable in settings)</li>\n<li>Fixed duplicate hashing when using keyboard to trigger hash calculation</li>\n<li>Improved HTC Sense keyboard compatibility</li></ul>
 \n
 \n<b>Usage</b>
 \nFrom the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list. After calculating the Hash Word, the password will have been placed on the clipboard. Just hit the back button to return to the web site and paste the clipboard to the password entry field.
 \n
 \n<b>Compatibility</b>
-\nHash It! is designed to be compatible with the hashing algorithm used by the Password Hasher Firefox extension. 
+\nHash It! is designed to be compatible with the hashing algorithm used by the Password Hasher Firefox extension and supports the &quot;Private Key&quot; feature from the Password Hasher Plus extension for Google Chrome. 
 \n
 \n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
 	<string name="Title_Welcome"><b>Hash It! for Android</b>
-\n<small>Version 1.2.1</small></string>
+\n<small>Version 1.3.0</small></string>
 	<string name="Header_Convenience">Convenience</string>
 	<string name="CheckBox_EnableHistory">Enable History</string>
 	<string name="Summary_EnableHistory">Keep a history of entered Site Tags.</string>
