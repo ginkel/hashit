@@ -45,8 +45,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
@@ -54,9 +54,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.ginkel.hashit.Constants.FocusRequest;
 import com.ginkel.hashit.util.HistoryManager;
@@ -276,8 +276,8 @@ public class MainActivity extends Activity {
                         siteTagHistory = new HistoryManager(this, Constants.SITE_TAGS,
                                 R.layout.autocomplete_list));
             }
-            if (getBool(Constants.ENABLE_HISTORY,
-                    PreferenceManager.getDefaultSharedPreferences(getBaseContext()), null, true)) {
+            if (getBool(Constants.ENABLE_HISTORY, PreferenceManager
+                    .getDefaultSharedPreferences(getBaseContext()), null, true)) {
                 autoCompleteSiteTag.setAdapter(siteTagHistory.getAdapter());
             } else {
                 autoCompleteSiteTag.setAdapter(new NullAdapter<String>(this,
@@ -328,8 +328,8 @@ public class MainActivity extends Activity {
                 TextView textView = (TextView) view.findViewById(R.id.message);
                 textView.setMovementMethod(LinkMovementMethod.getInstance());
                 textView.setText(R.string.Text_About);
-                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_About)
-                        .setView(view).setIcon(R.drawable.icon).show();
+                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_About).setView(
+                        view).setIcon(R.drawable.icon).show();
                 return true;
             }
         });
@@ -359,10 +359,8 @@ public class MainActivity extends Activity {
      */
     private static int getStringAsInt(String key, SharedPreferences prefs,
             SharedPreferences defaults, int def) {
-        return Integer.valueOf(prefs.getString(
-                key,
-                defaults != null ? defaults.getString(key, String.valueOf(def)) : String
-                        .valueOf(def)));
+        return Integer.valueOf(prefs.getString(key, defaults != null ? defaults.getString(key,
+                String.valueOf(def)) : String.valueOf(def)));
     }
 
     /**
@@ -400,17 +398,14 @@ public class MainActivity extends Activity {
                  * version code
                  */
                 dontShowAgain.setEnabled(packageInfo != null);
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(R.string.Title_Welcome)
-                        .setView(view)
-                        .setPositiveButton(android.R.string.ok,
+                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_Welcome)
+                        .setView(view).setPositiveButton(android.R.string.ok,
                                 new DialogInterface.OnClickListener() {
 
                                     public void onClick(DialogInterface dialog, int which) {
                                         if (dontShowAgain.isChecked()) {
-                                            prefs.edit()
-                                                    .putInt(Constants.HIDE_WELCOME_SCREEN,
-                                                            versionCode).commit();
+                                            prefs.edit().putInt(Constants.HIDE_WELCOME_SCREEN,
+                                                    versionCode).commit();
                                         }
                                     }
                                 }).setIcon(R.drawable.icon).show();
@@ -420,8 +415,9 @@ public class MainActivity extends Activity {
     }
 
     private void hashPassword() {
-        String tag = siteTag.getText().toString();
+        final String originalTag = siteTag.getText().toString();
         final String key = masterKey.getText().toString();
+        String tag = originalTag;
 
         if (tag.length() == 0) {
             Toast.makeText(getBaseContext(), R.string.Message_SiteTagEmpty, Toast.LENGTH_LONG)
@@ -432,14 +428,16 @@ public class MainActivity extends Activity {
                     .show();
             masterKey.requestFocus();
         } else {
-            SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
             SharedPreferences defaults = PreferenceManager
                     .getDefaultSharedPreferences(getBaseContext());
 
             boolean compatibility = tag.startsWith(Constants.COMPATIBILITY_PREFIX);
             if (compatibility) {
                 tag = tag.substring(Constants.COMPATIBILITY_PREFIX.length());
-            } else {
+            }
+
+            SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
+            if (!compatibility) {
                 /*
                  * Assume compatibility mode to be the default iff some prefs have already been
                  * stored for a given tag
@@ -449,8 +447,8 @@ public class MainActivity extends Activity {
                         || defaults.getBoolean(Constants.COMPATIBILITY_MODE, true);
             }
 
-            Log.i(Constants.LOG_TAG,
-                    String.format("Compatibility mode %s", compatibility ? "enabled" : "disabled"));
+            Log.i(Constants.LOG_TAG, String.format("Compatibility mode %s",
+                    compatibility ? "enabled" : "disabled"));
 
             if (!compatibility) {
                 tag = PasswordHasher.hashPassword(SeedHelper.getSeed(defaults), tag, //
@@ -478,13 +476,13 @@ public class MainActivity extends Activity {
 
             if (originalHost != null) {
                 // save site tag for host name
-                defaults.edit().putString(String.format(Constants.SITE_MAP, originalHost), tag)
-                        .commit();
+                defaults.edit().putString(String.format(Constants.SITE_MAP, originalHost),
+                        originalTag).commit();
             }
 
             if (HashItApplication.SUPPORTS_HISTORY
                     && defaults.getBoolean(Constants.ENABLE_HISTORY, true)) {
-                HashItApplication.getApp(this).getHistoryManager().add(tag);
+                HashItApplication.getApp(this).getHistoryManager().add(originalTag);
                 masterKey.requestFocus();
             }
 
