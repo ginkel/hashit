@@ -21,7 +21,6 @@ package com.ginkel.hashit.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +93,7 @@ public class PreferenceListStorage implements ListSharedPreferences {
         String value = prefs.getString(key, null);
 
         if (value == null) {
-            return Collections.emptyList();
+            return new ArrayList<String>();
         } else if (!INTERNAL_LIST_SPECIAL_VALUE.equals(value)) {
             throw new IllegalArgumentException(String.format("%s is not a list value", key));
         }
