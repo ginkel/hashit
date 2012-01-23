@@ -45,8 +45,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
@@ -54,9 +54,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.ginkel.hashit.Constants.FocusRequest;
 import com.ginkel.hashit.util.HistoryManager;
@@ -276,8 +276,8 @@ public class MainActivity extends Activity {
                         siteTagHistory = new HistoryManager(this, Constants.SITE_TAGS,
                                 R.layout.autocomplete_list));
             }
-            if (getBool(Constants.ENABLE_HISTORY, PreferenceManager
-                    .getDefaultSharedPreferences(getBaseContext()), null, true)) {
+            if (getBool(Constants.ENABLE_HISTORY,
+                    PreferenceManager.getDefaultSharedPreferences(getBaseContext()), null, true)) {
                 autoCompleteSiteTag.setAdapter(siteTagHistory.getAdapter());
             } else {
                 autoCompleteSiteTag.setAdapter(new NullAdapter<String>(this,
@@ -328,8 +328,8 @@ public class MainActivity extends Activity {
                 TextView textView = (TextView) view.findViewById(R.id.message);
                 textView.setMovementMethod(LinkMovementMethod.getInstance());
                 textView.setText(R.string.Text_About);
-                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_About).setView(
-                        view).setIcon(R.drawable.icon).show();
+                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_About)
+                        .setView(view).setIcon(R.drawable.icon).show();
                 return true;
             }
         });
@@ -359,8 +359,10 @@ public class MainActivity extends Activity {
      */
     private static int getStringAsInt(String key, SharedPreferences prefs,
             SharedPreferences defaults, int def) {
-        return Integer.valueOf(prefs.getString(key, defaults != null ? defaults.getString(key,
-                String.valueOf(def)) : String.valueOf(def)));
+        return Integer.valueOf(prefs.getString(
+                key,
+                defaults != null ? defaults.getString(key, String.valueOf(def)) : String
+                        .valueOf(def)));
     }
 
     /**
@@ -398,18 +400,39 @@ public class MainActivity extends Activity {
                  * version code
                  */
                 dontShowAgain.setEnabled(packageInfo != null);
+                final WelcomeDialogListener welcomeListener = new WelcomeDialogListener(prefs,
+                        dontShowAgain, versionCode);
                 new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_Welcome)
-                        .setView(view).setPositiveButton(android.R.string.ok,
-                                new DialogInterface.OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (dontShowAgain.isChecked()) {
-                                            prefs.edit().putInt(Constants.HIDE_WELCOME_SCREEN,
-                                                    versionCode).commit();
-                                        }
-                                    }
-                                }).setIcon(R.drawable.icon).show();
+                        .setView(view).setPositiveButton(android.R.string.ok, welcomeListener)
+                        .setOnCancelListener(welcomeListener).setIcon(R.drawable.icon).show();
                 welcomeDisplayed = true;
+            }
+        }
+    }
+
+    private class WelcomeDialogListener implements DialogInterface.OnClickListener,
+            DialogInterface.OnCancelListener {
+        private final SharedPreferences prefs;
+        private final CheckBox dontShowAgain;
+        private final int versionCode;
+
+        WelcomeDialogListener(SharedPreferences prefs, CheckBox dontShowAgain, int versionCode) {
+            this.prefs = prefs;
+            this.dontShowAgain = dontShowAgain;
+            this.versionCode = versionCode;
+        }
+
+        public void onCancel(DialogInterface dialog) {
+            onDismissDialog();
+        }
+
+        public void onClick(DialogInterface dialog, int which) {
+            onDismissDialog();
+        }
+
+        private void onDismissDialog() {
+            if (dontShowAgain.isChecked()) {
+                prefs.edit().putInt(Constants.HIDE_WELCOME_SCREEN, versionCode).commit();
             }
         }
     }
@@ -447,8 +470,8 @@ public class MainActivity extends Activity {
                         || defaults.getBoolean(Constants.COMPATIBILITY_MODE, true);
             }
 
-            Log.i(Constants.LOG_TAG, String.format("Compatibility mode %s",
-                    compatibility ? "enabled" : "disabled"));
+            Log.i(Constants.LOG_TAG,
+                    String.format("Compatibility mode %s", compatibility ? "enabled" : "disabled"));
 
             if (!compatibility) {
                 tag = PasswordHasher.hashPassword(SeedHelper.getSeed(defaults), tag, //
@@ -476,8 +499,9 @@ public class MainActivity extends Activity {
 
             if (originalHost != null) {
                 // save site tag for host name
-                defaults.edit().putString(String.format(Constants.SITE_MAP, originalHost),
-                        originalTag).commit();
+                defaults.edit()
+                        .putString(String.format(Constants.SITE_MAP, originalHost), originalTag)
+                        .commit();
             }
 
             if (HashItApplication.SUPPORTS_HISTORY
