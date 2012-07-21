@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ * This file is part of Hash It!.
+ * 
+ * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
+ * Copyright (C) 2011-2012 TG Byte Software GmbH.
+ * 
+ * Hash It! is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Hash It! is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<resources>
+	<string name="AppName">Hash It!</string>
+	<string name="Message_HashCopiedToClipboard">密码已复制到剪贴板.
+	</string>
+	<string name="Message_SiteTagEmpty">站点标识不能为空.</string>
+	<string name="Message_MasterKeyEmpty">主密码不能为空.</string>
+	<string name="Message_SiteTagFailure">无法从URI获取立站点标识.</string>
+	<string name="Message_InvalidSiteTag">站点标识无效.</string>
+	<string name="MenuItem_Settings">设置</string>
+	<string name="MenuItem_About">关于</string>
+	<string name="Title_About">关于 Hash It!</string>
+	<string name="Header_Requirements">需求</string>
+	<string name="CheckBox_Digits">数字</string>
+	<string name="CheckBox_Punctuation">符号</string>
+	<string name="CheckBox_MixedCase">大小写</string>
+	<string name="Header_Restrictions">限制</string>
+	<string name="CheckBox_NoSpecialChars">无特殊符号</string>
+	<string name="CheckBox_DigitsOnly">仅数字</string>
+	<string name="Header_HashWordSize">密码长度</string>
+	<string name="Label_Size">密码长度</string>
+	<string name="Label_Password">密码</string>
+	<string name="Label_Settings">参数</string>
+	<string name="Title_Settings">Hash It! - 设置</string>
+	<string name="Title_Parameters">Hash It! - 参数</string>
+	<string-array name="Array_Sizes">
+		<item>4 个字符</item>
+		<item>6 个字符</item>
+		<item>8 个字符</item>
+		<item>10 个字符</item>
+		<item>12 个字符</item>
+		<item>14 个字符</item>
+		<item>16 个字符</item>
+		<item>18 个字符</item>
+		<item>20 个字符</item>
+		<item>22 个字符</item>
+		<item>24 个字符</item>
+		<item>26 个字符</item>
+	</string-array>
+	<string-array name="Array_Sizes_Values">
+		<item>4</item>
+		<item>6</item>
+		<item>8</item>
+		<item>10</item>
+		<item>12</item>
+		<item>14</item>
+		<item>16</item>
+		<item>18</item>
+		<item>20</item>
+		<item>22</item>
+		<item>24</item>
+		<item>26</item>
+	</string-array>
+	<string name="Text_Introduction">欢迎使用 <b>Hash It!</b>!</string>
+	<string name="Text_About"><b>Hash It! for Android</b>
+\n<small>Version 1.3.2
+\n
+\nCopyright © 2009-2011\nThilo-Alexander Ginkel.
+\nCopyright © 2011-2012 TG Byte Software GmbH.
+\n
+\nPortions based upon Password Hasher by Steve Cooper.
+\nCopyright © 2006 Steve Cooper.
+\n
+\nThis product includes software developed by <a href="http://www.apache.org/">The Apache Software Foundation</a>.
+\nCopyright © 2002-2009 The Apache Software Foundation.
+\n
+\nHash It! eases using unique passwords per web site without overloading your brain. It is compatible with the hashing algorithm used by the Password Hasher Firefox extension. 
+\n
+\n<b>Further Information / Changelog</b>
+\n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a>
+\n
+\n<b>Found a bug or would like to provide feedback?</b>
+\n<a href="mailto:android@ginkel.com">android@ginkel.com</a>
+\n</small>
+\n<b>License</b>
+\n<small>Hash It! is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+\n
+\nHash It! is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the <a href="http://www.gnu.org/licenses/">GNU General Public License</a> for more details.
+\n</small>
+\n<b>Apache Commons Codec</b>
+\n<small>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+\n
+\nYou may obtain a copy of the License at: <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+\n
+\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</small>\n</string>
+	<string name="Text_Welcome"><b>Welcome to Hash It!</b>
+\n<small>
+\nHash It! eases using unique passwords per web site without overloading your brain by generating site-specific passwords derived from a secret Master Key. You will only have to remember a single or few Master Keys whereas Hash It! will make sure that no two web sites will use the same password.
+\n
+\n<b>What\'s New?</b>
+\n<ul><li>Improved &quot;Welcome&quot; dialog usability</li></ul>
+\n
+\n<b>Usage</b>
+\nFrom the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list. After calculating the Hash Word, the password will have been placed on the clipboard. Just hit the back button to return to the web site and paste the clipboard to the password entry field.
+\n
+\n<b>Compatibility</b>
+\nHash It! is designed to be compatible with the hashing algorithm used by the Password Hasher Firefox extension and supports the &quot;Private Key&quot; feature from the Password Hasher Plus extension for Google Chrome. 
+\n
+\n<b>Further Information / Changelog</b>
+\n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
+	<string name="Title_Welcome"><b>Hash It! for Android</b>
+\n<small>Version 1.3.3</small></string>
+	<string name="Header_Convenience">方便性</string>
+	<string name="CheckBox_EnableHistory">启用历史功能</string>
+	<string name="Summary_EnableHistory">保存使用过的站点标识.</string>
+	<string name="Summary_EnableHistory_Cupcake">需要 Android 1.6 以上版本.</string>
+	<string name="Action_ClearHistory">清除历史</string>
+	<string name="Summary_ClearHistory">清除使用过的站点标识.</string>
+	<string name="Summary_ClearHistory_Empty">站点标识记录为空.</string>
+	<string name="CheckBox_AutoExit">返回浏览器</string>
+	<string name="Summary_AutoExit">Hash 密码后自动返回浏览器 (仅通过浏览器调用时有效).</string>
+	<string name="Label_CacheMasterKey">缓存主密码</string>
+	<string name="Header_CacheDuration">缓存时长</string>
+	<string-array name="Array_CacheDuration">
+		<item>从不</item>
+		<item>5 分钟</item>
+		<item>15 分钟</item>
+		<item>30 分钟</item>
+		<item>1 小时</item>
+		<item>2 小时</item>
+		<item>4 小时</item>
+		<item>8 小时</item>
+		<item>12 小时</item>
+		<item>24 小时</item>
+	</string-array>
+	<string-array name="Array_CacheDuration_Values">
+		<item>-1</item>
+		<item>5</item>
+		<item>15</item>
+		<item>30</item>
+		<item>60</item>
+		<item>120</item>
+		<item>240</item>
+		<item>480</item>
+		<item>720</item>
+		<item>1440</item>
+	</string-array>
+	<string name="Header_Security">安全</string>
+	<string name="CheckBox_CompatibilityMode">使用兼容模式</string>
+	<string name="Summary_CompatibilityMode">兼容 Firefox扩展 Password Hasher.</string>
+	<string name="Action_ChangeSeed">更改私钥</string>
+	<string name="Summary_ChangeSeed">注意: 更改将使以前生成的密码无效.</string>
+	<string name="Title_ChangeSeed"><b>更改私钥</b></string>
+	<string name="Title_SeedWarning"><b>禁止兼容模式</b></string>
+	<string name="Message_SeedWarning">你选择禁止兼容模式. 本软件将只兼容 Google Chrome 的 Password Hasher Plus 扩展, 并且<b>不</b> 兼容 Firefox 扩展 Password Hasher.\n\n请确认您的所有设备上使用了相同的私钥.</string>
+	<string name="Summary_GlobalCompatibilityMode">兼容模式已启用,请到设置中关闭.</string>
+</resources>

@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import android.content.SharedPreferences;
 
@@ -208,5 +209,20 @@ public class PreferenceListStorage implements ListSharedPreferences {
         public Editor remove(String key) {
             return editor.remove(key);
         }
+
+        public void apply() {
+            // TODO Auto-generated method stub
+
+        }
+
+        public Editor putStringSet(String arg0, Set<String> arg1) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+    }
+
+    public Set<String> getStringSet(String arg0, Set<String> arg1) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
