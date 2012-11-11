@@ -418,12 +418,7 @@ public class MainActivity extends Activity {
 
             SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
             if (!compatibility) {
-                /*
-                 * Assume compatibility mode to be the default iff some prefs have already been
-                 * stored for a given tag
-                 */
-                compatibility = prefs.getBoolean(Constants.COMPATIBILITY_MODE, prefs.getAll()
-                        .size() > 0)
+                compatibility = prefs.getBoolean(Constants.COMPATIBILITY_MODE, false)
                         || defaults.getBoolean(Constants.COMPATIBILITY_MODE, true);
             }
 
