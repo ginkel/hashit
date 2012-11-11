@@ -21,10 +21,7 @@ package com.ginkel.hashit;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Build;
-
 import com.ginkel.hashit.util.HistoryManager;
-import com.ginkel.hashit.util.VersionHelper;
 
 /**
  * The Hash It! Application. Used to sync the site tag between different activities.
@@ -34,8 +31,6 @@ import com.ginkel.hashit.util.VersionHelper;
 public class HashItApplication extends Application {
     private String siteTag;
     private HistoryManager siteTagHistory;
-
-    public static final boolean SUPPORTS_HISTORY = VersionHelper.getSdkVersion() >= Build.VERSION_CODES.DONUT;
 
     public static HashItApplication getApp(Context ctx) {
         return (HashItApplication) ctx.getApplicationContext();

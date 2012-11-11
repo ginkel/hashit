@@ -23,16 +23,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
+import android.preference.*;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.view.View;
 import android.widget.EditText;
-
 import com.ginkel.hashit.util.HistoryManager;
 import com.ginkel.hashit.util.SeedHelper;
 import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
@@ -40,7 +35,7 @@ import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
 /**
  * An activity for the global application preferences (including default hash parameters, which are
  * inherited from {@link ParametersActivity}).
- * 
+ *
  * @author Thilo-Alexander Ginkel
  */
 public class SettingsActivity extends ParametersActivity {
@@ -73,13 +68,8 @@ public class SettingsActivity extends ParametersActivity {
 
         final Preference enableHistory = addCheckBoxPreference(convenience,
                 Constants.ENABLE_HISTORY, R.string.CheckBox_EnableHistory, defaults,
-                HashItApplication.SUPPORTS_HISTORY);
-        if (HashItApplication.SUPPORTS_HISTORY) {
-            enableHistory.setSummary(R.string.Summary_EnableHistory);
-        } else {
-            enableHistory.setSummary(R.string.Summary_EnableHistory_Cupcake);
-            enableHistory.setEnabled(false);
-        }
+                true);
+        enableHistory.setSummary(R.string.Summary_EnableHistory);
 
         final boolean enableClear = historyManager != null && !historyManager.isEmpty();
         final Preference clear = addActionPreference(convenience, R.string.Action_ClearHistory,
@@ -118,7 +108,7 @@ public class SettingsActivity extends ParametersActivity {
 
     @Override
     protected void populateSecurityCategory(final PreferenceCategory security,
-            final SharedPreferences defaults) {
+                                            final SharedPreferences defaults) {
         final Preference compatibilityMode = addCheckBoxPreference(security,
                 Constants.COMPATIBILITY_MODE, R.string.CheckBox_CompatibilityMode, defaults, true);
         compatibilityMode.setSummary(R.string.Summary_CompatibilityMode);

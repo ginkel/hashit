@@ -46,7 +46,7 @@
 			android:label="Hash It! Master Key Cache" android:icon="@drawable/icon"
 			android:exported="false"></service>
 	</application>
-	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="8" />
+	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="8" />
 	<supports-screens android:smallScreens="true"
 		android:normalScreens="true" android:largeScreens="true"
 		android:anyDensity="true" />

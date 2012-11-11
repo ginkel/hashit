@@ -19,17 +19,9 @@
 
 package com.ginkel.hashit;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
@@ -41,29 +33,22 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
-
 import com.ginkel.hashit.Constants.FocusRequest;
 import com.ginkel.hashit.util.HistoryManager;
 import com.ginkel.hashit.util.NullAdapter;
 import com.ginkel.hashit.util.SeedHelper;
 import com.ginkel.hashit.util.cache.MemoryCacheService;
 import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends Activity {
     private EditText siteTag;
@@ -82,11 +67,15 @@ public class MainActivity extends Activity {
 
     private FocusRequest focus = FocusRequest.NONE;
 
-    /** A pattern used to extract a site tag from a host name */
+    /**
+     * A pattern used to extract a site tag from a host name
+     */
     private static final Pattern SITE_PATTERN = Pattern
             .compile("^.*?([\\w\\d\\-]+)\\.((co|com|net|org|ac)\\.)?\\w+$");
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,10 +99,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        if (HashItApplication.SUPPORTS_HISTORY) {
-            // Android 1.6 and higher
-            autoCompleteSiteTag = (AutoCompleteTextView) siteTag;
-        }
+        autoCompleteSiteTag = (AutoCompleteTextView) siteTag;
 
         masterKey = (EditText) findViewById(R.id.MasterKey);
         masterKey.setOnEditorActionListener(new OnEditorActionListener() {
@@ -257,9 +243,7 @@ public class MainActivity extends Activity {
             switch (focus) {
                 case SITE_TAG:
                     siteTag.requestFocus();
-                    if (HashItApplication.SUPPORTS_HISTORY) {
-                        autoCompleteSiteTag.dismissDropDown();
-                    }
+                    autoCompleteSiteTag.dismissDropDown();
                     break;
                 case MASTER_KEY:
                     masterKey.requestFocus();
@@ -267,22 +251,20 @@ public class MainActivity extends Activity {
             }
         }
 
-        if (HashItApplication.SUPPORTS_HISTORY) {
-            // Site Tag history
-            autoCompleteSiteTag.setThreshold(1);
-            HistoryManager siteTagHistory;
-            if ((siteTagHistory = HashItApplication.getApp(this).getHistoryManager()) == null) {
-                HashItApplication.getApp(this).setHistoryManager(
-                        siteTagHistory = new HistoryManager(this, Constants.SITE_TAGS,
-                                R.layout.autocomplete_list));
-            }
-            if (getBool(Constants.ENABLE_HISTORY, PreferenceManager
-                    .getDefaultSharedPreferences(getBaseContext()), null, true)) {
-                autoCompleteSiteTag.setAdapter(siteTagHistory.getAdapter());
-            } else {
-                autoCompleteSiteTag.setAdapter(new NullAdapter<String>(this,
-                        R.layout.autocomplete_list));
-            }
+        // Site Tag history
+        autoCompleteSiteTag.setThreshold(1);
+        HistoryManager siteTagHistory;
+        if ((siteTagHistory = HashItApplication.getApp(this).getHistoryManager()) == null) {
+            HashItApplication.getApp(this).setHistoryManager(
+                    siteTagHistory = new HistoryManager(this, Constants.SITE_TAGS,
+                            R.layout.autocomplete_list));
+        }
+        if (getBool(Constants.ENABLE_HISTORY, PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext()), null, true)) {
+            autoCompleteSiteTag.setAdapter(siteTagHistory.getAdapter());
+        } else {
+            autoCompleteSiteTag.setAdapter(new NullAdapter<String>(this,
+                    R.layout.autocomplete_list));
         }
 
         final SharedPreferences prefs = PreferenceManager
@@ -310,10 +292,8 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
 
-        if (HashItApplication.SUPPORTS_HISTORY) {
-            // back up history
-            HashItApplication.getApp(this).getHistoryManager().save();
-        }
+        // back up history
+        HashItApplication.getApp(this).getHistoryManager().save();
     }
 
     @Override
@@ -350,7 +330,7 @@ public class MainActivity extends Activity {
     }
 
     private static boolean getBool(String key, SharedPreferences prefs, SharedPreferences defaults,
-            boolean def) {
+                                   boolean def) {
         return prefs.getBoolean(key, defaults != null ? defaults.getBoolean(key, def) : def);
     }
 
@@ -358,7 +338,7 @@ public class MainActivity extends Activity {
      * Works around issue 2096.
      */
     private static int getStringAsInt(String key, SharedPreferences prefs,
-            SharedPreferences defaults, int def) {
+                                      SharedPreferences defaults, int def) {
         return Integer.valueOf(prefs.getString(key, defaults != null ? defaults.getString(key,
                 String.valueOf(def)) : String.valueOf(def)));
     }
@@ -400,15 +380,15 @@ public class MainActivity extends Activity {
                 dontShowAgain.setEnabled(packageInfo != null);
                 new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_Welcome)
                         .setView(view).setPositiveButton(android.R.string.ok,
-                                new DialogInterface.OnClickListener() {
+                        new DialogInterface.OnClickListener() {
 
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (dontShowAgain.isChecked()) {
-                                            prefs.edit().putInt(Constants.HIDE_WELCOME_SCREEN,
-                                                    versionCode).commit();
-                                        }
-                                    }
-                                }).setIcon(R.drawable.icon).show();
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (dontShowAgain.isChecked()) {
+                                    prefs.edit().putInt(Constants.HIDE_WELCOME_SCREEN,
+                                            versionCode).commit();
+                                }
+                            }
+                        }).setIcon(R.drawable.icon).show();
                 welcomeDisplayed = true;
             }
         }
@@ -458,7 +438,7 @@ public class MainActivity extends Activity {
                         true, // require mixed case
                         false, // no special chars
                         false // only digits
-                        );
+                );
             }
 
             String hash = PasswordHasher.hashPassword(tag, key, //
@@ -480,8 +460,7 @@ public class MainActivity extends Activity {
                         originalTag).commit();
             }
 
-            if (HashItApplication.SUPPORTS_HISTORY
-                    && defaults.getBoolean(Constants.ENABLE_HISTORY, true)) {
+            if (defaults.getBoolean(Constants.ENABLE_HISTORY, true)) {
                 HashItApplication.getApp(this).getHistoryManager().add(originalTag);
                 masterKey.requestFocus();
             }
