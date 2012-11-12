@@ -3,6 +3,7 @@
  * This file is part of Hash It!.
  * 
  * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
+ * Copyright (C) 2011-2012 TG Byte Software GmbH.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +22,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ginkel</groupId>
     <artifactId>hashit</artifactId>
-    <version>1.3.2</version>
+    <version>1.3.3</version>
     <packaging>apk</packaging>
     <name>Hashit</name>
 
@@ -45,8 +46,8 @@
         <plugins>
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>maven-android-plugin</artifactId>
-                <version>2.8.3</version>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>3.0.2</version>
                 <configuration>
                     <sdk>
                         <platform>8</platform>
@@ -73,38 +74,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <!-- version 2.3 defaults to java 1.5, so no further configuration needed-->
                 <version>2.3</version>
-            </plugin>
-            <plugin>
-                <groupId>com.pyx4me</groupId>
-                <artifactId>proguard-maven-plugin</artifactId>
-                <version>2.0.4</version>
-                <executions>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>proguard</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <injar>android-classes</injar>
-                    <libs>
-                        <lib>${java.home}/lib/rt.jar</lib>
-                    </libs>
-                    <obfuscate>false</obfuscate>
-                    <options>
-                        <option>-keep public class * extends android.app.Activity</option>
-                        <option>-keep public class * extends android.app.Application</option>
-                        <option>-keep public class * extends android.app.Service</option>
-                        <option>-keep public class * extends android.content.BroadcastReceiver</option>
-                        <option>-keep public class * extends android.content.ContentProvider</option>
-                        <option>-dontskipnonpubliclibraryclasses</option>
-                        <option>-dontoptimize</option>
-                        <option>-printmapping map.txt</option>
-                        <option>-printseeds seed.txt</option>
-                        <option>-ignorewarnings</option>
-                    </options>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -141,9 +110,12 @@
                     </plugin>
                     <plugin>
                         <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                        <artifactId>maven-android-plugin</artifactId>
+                        <artifactId>android-maven-plugin</artifactId>
                         <inherited>true</inherited>
                         <configuration>
+                            <proguard>
+                                <skip>false</skip>
+                            </proguard>
                             <sign>
                                 <debug>false</debug>
                             </sign>

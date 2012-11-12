@@ -3,6 +3,7 @@
  * This file is part of Hash It!.
  * 
  * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
+ * Copyright (C) 2011-2012 TG Byte Software GmbH.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +18,27 @@
  * You should have received a copy of the GNU General Public License
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/scrollView" android:layout_width="fill_parent"
-	android:layout_height="wrap_content" android:paddingTop="2dip"
-	android:paddingBottom="12dip" android:paddingLeft="14dip"
-	android:paddingRight="10dip">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-		<TextView android:id="@+id/message" style="?android:attr/textAppearanceMedium"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:padding="5dip" android:linksClickable="true" />
-		<CheckBox android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:id="@+id/CheckBox_DoNotShowAgain"
-			android:text="Do not show again"></CheckBox>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/scrollView" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:paddingTop="2dip"
+		android:paddingBottom="5dip" android:paddingLeft="14dip"
+		android:paddingRight="10dip" android:layout_weight="1">
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+			<TextView android:id="@+id/message" style="?android:attr/textAppearanceMedium"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:padding="5dip" android:linksClickable="true"/>
+		</LinearLayout>
+	</ScrollView>
+	<LinearLayout android:orientation="vertical" android:gravity="bottom"
+	    android:layout_width="fill_parent" android:layout_height="wrap_content"
+	    android:paddingLeft="14dip" android:paddingRight="10dip"
+	    android:paddingBottom="5dip">
+		<CheckBox android:layout_width="fill_parent" android:layout_height="wrap_content"
+		    android:id="@+id/CheckBox_DoNotShowAgain" android:text="Do not show again"/>
 	</LinearLayout>
-</ScrollView>
+</LinearLayout>

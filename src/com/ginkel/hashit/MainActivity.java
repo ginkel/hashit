@@ -2,6 +2,7 @@
  * This file is part of Hash It!.
  * 
  * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
+ * Copyright (C) 2011-2012 TG Byte Software GmbH.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +35,7 @@ import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.*;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
@@ -307,8 +309,8 @@ public class MainActivity extends Activity {
                 TextView textView = (TextView) view.findViewById(R.id.message);
                 textView.setMovementMethod(LinkMovementMethod.getInstance());
                 textView.setText(R.string.Text_About);
-                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_About).setView(
-                        view).setIcon(R.drawable.icon).show();
+                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_About)
+                        .setView(view).setIcon(R.drawable.icon).show();
                 return true;
             }
         });
@@ -372,18 +374,39 @@ public class MainActivity extends Activity {
                  * version code
                  */
                 dontShowAgain.setEnabled(packageInfo != null);
+                final WelcomeDialogListener welcomeListener = new WelcomeDialogListener(prefs,
+                        dontShowAgain, versionCode);
                 new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_Welcome)
-                        .setView(view).setPositiveButton(android.R.string.ok,
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (dontShowAgain.isChecked()) {
-                                    prefs.edit().putInt(Constants.HIDE_WELCOME_SCREEN,
-                                            versionCode).commit();
-                                }
-                            }
-                        }).setIcon(R.drawable.icon).show();
+                        .setView(view).setPositiveButton(android.R.string.ok, welcomeListener)
+                        .setOnCancelListener(welcomeListener).setIcon(R.drawable.icon).show();
                 welcomeDisplayed = true;
+            }
+        }
+    }
+
+    private class WelcomeDialogListener implements DialogInterface.OnClickListener,
+            DialogInterface.OnCancelListener {
+        private final SharedPreferences prefs;
+        private final CheckBox dontShowAgain;
+        private final int versionCode;
+
+        WelcomeDialogListener(SharedPreferences prefs, CheckBox dontShowAgain, int versionCode) {
+            this.prefs = prefs;
+            this.dontShowAgain = dontShowAgain;
+            this.versionCode = versionCode;
+        }
+
+        public void onCancel(DialogInterface dialog) {
+            onDismissDialog();
+        }
+
+        public void onClick(DialogInterface dialog, int which) {
+            onDismissDialog();
+        }
+
+        private void onDismissDialog() {
+            if (dontShowAgain.isChecked()) {
+                prefs.edit().putInt(Constants.HIDE_WELCOME_SCREEN, versionCode).commit();
             }
         }
     }
@@ -413,12 +436,12 @@ public class MainActivity extends Activity {
             SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
             if (!compatibility) {
                 compatibility = prefs.getBoolean(Constants.COMPATIBILITY_MODE,
-                        prefs.getInt(Constants.APP_VERSION, -1) < 17 && prefs.getAll().size() > 0)
+                        prefs.getInt(Constants.APP_VERSION, -1) < 18 && prefs.getAll().size() > 0)
                         || defaults.getBoolean(Constants.COMPATIBILITY_MODE, true);
             }
 
-            Log.i(Constants.LOG_TAG, String.format("Compatibility mode %s",
-                    compatibility ? "enabled" : "disabled"));
+            Log.i(Constants.LOG_TAG,
+                    String.format("Compatibility mode %s", compatibility ? "enabled" : "disabled"));
 
             if (!compatibility) {
                 tag = PasswordHasher.hashPassword(SeedHelper.getSeed(defaults), tag, //
@@ -446,8 +469,9 @@ public class MainActivity extends Activity {
 
             if (originalHost != null) {
                 // save site tag for host name
-                defaults.edit().putString(String.format(Constants.SITE_MAP, originalHost),
-                        originalTag).commit();
+                defaults.edit()
+                        .putString(String.format(Constants.SITE_MAP, originalHost), originalTag)
+                        .commit();
             }
 
             if (defaults.getBoolean(Constants.ENABLE_HISTORY, true)) {
