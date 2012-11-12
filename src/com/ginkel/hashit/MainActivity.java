@@ -436,7 +436,7 @@ public class MainActivity extends Activity {
             SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
             if (!compatibility) {
                 compatibility = prefs.getBoolean(Constants.COMPATIBILITY_MODE,
-                        prefs.getInt(Constants.APP_VERSION, -1) < 18 && prefs.getAll().size() > 0)
+                        prefs.getInt(Constants.APP_VERSION, -1) < 19 && prefs.getAll().size() > 0)
                         || defaults.getBoolean(Constants.COMPATIBILITY_MODE, true);
             }
 
