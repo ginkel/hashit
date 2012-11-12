@@ -21,11 +21,14 @@ package com.ginkel.hashit;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.util.Log;
 import com.ginkel.hashit.util.HistoryManager;
 
 /**
  * The Hash It! Application. Used to sync the site tag between different activities.
- * 
+ *
  * @author Thilo-Alexander Ginkel
  */
 public class HashItApplication extends Application {
@@ -50,5 +53,19 @@ public class HashItApplication extends Application {
 
     protected void setHistoryManager(HistoryManager historyManager) {
         siteTagHistory = historyManager;
+    }
+
+    protected PackageInfo getPackageInfo() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(Constants.LOG_TAG, "Could not retrieve package info", e);
+        }
+        return null;
+    }
+
+    protected int getVersion() {
+        PackageInfo packageInfo = getPackageInfo();
+        return packageInfo == null ? Integer.MAX_VALUE : packageInfo.versionCode;
     }
 }

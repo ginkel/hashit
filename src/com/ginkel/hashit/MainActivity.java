@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -355,13 +354,8 @@ public class MainActivity extends Activity {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getBaseContext());
 
-            Integer hideUpToVersion = prefs.getInt(Constants.HIDE_WELCOME_SCREEN, 0);
-            PackageInfo packageInfo = null;
-            try {
-                packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            } catch (NameNotFoundException e) {
-                Log.e(Constants.LOG_TAG, "Could not retrieve package info", e);
-            }
+            final Integer hideUpToVersion = prefs.getInt(Constants.HIDE_WELCOME_SCREEN, 0);
+            final PackageInfo packageInfo = HashItApplication.getApp(this).getPackageInfo();
             final int versionCode = packageInfo == null ? Integer.MAX_VALUE
                     : packageInfo.versionCode;
 
@@ -418,7 +412,8 @@ public class MainActivity extends Activity {
 
             SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
             if (!compatibility) {
-                compatibility = prefs.getBoolean(Constants.COMPATIBILITY_MODE, false)
+                compatibility = prefs.getBoolean(Constants.COMPATIBILITY_MODE,
+                        prefs.getInt(Constants.APP_VERSION, -1) < 17 && prefs.getAll().size() > 0)
                         || defaults.getBoolean(Constants.COMPATIBILITY_MODE, true);
             }
 

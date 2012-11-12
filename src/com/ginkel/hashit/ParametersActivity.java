@@ -23,19 +23,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
+import android.preference.*;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 
 /**
  * An {@link Activity} for the site-specific hash settings.
- * 
+ *
  * @author Thilo-Alexander Ginkel
  */
 public class ParametersActivity extends PreferenceActivity {
@@ -43,14 +37,14 @@ public class ParametersActivity extends PreferenceActivity {
     /**
      * Lists all preference keys that must be disabled if the "Digits only" restriction is in effect
      */
-    private static final String[] DEPS_RESTRICT_DIGITS_ONLY = { Constants.RESTRICT_SPECIAL_CHARS,
-            Constants.REQUIRE_DIGITS, Constants.REQUIRE_MIXED_CASE, Constants.REQUIRE_PUNCTUATION };
+    private static final String[] DEPS_RESTRICT_DIGITS_ONLY = {Constants.RESTRICT_SPECIAL_CHARS,
+            Constants.REQUIRE_DIGITS, Constants.REQUIRE_MIXED_CASE, Constants.REQUIRE_PUNCTUATION};
 
     /**
      * Lists all preference keys that must be disabled if the "Special characters" restriction is in
      * effect
      */
-    private static final String[] DEPS_RESTRICT_SPECIAL_CHARS = { Constants.REQUIRE_PUNCTUATION };
+    private static final String[] DEPS_RESTRICT_SPECIAL_CHARS = {Constants.REQUIRE_PUNCTUATION};
 
     /**
      * @see android.preference.PreferenceActivity#onCreate(android.os.Bundle)
@@ -79,6 +73,15 @@ public class ParametersActivity extends PreferenceActivity {
         PreferenceScreen prefScreen = getPreferenceScreen();
         if (prefScreen != null) {
             prefScreen.removeAll();
+        }
+
+        final SharedPreferences prefs = prefManager.getSharedPreferences();
+        if (prefs.getAll().size() == 0) {
+            /* Record which app version these settings were created with */
+            prefs.edit()
+                    .putInt(Constants.APP_VERSION, HashItApplication.getApp(this).getVersion())
+                    .putLong(Constants.CREATION_DATE, System.currentTimeMillis())
+                    .commit();
         }
 
         /* make sure our preferences are based on the current site tag */
@@ -160,8 +163,8 @@ public class ParametersActivity extends PreferenceActivity {
     }
 
     protected ListPreference addListPreference(PreferenceCategory parent, String key,
-            int labelResId, int dialogTitleResId, int entriesResId, int valuesResId,
-            SharedPreferences defaults, int defaultValue) {
+                                               int labelResId, int dialogTitleResId, int entriesResId, int valuesResId,
+                                               SharedPreferences defaults, int defaultValue) {
         ListPreference pref = new ListPreference(this);
         pref.setKey(key);
         pref.setTitle(labelResId);
@@ -193,23 +196,18 @@ public class ParametersActivity extends PreferenceActivity {
     /**
      * Adds a new {@link CheckBoxPreference} to a parent {@link PreferenceCategory} and returns the
      * newly created preference (which may be further tweaked by the caller).
-     * 
-     * @param parent
-     *            the parent category
-     * @param key
-     *            the preference key
-     * @param resId
-     *            the string representing the pref's label to be displayed in the prefs UI
-     * @param global
-     *            a global {@link SharedPreferences} object to derive the preference's default value
-     *            from
-     * @param defaultValue
-     *            the preference's default value (becoming effective of the global
-     *            {@link SharedPreferences} do not contain a default value for this key)
+     *
+     * @param parent       the parent category
+     * @param key          the preference key
+     * @param resId        the string representing the pref's label to be displayed in the prefs UI
+     * @param global       a global {@link SharedPreferences} object to derive the preference's default value
+     *                     from
+     * @param defaultValue the preference's default value (becoming effective of the global
+     *                     {@link SharedPreferences} do not contain a default value for this key)
      * @return the newly created {@link CheckBoxPreference}
      */
     protected CheckBoxPreference addCheckBoxPreference(PreferenceCategory parent, String key,
-            int resId, SharedPreferences global, boolean defaultValue) {
+                                                       int resId, SharedPreferences global, boolean defaultValue) {
         CheckBoxPreference pref = new CheckBoxPreference(this);
         pref.setKey(key);
         pref.setTitle(resId);
@@ -223,7 +221,7 @@ public class ParametersActivity extends PreferenceActivity {
     }
 
     protected Preference addActionPreference(PreferenceCategory parent, int resId,
-            OnPreferenceClickListener action, boolean enable) {
+                                             OnPreferenceClickListener action, boolean enable) {
         Preference pref = new Preference(this);
         pref.setTitle(resId);
         pref.setOnPreferenceClickListener(action);
@@ -235,10 +233,9 @@ public class ParametersActivity extends PreferenceActivity {
     /**
      * Disables all preferences, which are in conflict with the preference identified by the
      * specified key.
-     * 
+     *
      * @param key
-     * @param dependencies
-     *            a set of dependencies to be disabled if the given preference is set to "true"
+     * @param dependencies a set of dependencies to be disabled if the given preference is set to "true"
      */
     private void disableConflictingPreferences(String key, String... dependencies) {
         disableConflictingPreferences(getPreferenceManager().findPreference(key)
@@ -247,14 +244,12 @@ public class ParametersActivity extends PreferenceActivity {
 
     /**
      * Disables a set of preferences.
-     * 
-     * @param disable
-     *            indicates whether the preferences should be disabled
-     * @param dependencies
-     *            the preferences to be disabled
+     *
+     * @param disable      indicates whether the preferences should be disabled
+     * @param dependencies the preferences to be disabled
      */
     private void disableConflictingPreferences(boolean disable, boolean reset,
-            String... dependencies) {
+                                               String... dependencies) {
         for (String dep : dependencies) {
             if (disable || reset) {
                 getPreferenceManager().findPreference(dep).setEnabled(!disable);
