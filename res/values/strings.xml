@@ -73,7 +73,7 @@
 	</string-array>
 	<string name="Text_Introduction">Welcome to <b>Hash It!</b>!</string>
 	<string name="Text_About"><b>Hash It! for Android</b>
-\n<small>Version 1.3.3
+\n<small>Version 1.3.4
 \n
 \nCopyright © 2009-2011\nThilo-Alexander Ginkel.
 \nCopyright © 2011-2012 TG Byte Software GmbH.
@@ -108,7 +108,7 @@
 \nHash It! eases using unique passwords per web site without overloading your brain by generating site-specific passwords derived from a secret Master Key. You will only have to remember a single or few Master Keys whereas Hash It! will make sure that no two web sites will use the same password.
 \n
 \n<b>What\'s New?</b>
-\n<ul><li>Improved &quot;Welcome&quot; dialog usability</li></ul>
+\n<ul><li>Fixed erroneous switch to Compatibility Mode</li></ul>
 \n
 \n<b>Usage</b>
 \nFrom the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list. After calculating the Hash Word, the password will have been placed on the clipboard. Just hit the back button to return to the web site and paste the clipboard to the password entry field.
@@ -119,11 +119,10 @@
 \n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
 	<string name="Title_Welcome"><b>Hash It! for Android</b>
-\n<small>Version 1.3.3</small></string>
+\n<small>Version 1.3.4</small></string>
 	<string name="Header_Convenience">Convenience</string>
 	<string name="CheckBox_EnableHistory">Enable History</string>
 	<string name="Summary_EnableHistory">Keep a history of entered Site Tags.</string>
-	<string name="Summary_EnableHistory_Cupcake">Requires Android 1.6 or higher.</string>
 	<string name="Action_ClearHistory">Clear History</string>
 	<string name="Summary_ClearHistory">Clear the Site Tag history.</string>
 	<string name="Summary_ClearHistory_Empty">The Site Tag history is empty.</string>

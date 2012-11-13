@@ -46,6 +46,9 @@ public interface Constants {
     final String COMPATIBILITY_PREFIX = "compatible:";
     final String SEED = "Seed";
 
+    final String APP_VERSION = "AppVersion";
+    final String CREATION_DATE = "CreationDate";
+
     final String ACTION_GLOBAL_PREFS = "com.ginkel.hashit.GLOBAL_PREFS";
     final String ACTION_SITE_PREFS = "com.ginkel.hashit.SITE_PREFS";
 
