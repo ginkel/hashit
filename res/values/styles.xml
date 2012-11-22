@@ -10,7 +10,7 @@
     </style>
     <color name="SectionHeader">@android:color/holo_blue_light</color>
     <style name="SectionHeader" parent="Greedy">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/SectionHeader</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">8dp</item>
@@ -26,8 +26,8 @@
         <item name="android:layout_height">1px</item>
     </style>
     <style name="LargeWidget" parent="Greedy">
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">4dp</item>
     </style>
@@ -37,7 +37,8 @@
         <item name="android:inputType">none</item>
     </style>
     <style name="Button" parent="LargeWidget">
-        <item name="android:minWidth">80dp</item>
+        <item name="android:minWidth">96sp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:layout_gravity">right</item>
         <item name="android:paddingLeft">8dp</item>
     </style>
@@ -47,11 +48,11 @@
         <item name="android:stretchColumns">0</item>
     </style>
     <style name="Row" parent="Greedy">
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_height">56dp</item>
         <item name="android:layout_gravity">fill</item>
     </style>
     <style name="Help" parent="Greedy">
         <item name="android:padding">8dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>
