@@ -33,8 +33,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.*;
-import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -51,7 +50,7 @@ import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends Activity {
+public class PasswordActivity extends Activity {
     private EditText siteTag;
     private AutoCompleteTextView autoCompleteSiteTag;
     private boolean ignoreTagChange;
@@ -92,9 +91,9 @@ public class MainActivity extends Activity {
             }
 
             public void afterTextChanged(Editable s) {
-                synchronized (MainActivity.this) {
+                synchronized (PasswordActivity.this) {
                     if (!ignoreTagChange) {
-                        publishSiteTag(MainActivity.this, s.toString());
+                        publishSiteTag(PasswordActivity.this, s.toString());
                     }
                 }
             }
@@ -297,39 +296,6 @@ public class MainActivity extends Activity {
         HashItApplication.getApp(this).getHistoryManager().save();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-
-        menu.findItem(R.id.MenuItemAbout).setOnMenuItemClickListener(new OnMenuItemClickListener() {
-
-            public boolean onMenuItemClick(MenuItem item) {
-                View view = View.inflate(MainActivity.this, R.layout.about, null);
-                TextView textView = (TextView) view.findViewById(R.id.message);
-                textView.setMovementMethod(LinkMovementMethod.getInstance());
-                textView.setText(R.string.Text_About);
-                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_About)
-                        .setView(view).setIcon(R.drawable.icon).show();
-                return true;
-            }
-        });
-
-        menu.findItem(R.id.MenuItemSettings).setOnMenuItemClickListener(
-                new OnMenuItemClickListener() {
-
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                        intent.setAction(Constants.ACTION_GLOBAL_PREFS);
-                        MainActivity.this.startActivity(intent);
-
-                        return true;
-                    }
-                });
-
-        return true;
-    }
-
     private static boolean getBool(String key, SharedPreferences prefs, SharedPreferences defaults,
                                    boolean def) {
         return prefs.getBoolean(key, defaults != null ? defaults.getBoolean(key, def) : def);
@@ -363,7 +329,7 @@ public class MainActivity extends Activity {
 
             if (hideUpToVersion == null || packageInfo == null
                     || hideUpToVersion < packageInfo.versionCode) {
-                View view = View.inflate(MainActivity.this, R.layout.welcome, null);
+                View view = View.inflate(PasswordActivity.this, R.layout.welcome, null);
                 TextView textView = (TextView) view.findViewById(R.id.message);
                 textView.setMovementMethod(LinkMovementMethod.getInstance());
                 textView.setText(R.string.Text_Welcome);
@@ -376,7 +342,7 @@ public class MainActivity extends Activity {
                 dontShowAgain.setEnabled(packageInfo != null);
                 final WelcomeDialogListener welcomeListener = new WelcomeDialogListener(prefs,
                         dontShowAgain, versionCode);
-                new AlertDialog.Builder(MainActivity.this).setTitle(R.string.Title_Welcome)
+                new AlertDialog.Builder(PasswordActivity.this).setTitle(R.string.Title_Welcome)
                         .setView(view).setPositiveButton(android.R.string.ok, welcomeListener)
                         .setOnCancelListener(welcomeListener).setIcon(R.drawable.icon).show();
                 welcomeDisplayed = true;

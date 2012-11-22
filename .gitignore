@@ -1,3 +1,5 @@
 local.properties
 bin/*
+out/*
 target/*
+.idea/workspace.xml

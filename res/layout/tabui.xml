@@ -19,15 +19,15 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="wrap_content" android:layout_width="fill_parent">
-	<LinearLayout android:layout_height="wrap_content"
-		android:layout_width="fill_parent">
-		<TabWidget android:id="@android:id/tabs"
-			android:layout_height="wrap_content" android:layout_width="fill_parent"></TabWidget>
-		<FrameLayout android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@android:id/tabcontent">
-			<include android:layout_width="wrap_content"
-				android:layout_height="wrap_content" layout="@layout/main"></include>
-		</FrameLayout>
-	</LinearLayout>
+         android:layout_height="wrap_content" android:layout_width="fill_parent">
+    <LinearLayout android:layout_height="wrap_content"
+                  android:layout_width="fill_parent">
+        <TabWidget android:id="@android:id/tabs"
+                   android:layout_height="wrap_content" android:layout_width="fill_parent"/>
+        <FrameLayout android:layout_width="wrap_content"
+                     android:layout_height="wrap_content" android:id="@android:id/tabcontent">
+            <include android:layout_width="wrap_content"
+                     android:layout_height="wrap_content" layout="@layout/main"/>
+        </FrameLayout>
+    </LinearLayout>
 </TabHost>

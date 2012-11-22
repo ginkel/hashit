@@ -20,13 +20,9 @@
 
 package com.ginkel.hashit.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.SharedPreferences;
+
+import java.util.*;
 
 /**
  * An incarnation of the {@link ListSharedPreferences} interface adding the capability to persist
@@ -38,8 +34,8 @@ public class PreferenceListStorage implements ListSharedPreferences {
     private static final String INTERNAL_LIST_PREFIX = "_List_";
     private static final String INTERNAL_LIST_SPECIAL_VALUE = "_PrefList_";
 
-    private SharedPreferences prefs;
-    private Map<OnSharedPreferenceChangeListener, ListAwareChangeListener> listeners;
+    private final SharedPreferences prefs;
+    private final Map<OnSharedPreferenceChangeListener, ListAwareChangeListener> listeners;
 
     public PreferenceListStorage(SharedPreferences prefs) {
         this.prefs = prefs;
@@ -77,6 +73,11 @@ public class PreferenceListStorage implements ListSharedPreferences {
 
     public String getString(String key, String defValue) {
         return prefs.getString(key, defValue);
+    }
+
+    @Override
+    public Set<String> getStringSet(String key, Set<String> defValues) {
+        return prefs.getStringSet(key, defValues);
     }
 
     /**
@@ -161,6 +162,11 @@ public class PreferenceListStorage implements ListSharedPreferences {
             return editor.commit();
         }
 
+        @Override
+        public void apply() {
+            editor.apply();
+        }
+
         public ListEditor putBoolean(String key, boolean value) {
             editor.putBoolean(key, value);
             return this;
@@ -183,6 +189,12 @@ public class PreferenceListStorage implements ListSharedPreferences {
 
         public ListEditor putString(String key, String value) {
             editor.putString(key, value);
+            return this;
+        }
+
+        @Override
+        public ListEditor putStringSet(String key, Set<String> values) {
+            editor.putStringSet(key, values);
             return this;
         }
 

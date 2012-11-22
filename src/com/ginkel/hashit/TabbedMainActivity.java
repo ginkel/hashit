@@ -20,12 +20,18 @@
 
 package com.ginkel.hashit;
 
+import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.view.Window;
+import android.os.Build;
+import android.text.method.LinkMovementMethod;
+import android.view.*;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
+
+import static com.ginkel.hashit.Constants.ACTION_GLOBAL_PREFS;
 
 public class TabbedMainActivity extends TabActivity {
 
@@ -33,12 +39,14 @@ public class TabbedMainActivity extends TabActivity {
         super.onCreate(savedInstanceState);
 
         /* Hide title bar for small screens */
-        final Window win = getWindow();
-        final int screenHeight = win.getWindowManager().getDefaultDisplay().getHeight();
-        final int screenWidth = win.getWindowManager().getDefaultDisplay().getWidth();
-        if ((screenHeight <= 240 && screenWidth <= 320)
-                || (screenHeight <= 320 && screenWidth <= 240)) {
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            final Window win = getWindow();
+            final int screenHeight = win.getWindowManager().getDefaultDisplay().getHeight();
+            final int screenWidth = win.getWindowManager().getDefaultDisplay().getWidth();
+            if ((screenHeight <= 240 && screenWidth <= 320)
+                    || (screenHeight <= 320 && screenWidth <= 240)) {
+                requestWindowFeature(Window.FEATURE_NO_TITLE);
+            }
         }
 
         /* Create tabs */
@@ -47,7 +55,7 @@ public class TabbedMainActivity extends TabActivity {
 
         /* Create home tab */
         TabSpec tab = tabHost.newTabSpec("home");
-        Intent mainIntent = new Intent(this, MainActivity.class);
+        Intent mainIntent = new Intent(this, PasswordActivity.class);
         mainIntent.fillIn(getIntent(), Intent.FILL_IN_DATA | Intent.FILL_IN_ACTION);
         tab.setContent(mainIntent);
         tab.setIndicator(resources.getText(R.string.Label_Password),
@@ -62,5 +70,38 @@ public class TabbedMainActivity extends TabActivity {
         tab.setIndicator(resources.getText(R.string.Label_Settings),
                 resources.getDrawable(R.drawable.wrench_tab));
         tabHost.addTab(tab);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        menu.findItem(R.id.MenuItemAbout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+            public boolean onMenuItemClick(MenuItem item) {
+                View view = View.inflate(TabbedMainActivity.this, R.layout.about, null);
+                TextView textView = (TextView) view.findViewById(R.id.message);
+                textView.setMovementMethod(LinkMovementMethod.getInstance());
+                textView.setText(R.string.Text_About);
+                new AlertDialog.Builder(TabbedMainActivity.this).setTitle(R.string.Title_About)
+                        .setView(view).setIcon(R.drawable.icon).show();
+                return true;
+            }
+        });
+
+        menu.findItem(R.id.MenuItemSettings).setOnMenuItemClickListener(
+                new MenuItem.OnMenuItemClickListener() {
+
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Intent intent = new Intent(TabbedMainActivity.this, SettingsActivity.class);
+                        intent.setAction(ACTION_GLOBAL_PREFS);
+                        TabbedMainActivity.this.startActivity(intent);
+
+                        return true;
+                    }
+                });
+
+        return true;
     }
 }
