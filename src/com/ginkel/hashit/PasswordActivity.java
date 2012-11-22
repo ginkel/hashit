@@ -202,8 +202,6 @@ public class PasswordActivity extends Activity {
         } else {
             findViewById(R.id.UsageInformation).setVisibility(View.VISIBLE);
         }
-
-        displayWelcomeScreen();
     }
 
     @Override
@@ -282,6 +280,8 @@ public class PasswordActivity extends Activity {
                 }
             }, BIND_AUTO_CREATE);
         }
+
+        displayWelcomeScreen();
     }
 
     @Override
