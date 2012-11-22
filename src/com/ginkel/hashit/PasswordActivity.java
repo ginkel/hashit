@@ -50,6 +50,8 @@ import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.ginkel.hashit.Constants.*;
+
 public class PasswordActivity extends Activity {
     private EditText siteTag;
     private AutoCompleteTextView autoCompleteSiteTag;
@@ -153,7 +155,7 @@ public class PasswordActivity extends Activity {
         focus = FocusRequest.SITE_TAG;
 
         Intent intent = getIntent();
-        Log.d(Constants.LOG_TAG, "intent = " + intent);
+        Log.d(LOG_TAG, "intent = " + intent);
         if (intent != null && Intent.ACTION_SEND.equals(intent.getAction())) {
             // we have been called via the "Send to" intent
 
@@ -161,17 +163,15 @@ public class PasswordActivity extends Activity {
                 /* we did not just switch back and forth between the password and the parameters tab */
 
                 String uriCandidate = intent.getStringExtra(Intent.EXTRA_TEXT);
-                Log.d(Constants.LOG_TAG, "uriCandidate = " + uriCandidate);
+                Log.d(LOG_TAG, "uriCandidate = " + uriCandidate);
                 if (uriCandidate != null) {
                     try {
                         Uri uri = Uri.parse(uriCandidate);
                         String host = uri.getHost();
                         originalHost = host;
 
-                        SharedPreferences prefs = PreferenceManager
-                                .getDefaultSharedPreferences(getBaseContext());
-                        String site = prefs
-                                .getString(String.format(Constants.SITE_MAP, host), null);
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                        String site = prefs.getString(String.format(SITE_MAP, host), null);
 
                         if (site != null) {
                             siteTag.setText(site);
@@ -210,18 +210,17 @@ public class PasswordActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean(Constants.STATE_WELCOME_DISPLAYED, welcomeDisplayed);
-        outState.putCharSequence(Constants.STATE_SITE_TAG, siteTag.getText());
+        outState.putBoolean(STATE_WELCOME_DISPLAYED, welcomeDisplayed);
+        outState.putCharSequence(STATE_SITE_TAG, siteTag.getText());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        welcomeDisplayed = savedInstanceState.getBoolean(Constants.STATE_WELCOME_DISPLAYED,
-                welcomeDisplayed);
+        welcomeDisplayed = savedInstanceState.getBoolean(STATE_WELCOME_DISPLAYED, welcomeDisplayed);
 
-        CharSequence savedSiteTag = savedInstanceState.getCharSequence(Constants.STATE_SITE_TAG);
+        CharSequence savedSiteTag = savedInstanceState.getCharSequence(STATE_SITE_TAG);
         if (savedSiteTag != null) {
             siteTag.setText(savedSiteTag);
             restoredSiteTag = true;
@@ -256,20 +255,17 @@ public class PasswordActivity extends Activity {
         HistoryManager siteTagHistory;
         if ((siteTagHistory = HashItApplication.getApp(this).getHistoryManager()) == null) {
             HashItApplication.getApp(this).setHistoryManager(
-                    siteTagHistory = new HistoryManager(this, Constants.SITE_TAGS,
-                            R.layout.autocomplete_list));
+                    siteTagHistory = new HistoryManager(this, SITE_TAGS, R.layout.autocomplete_list));
         }
-        if (getBool(Constants.ENABLE_HISTORY, PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext()), null, true)) {
+        if (getBool(ENABLE_HISTORY, PreferenceManager.getDefaultSharedPreferences(getBaseContext()), null, true)) {
             autoCompleteSiteTag.setAdapter(siteTagHistory.getAdapter());
         } else {
-            autoCompleteSiteTag.setAdapter(new NullAdapter<String>(this,
-                    R.layout.autocomplete_list));
+            autoCompleteSiteTag.setAdapter(new NullAdapter<String>(this, R.layout.autocomplete_list));
         }
 
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
-        if (getStringAsInt(Constants.CACHE_DURATION, prefs, null, -1) > 0) {
+        if (getStringAsInt(CACHE_DURATION, prefs, null, -1) > 0) {
             final Context ctx = getApplicationContext();
             ctx.bindService(new Intent(ctx, MemoryCacheServiceImpl.class), new ServiceConnection() {
 
@@ -278,7 +274,7 @@ public class PasswordActivity extends Activity {
 
                 public void onServiceConnected(ComponentName name, IBinder service) {
                     final String cachedKey = ((MemoryCacheService.Binder) service).getService()
-                            .getEntry(Constants.MASTER_KEY_CACHE);
+                            .getEntry(MASTER_KEY_CACHE);
 
                     if (cachedKey != null) {
                         masterKey.setText(cachedKey);
@@ -319,22 +315,18 @@ public class PasswordActivity extends Activity {
 
     private void displayWelcomeScreen() {
         if (!welcomeDisplayed) {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getBaseContext());
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
-            final Integer hideUpToVersion = prefs.getInt(Constants.HIDE_WELCOME_SCREEN, 0);
+            final Integer hideUpToVersion = prefs.getInt(HIDE_WELCOME_SCREEN, 0);
             final PackageInfo packageInfo = HashItApplication.getApp(this).getPackageInfo();
-            final int versionCode = packageInfo == null ? Integer.MAX_VALUE
-                    : packageInfo.versionCode;
+            final int versionCode = packageInfo == null ? Integer.MAX_VALUE : packageInfo.versionCode;
 
-            if (hideUpToVersion == null || packageInfo == null
-                    || hideUpToVersion < packageInfo.versionCode) {
+            if (hideUpToVersion == null || packageInfo == null || hideUpToVersion < packageInfo.versionCode) {
                 View view = View.inflate(PasswordActivity.this, R.layout.welcome, null);
                 TextView textView = (TextView) view.findViewById(R.id.message);
                 textView.setMovementMethod(LinkMovementMethod.getInstance());
                 textView.setText(R.string.Text_Welcome);
-                final CheckBox dontShowAgain = (CheckBox) view
-                        .findViewById(R.id.CheckBox_DoNotShowAgain);
+                final CheckBox dontShowAgain = (CheckBox) view.findViewById(R.id.CheckBox_DoNotShowAgain);
                 /*
                  * we can't reliably store the current version if we could not determine the package
                  * version code
@@ -372,7 +364,7 @@ public class PasswordActivity extends Activity {
 
         private void onDismissDialog() {
             if (dontShowAgain.isChecked()) {
-                prefs.edit().putInt(Constants.HIDE_WELCOME_SCREEN, versionCode).commit();
+                prefs.edit().putInt(HIDE_WELCOME_SCREEN, versionCode).commit();
             }
         }
     }
@@ -383,31 +375,27 @@ public class PasswordActivity extends Activity {
         String tag = originalTag;
 
         if (tag.length() == 0) {
-            Toast.makeText(getBaseContext(), R.string.Message_SiteTagEmpty, Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(getBaseContext(), R.string.Message_SiteTagEmpty, Toast.LENGTH_LONG).show();
             siteTag.requestFocus();
         } else if (key.length() == 0) {
-            Toast.makeText(getBaseContext(), R.string.Message_MasterKeyEmpty, Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(getBaseContext(), R.string.Message_MasterKeyEmpty, Toast.LENGTH_LONG).show();
             masterKey.requestFocus();
         } else {
-            SharedPreferences defaults = PreferenceManager
-                    .getDefaultSharedPreferences(getBaseContext());
+            SharedPreferences defaults = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
-            boolean compatibility = tag.startsWith(Constants.COMPATIBILITY_PREFIX);
+            boolean compatibility = tag.startsWith(COMPATIBILITY_PREFIX);
             if (compatibility) {
-                tag = tag.substring(Constants.COMPATIBILITY_PREFIX.length());
+                tag = tag.substring(COMPATIBILITY_PREFIX.length());
             }
 
             SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
             if (!compatibility) {
-                compatibility = prefs.getBoolean(Constants.COMPATIBILITY_MODE,
-                        prefs.getInt(Constants.APP_VERSION, -1) < 19 && prefs.getAll().size() > 0)
-                        || defaults.getBoolean(Constants.COMPATIBILITY_MODE, true);
+                compatibility = prefs.getBoolean(COMPATIBILITY_MODE,
+                        prefs.getInt(APP_VERSION, -1) < 19 && prefs.getAll().size() > 0)
+                        || defaults.getBoolean(COMPATIBILITY_MODE, true);
             }
 
-            Log.i(Constants.LOG_TAG,
-                    String.format("Compatibility mode %s", compatibility ? "enabled" : "disabled"));
+            Log.i(LOG_TAG, String.format("Compatibility mode %s", compatibility ? "enabled" : "disabled"));
 
             if (!compatibility) {
                 tag = PasswordHasher.hashPassword(SeedHelper.getSeed(defaults), tag, //
@@ -421,12 +409,12 @@ public class PasswordActivity extends Activity {
             }
 
             String hash = PasswordHasher.hashPassword(tag, key, //
-                    getStringAsInt(Constants.HASH_WORD_SIZE, prefs, defaults, 8), //
-                    getBool(Constants.REQUIRE_DIGITS, prefs, defaults, true), //
-                    getBool(Constants.REQUIRE_PUNCTUATION, prefs, defaults, true), //
-                    getBool(Constants.REQUIRE_MIXED_CASE, prefs, defaults, true), //
-                    getBool(Constants.RESTRICT_SPECIAL_CHARS, prefs, defaults, false), //
-                    getBool(Constants.RESTRICT_DIGITS, prefs, defaults, false));
+                    getStringAsInt(HASH_WORD_SIZE, prefs, defaults, 8), //
+                    getBool(REQUIRE_DIGITS, prefs, defaults, true), //
+                    getBool(REQUIRE_PUNCTUATION, prefs, defaults, true), //
+                    getBool(REQUIRE_MIXED_CASE, prefs, defaults, true), //
+                    getBool(RESTRICT_SPECIAL_CHARS, prefs, defaults, false), //
+                    getBool(RESTRICT_DIGITS, prefs, defaults, false));
 
             hashWord.setText(hash, BufferType.NORMAL);
 
@@ -435,17 +423,15 @@ public class PasswordActivity extends Activity {
 
             if (originalHost != null) {
                 // save site tag for host name
-                defaults.edit()
-                        .putString(String.format(Constants.SITE_MAP, originalHost), originalTag)
-                        .commit();
+                defaults.edit().putString(String.format(Constants.SITE_MAP, originalHost), originalTag).commit();
             }
 
-            if (defaults.getBoolean(Constants.ENABLE_HISTORY, true)) {
+            if (defaults.getBoolean(ENABLE_HISTORY, true)) {
                 HashItApplication.getApp(this).getHistoryManager().add(originalTag);
                 masterKey.requestFocus();
             }
 
-            final int cacheDuration = getStringAsInt(Constants.CACHE_DURATION, defaults, null, -1);
+            final int cacheDuration = getStringAsInt(CACHE_DURATION, defaults, null, -1);
             if (cacheDuration > 0) {
                 final Context ctx = getApplicationContext();
                 MemoryCacheServiceImpl.ensureStarted(ctx);
@@ -457,13 +443,12 @@ public class PasswordActivity extends Activity {
 
                             public void onServiceConnected(ComponentName name, IBinder service) {
                                 ((MemoryCacheService.Binder) service).getService().putEntry(
-                                        Constants.MASTER_KEY_CACHE, key, cacheDuration * 60 * 1000);
+                                        MASTER_KEY_CACHE, key, cacheDuration * 60 * 1000);
                             }
                         }, 0);
             }
 
-            Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard,
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard, Toast.LENGTH_LONG).show();
 
             Intent intent = getIntent();
             if (defaults.getBoolean(Constants.AUTO_EXIT, false) && intent != null
