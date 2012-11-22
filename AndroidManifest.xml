@@ -19,36 +19,36 @@
  * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.ginkel.hashit" android:versionCode="20"
-	android:versionName="1.3.4" android:installLocation="auto">
-	<application android:icon="@drawable/icon" android:label="@string/AppName"
-		android:name=".HashItApplication" android:allowClearUserData="true"
-		android:allowBackup="true">
-		<activity android:name=".TabbedMainActivity" android:label="@string/AppName">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
+          package="com.ginkel.hashit" android:versionCode="21"
+          android:versionName="1.5.0" android:installLocation="auto">
+    <uses-sdk android:minSdkVersion="5" android:targetSdkVersion="16"/>
+    <supports-screens android:smallScreens="true"
+                      android:normalScreens="true" android:largeScreens="true"
+                      android:anyDensity="true"/>
+    <application android:icon="@drawable/icon" android:label="@string/AppName"
+                 android:name=".HashItApplication" android:allowClearUserData="true"
+                 android:allowBackup="true" android:theme="@android:style/Theme.Holo.Light">
+        <activity android:name=".TabbedMainActivity" android:label="@string/AppName">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
-			<!-- browser integration -->
-			<intent-filter android:label="@string/AppName">
-				<action android:name="android.intent.action.SEND" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<data android:mimeType="text/plain" />
-			</intent-filter>
-		</activity>
-		<activity android:name=".MainActivity" android:label="@string/AppName">
-		</activity>
-		<activity android:name=".SettingsActivity" android:label="@string/Title_Settings">
-		</activity>
-		<activity android:name=".ParametersActivity" android:label="@string/Title_Parameters">
-		</activity>
-		<service android:name=".util.cache.MemoryCacheServiceImpl"
-			android:label="Hash It! Master Key Cache" android:icon="@drawable/icon"
-			android:exported="false"></service>
-	</application>
-	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="8" />
-	<supports-screens android:smallScreens="true"
-		android:normalScreens="true" android:largeScreens="true"
-		android:anyDensity="true" />
-</manifest> 
+            <!-- browser integration -->
+            <intent-filter android:label="@string/AppName">
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".PasswordActivity" android:label="@string/AppName">
+        </activity>
+        <activity android:name=".SettingsActivity" android:label="@string/Title_Settings">
+        </activity>
+        <activity android:name=".ParametersActivity" android:label="@string/Title_Parameters">
+        </activity>
+        <service android:name=".util.cache.MemoryCacheServiceImpl"
+                 android:label="Hash It! Master Key Cache" android:icon="@drawable/icon"
+                 android:exported="false"/>
+    </application>
+</manifest>

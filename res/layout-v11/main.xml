@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ * This file is part of Hash It!.
+ * 
+ * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
+ * Copyright (C) 2011-2012 TG Byte Software GmbH.
+ * 
+ * Hash It! is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Hash It! is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Hash It!.  If not, see <http://www.gnu.org/licenses/>.
+ -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+    <LinearLayout style="@style/Layout">
+
+        <TextView android:text="Input"
+                  style="@style/SectionHeader"/>
+        <View style="@style/SectionDivider"/>
+        <TableLayout style="@style/Table">
+            <TableRow style="@style/Row">
+                <AutoCompleteTextView
+                        android:inputType="textUri"
+                        android:id="@+id/SiteTag"
+                        android:hint="Site Tag"
+                        style="@style/Edit"/>
+                <Button
+                        android:text="Bump"
+                        android:id="@+id/Bump"
+                        style="@style/Button"/>
+            </TableRow>
+            <TableRow style="@style/Row">
+                <EditText
+                        android:inputType="textPassword"
+                        android:id="@+id/MasterKey"
+                        android:hint="Master Key"
+                        style="@style/Edit"/>
+                <Button
+                        android:text="Hash It!"
+                        android:id="@+id/Calculate"
+                        style="@style/Button"/>
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+                android:text="Hash Word"
+                style="@style/SectionHeader"/>
+        <View style="@style/SectionDivider"/>
+        <EditText
+                android:id="@+id/HashWord"
+                android:inputType="none"
+                style="@style/Edit"/>
+
+        <TableLayout
+                android:id="@+id/UsageInformation"
+                style="@style/Table">
+            <TextView android:text="Usage"
+                      style="@style/SectionHeader"/>
+            <View style="@style/SectionDivider"/>
+            <TextView
+                    android:text="You have invoked Hash It! from your home screen. There is nothing wrong with that, but there is a more convenient method available, which will automatically pre-populate the Site Tag for you. From the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list."
+                    style="@style/Help"/>
+        </TableLayout>
+    </LinearLayout>
+</ScrollView>
