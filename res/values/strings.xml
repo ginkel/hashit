@@ -84,7 +84,7 @@
 \nThis product includes software developed by <a href="http://www.apache.org/">The Apache Software Foundation</a>.
 \nCopyright © 2002-2009 The Apache Software Foundation.
 \n
-\nHash It! eases using unique passwords per web site without overloading your brain. It is compatible with the hashing algorithm used by the Password Hasher Firefox extension. 
+\nHash It! eases using unique passwords per web site without overloading your brain. It is compatible with the hashing algorithm used by the Password Hasher Firefox extension.
 \n
 \n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a>
@@ -114,12 +114,14 @@
 \nFrom the Browser application, just choose &quot;Share Page&quot; from the menu and select the &quot;Hash It!&quot; entry from the list. After calculating the Hash Word, the password will have been placed on the clipboard. Just hit the back button to return to the web site and paste the clipboard to the password entry field.
 \n
 \n<b>Compatibility</b>
-\nHash It! is designed to be compatible with the hashing algorithm used by the Password Hasher Firefox extension and supports the &quot;Private Key&quot; feature from the Password Hasher Plus extension for Google Chrome. 
+\nHash It! is designed to be compatible with the hashing algorithm used by the Password Hasher Firefox extension and supports the &quot;Private Key&quot; feature from the Password Hasher Plus extension for Google Chrome.
 \n
 \n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
 	<string name="Title_Welcome"><b>Hash It! for Android</b>
 \n<small>Version 1.5.0</small></string>
+	<string name="Header_LookAndFeel">Look &amp; Feel</string>
+	<string name="CheckBox_UseDarkTheme">Use Dark Theme</string>
 	<string name="Header_Convenience">Convenience</string>
 	<string name="CheckBox_EnableHistory">Enable History</string>
 	<string name="Summary_EnableHistory">Keep a history of entered Site Tags.</string>

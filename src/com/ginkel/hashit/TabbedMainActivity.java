@@ -32,11 +32,14 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import static com.ginkel.hashit.Constants.ACTION_GLOBAL_PREFS;
+import static com.ginkel.hashit.util.ThemeUtil.applyTheme;
 
 public class TabbedMainActivity extends TabActivity {
 
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        applyTheme(this);
 
         /* Hide title bar for small screens */
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {

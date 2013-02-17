@@ -41,6 +41,7 @@ public interface Constants {
     final String ENABLE_HISTORY = "EnableHistory";
     final String AUTO_EXIT = "AutoExit";
     final String CACHE_DURATION = "CacheDuration";
+    final String USE_DARK_THEME = "DarkTheme";
 
     final String COMPATIBILITY_MODE = "CompatibilityMode";
     final String COMPATIBILITY_PREFIX = "compatible:";
