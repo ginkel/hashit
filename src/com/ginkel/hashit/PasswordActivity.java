@@ -40,13 +40,17 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
-import com.ginkel.hashit.Constants.FocusRequest;
+import com.ginkel.hashit.Constants.*;
+import com.ginkel.hashit.util.Base64;
 import com.ginkel.hashit.util.HistoryManager;
 import com.ginkel.hashit.util.NullAdapter;
 import com.ginkel.hashit.util.SeedHelper;
 import com.ginkel.hashit.util.cache.MemoryCacheService;
 import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -104,6 +108,8 @@ public class PasswordActivity extends Activity {
 
         autoCompleteSiteTag = (AutoCompleteTextView) siteTag;
 
+        final TextView masterKeyOverlay = (TextView) findViewById(R.id.MasterKeyOverlay);
+
         masterKey = (EditText) findViewById(R.id.MasterKey);
         masterKey.setOnEditorActionListener(new OnEditorActionListener() {
             private long lastProcessedEvent;
@@ -124,6 +130,25 @@ public class PasswordActivity extends Activity {
                 return false;
             }
         });
+        if (masterKeyOverlay != null) {
+            masterKey.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    CharSequence key = masterKey.getText();
+                    if (key.length() > 0) {
+                        try {
+                            final MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+                            masterKeyOverlay.setText(Base64.toBase64(sha1.digest(key.toString().getBytes("UTF-8"))).subSequence(0, 2));
+                        } catch (NoSuchAlgorithmException e) {
+                        } catch (UnsupportedEncodingException e) {
+                        }
+                    } else
+                        masterKeyOverlay.setText("");
+
+                    return false;
+                }
+            });
+        }
 
         hashWord = (EditText) findViewById(R.id.HashWord);
         hashWord.setEnabled(false);

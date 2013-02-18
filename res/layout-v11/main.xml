@@ -39,11 +39,17 @@
                         style="@style/Button"/>
             </TableRow>
             <TableRow style="@style/Row">
-                <EditText
-                        android:inputType="textPassword"
-                        android:id="@+id/MasterKey"
-                        android:hint="Master Key"
-                        style="@style/Edit"/>
+                <FrameLayout>
+                    <EditText
+                            android:inputType="textPassword"
+                            android:id="@+id/MasterKey"
+                            android:hint="Master Key"
+                            style="@style/Edit">
+                    </EditText>
+                    <TextView
+                            android:id="@+id/MasterKeyOverlay"
+                            style="@style/EditBackground"/>
+                </FrameLayout>
                 <Button
                         android:text="Hash It!"
                         android:id="@+id/Calculate"
