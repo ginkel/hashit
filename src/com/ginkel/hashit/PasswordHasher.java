@@ -2,7 +2,7 @@
  * This file is part of Hash It!.
  * 
  * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
- * Copyright (C) 2011-2012 TG Byte Software GmbH.
+ * Copyright (C) 2011-2013 TG Byte Software GmbH.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,17 +20,15 @@
 
 package com.ginkel.hashit;
 
+import android.util.Log;
+import com.ginkel.hashit.util.Base64;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
-import android.util.Log;
-
-import com.ginkel.hashit.util.Base64;
 
 public class PasswordHasher {
     /** The MAC to be used for hashing the site tag */

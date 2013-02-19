@@ -2,7 +2,7 @@
  * This file is part of Hash It!.
  * 
  * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
- * Copyright (C) 2011-2012 TG Byte Software GmbH.
+ * Copyright (C) 2011-2013 TG Byte Software GmbH.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,17 +20,16 @@
 
 package com.ginkel.hashit.util.cache;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-
 import com.ginkel.hashit.Constants;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The implementation of the memory cache service declared in the {@link MemoryCacheService}
