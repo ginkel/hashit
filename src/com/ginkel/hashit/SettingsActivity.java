@@ -148,6 +148,11 @@ public class SettingsActivity extends ParametersActivity {
         });
         updateSummary(cacheDuration, cacheDuration.getValue());
 
+        final Preference showMasterKeyDigest = addCheckBoxPreference(convenience,
+                Constants.SHOW_MASTER_KEY_DIGEST, R.string.CheckBox_ShowMasterKeyDigest, defaults,
+                true);
+        showMasterKeyDigest.setSummary(R.string.Summary_ShowMasterKeyDigest);
+
         if (savedState != null) {
             final Parcelable listState = savedState.getParcelable(PREF_LIST_STATE);
             if (listState != null) {

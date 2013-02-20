@@ -62,6 +62,7 @@ public class PasswordActivity extends Activity {
     private boolean ignoreTagChange;
 
     private EditText masterKey;
+    private TextView masterKeyOverlay;
     private EditText hashWord;
     private Button hashPassword;
 
@@ -108,7 +109,7 @@ public class PasswordActivity extends Activity {
 
         autoCompleteSiteTag = (AutoCompleteTextView) siteTag;
 
-        final TextView masterKeyOverlay = (TextView) findViewById(R.id.MasterKeyOverlay);
+        masterKeyOverlay = (TextView) findViewById(R.id.MasterKeyOverlay);
 
         masterKey = (EditText) findViewById(R.id.MasterKey);
         masterKey.setOnEditorActionListener(new OnEditorActionListener() {
@@ -134,17 +135,7 @@ public class PasswordActivity extends Activity {
             masterKey.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    CharSequence key = masterKey.getText();
-                    if (key.length() > 0) {
-                        try {
-                            final MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
-                            masterKeyOverlay.setText(Base64.toBase64(sha1.digest(key.toString().getBytes("UTF-8"))).subSequence(0, 2));
-                        } catch (NoSuchAlgorithmException e) {
-                        } catch (UnsupportedEncodingException e) {
-                        }
-                    } else
-                        masterKeyOverlay.setText("");
-
+                    showMasterKeyDigest(masterKey.getText());
                     return false;
                 }
             });
@@ -300,9 +291,9 @@ public class PasswordActivity extends Activity {
                     final String cachedKey = ((MemoryCacheService.Binder) service).getService()
                             .getEntry(MASTER_KEY_CACHE);
 
-                    if (cachedKey != null) {
+                    if (cachedKey != null)
                         masterKey.setText(cachedKey);
-                    }
+                    showMasterKeyDigest(cachedKey);
                 }
             }, BIND_AUTO_CREATE);
         }
@@ -482,5 +473,18 @@ public class PasswordActivity extends Activity {
                 finish();
             }
         }
+    }
+
+    private void showMasterKeyDigest(CharSequence key) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if (key.length() > 0 && prefs.getBoolean(Constants.SHOW_MASTER_KEY_DIGEST, true)) {
+            try {
+                final MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+                masterKeyOverlay.setText(Base64.toBase64(sha1.digest(key.toString().getBytes("UTF-8"))).subSequence(0, 2));
+            } catch (NoSuchAlgorithmException e) {
+            } catch (UnsupportedEncodingException e) {
+            }
+        } else
+            masterKeyOverlay.setText("");
     }
 }

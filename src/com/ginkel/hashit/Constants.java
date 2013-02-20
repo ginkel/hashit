@@ -42,6 +42,7 @@ public interface Constants {
     final String AUTO_EXIT = "AutoExit";
     final String CACHE_DURATION = "CacheDuration";
     final String USE_DARK_THEME = "DarkTheme";
+    final String SHOW_MASTER_KEY_DIGEST = "ShowMasterKeyDigest";
 
     final String COMPATIBILITY_MODE = "CompatibilityMode";
     final String COMPATIBILITY_PREFIX = "compatible:";
