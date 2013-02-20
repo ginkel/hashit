@@ -27,6 +27,7 @@
 	<string name="Message_SiteTagFailure">Failed to extract Site Tag from URI.</string>
 	<string name="Message_InvalidSiteTag">The specified Site Tag is invalid and thus cannot
 		be bumped.</string>
+	<string name="Message_ClipboardError">An error occurred while copying the Hash Word to the clipboard. Unfortunately, this is caused by a Samsung firmware bug that we cannot work around.</string>
 	<string name="MenuItem_Settings">Settings</string>
 	<string name="MenuItem_About">About</string>
 	<string name="Title_About">About Hash It!</string>
