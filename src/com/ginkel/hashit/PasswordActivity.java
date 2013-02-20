@@ -134,11 +134,10 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
             }
         });
         if (masterKeyOverlay != null) {
-            masterKey.setOnKeyListener(new View.OnKeyListener() {
+            masterKey.addTextChangedListener(new TextWatcherAdapter() {
                 @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                public void afterTextChanged(Editable s) {
                     showMasterKeyDigest(masterKey.getText());
-                    return false;
                 }
             });
         }
@@ -474,15 +473,16 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
     }
 
     private void showMasterKeyDigest(CharSequence key) {
-        if (key.length() > 0 && settings.getBoolean(SHOW_MASTER_KEY_DIGEST, true)) {
-            try {
-                final MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
-                masterKeyOverlay.setText(Base64.toBase64(sha1.digest(key.toString().getBytes("UTF-8"))).subSequence(0, 2));
-            } catch (NoSuchAlgorithmException e) {
-            } catch (UnsupportedEncodingException e) {
-            }
-        } else
-            masterKeyOverlay.setText("");
+        if (masterKeyOverlay != null)
+            if (key.length() > 0 && settings.getBoolean(SHOW_MASTER_KEY_DIGEST, true)) {
+                try {
+                    final MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+                    masterKeyOverlay.setText(Base64.toBase64(sha1.digest(key.toString().getBytes("UTF-8"))).subSequence(0, 2));
+                } catch (NoSuchAlgorithmException e) {
+                } catch (UnsupportedEncodingException e) {
+                }
+            } else
+                masterKeyOverlay.setText("");
     }
 
     @Override
