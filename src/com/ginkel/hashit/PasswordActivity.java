@@ -74,6 +74,8 @@ public class PasswordActivity extends Activity {
 
     private FocusRequest focus = FocusRequest.NONE;
 
+    private SharedPreferences settings;
+
     /**
      * A pattern used to extract a site tag from a host name
      */
@@ -86,6 +88,8 @@ public class PasswordActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         setContentView(R.layout.main);
 
@@ -187,8 +191,7 @@ public class PasswordActivity extends Activity {
                         String host = uri.getHost();
                         originalHost = host;
 
-                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                        String site = prefs.getString(String.format(SITE_MAP, host), null);
+                        String site = settings.getString(String.format(SITE_MAP, host), null);
 
                         if (site != null) {
                             siteTag.setText(site);
@@ -272,15 +275,12 @@ public class PasswordActivity extends Activity {
             HashItApplication.getApp(this).setHistoryManager(
                     siteTagHistory = new HistoryManager(this, SITE_TAGS, R.layout.autocomplete_list));
         }
-        if (getBool(ENABLE_HISTORY, PreferenceManager.getDefaultSharedPreferences(getBaseContext()), null, true)) {
+        if (getBool(ENABLE_HISTORY, settings, null, true))
             autoCompleteSiteTag.setAdapter(siteTagHistory.getAdapter());
-        } else {
+        else
             autoCompleteSiteTag.setAdapter(new NullAdapter<String>(this, R.layout.autocomplete_list));
-        }
 
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext());
-        if (getStringAsInt(CACHE_DURATION, prefs, null, -1) > 0) {
+        if (getStringAsInt(CACHE_DURATION, settings, null, -1) > 0) {
             final Context ctx = getApplicationContext();
             ctx.bindService(new Intent(ctx, MemoryCacheServiceImpl.class), new ServiceConnection() {
 
@@ -332,9 +332,7 @@ public class PasswordActivity extends Activity {
 
     private void displayWelcomeScreen() {
         if (!welcomeDisplayed) {
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-            final Integer hideUpToVersion = prefs.getInt(HIDE_WELCOME_SCREEN, 0);
+            final Integer hideUpToVersion = settings.getInt(HIDE_WELCOME_SCREEN, 0);
             final PackageInfo packageInfo = HashItApplication.getApp(this).getPackageInfo();
             final int versionCode = packageInfo == null ? Integer.MAX_VALUE : packageInfo.versionCode;
 
@@ -349,8 +347,7 @@ public class PasswordActivity extends Activity {
                  * version code
                  */
                 dontShowAgain.setEnabled(packageInfo != null);
-                final WelcomeDialogListener welcomeListener = new WelcomeDialogListener(prefs,
-                        dontShowAgain, versionCode);
+                final WelcomeDialogListener welcomeListener = new WelcomeDialogListener(dontShowAgain, versionCode);
                 new AlertDialog.Builder(PasswordActivity.this).setTitle(R.string.Title_Welcome)
                         .setView(view).setPositiveButton(android.R.string.ok, welcomeListener)
                         .setOnCancelListener(welcomeListener).setIcon(R.drawable.icon).show();
@@ -361,12 +358,10 @@ public class PasswordActivity extends Activity {
 
     private class WelcomeDialogListener implements DialogInterface.OnClickListener,
             DialogInterface.OnCancelListener {
-        private final SharedPreferences prefs;
         private final CheckBox dontShowAgain;
         private final int versionCode;
 
-        WelcomeDialogListener(SharedPreferences prefs, CheckBox dontShowAgain, int versionCode) {
-            this.prefs = prefs;
+        WelcomeDialogListener(CheckBox dontShowAgain, int versionCode) {
             this.dontShowAgain = dontShowAgain;
             this.versionCode = versionCode;
         }
@@ -381,7 +376,7 @@ public class PasswordActivity extends Activity {
 
         private void onDismissDialog() {
             if (dontShowAgain.isChecked()) {
-                prefs.edit().putInt(HIDE_WELCOME_SCREEN, versionCode).commit();
+                settings.edit().putInt(HIDE_WELCOME_SCREEN, versionCode).commit();
             }
         }
     }
@@ -398,7 +393,6 @@ public class PasswordActivity extends Activity {
             Toast.makeText(getBaseContext(), R.string.Message_MasterKeyEmpty, Toast.LENGTH_LONG).show();
             masterKey.requestFocus();
         } else {
-            SharedPreferences defaults = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
             boolean compatibility = tag.startsWith(COMPATIBILITY_PREFIX);
             if (compatibility) {
@@ -409,13 +403,13 @@ public class PasswordActivity extends Activity {
             if (!compatibility) {
                 compatibility = prefs.getBoolean(COMPATIBILITY_MODE,
                         prefs.getInt(APP_VERSION, -1) < 19 && prefs.getAll().size() > 0)
-                        || defaults.getBoolean(COMPATIBILITY_MODE, true);
+                        || settings.getBoolean(COMPATIBILITY_MODE, true);
             }
 
             Log.i(LOG_TAG, String.format("Compatibility mode %s", compatibility ? "enabled" : "disabled"));
 
             if (!compatibility) {
-                tag = PasswordHasher.hashPassword(SeedHelper.getSeed(defaults), tag, //
+                tag = PasswordHasher.hashPassword(SeedHelper.getSeed(settings), tag, //
                         24, //
                         true, // require digits
                         true, // require punctuation
@@ -426,12 +420,12 @@ public class PasswordActivity extends Activity {
             }
 
             String hash = PasswordHasher.hashPassword(tag, key, //
-                    getStringAsInt(HASH_WORD_SIZE, prefs, defaults, 8), //
-                    getBool(REQUIRE_DIGITS, prefs, defaults, true), //
-                    getBool(REQUIRE_PUNCTUATION, prefs, defaults, true), //
-                    getBool(REQUIRE_MIXED_CASE, prefs, defaults, true), //
-                    getBool(RESTRICT_SPECIAL_CHARS, prefs, defaults, false), //
-                    getBool(RESTRICT_DIGITS, prefs, defaults, false));
+                    getStringAsInt(HASH_WORD_SIZE, prefs, settings, 8), //
+                    getBool(REQUIRE_DIGITS, prefs, settings, true), //
+                    getBool(REQUIRE_PUNCTUATION, prefs, settings, true), //
+                    getBool(REQUIRE_MIXED_CASE, prefs, settings, true), //
+                    getBool(RESTRICT_SPECIAL_CHARS, prefs, settings, false), //
+                    getBool(RESTRICT_DIGITS, prefs, settings, false));
 
             hashWord.setText(hash, BufferType.NORMAL);
 
@@ -440,15 +434,15 @@ public class PasswordActivity extends Activity {
 
             if (originalHost != null) {
                 // save site tag for host name
-                defaults.edit().putString(String.format(Constants.SITE_MAP, originalHost), originalTag).commit();
+                settings.edit().putString(String.format(Constants.SITE_MAP, originalHost), originalTag).commit();
             }
 
-            if (defaults.getBoolean(ENABLE_HISTORY, true)) {
+            if (settings.getBoolean(ENABLE_HISTORY, true)) {
                 HashItApplication.getApp(this).getHistoryManager().add(originalTag);
                 masterKey.requestFocus();
             }
 
-            final int cacheDuration = getStringAsInt(CACHE_DURATION, defaults, null, -1);
+            final int cacheDuration = getStringAsInt(CACHE_DURATION, settings, null, -1);
             if (cacheDuration > 0) {
                 final Context ctx = getApplicationContext();
                 MemoryCacheServiceImpl.ensureStarted(ctx);
@@ -468,7 +462,7 @@ public class PasswordActivity extends Activity {
             Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard, Toast.LENGTH_LONG).show();
 
             Intent intent = getIntent();
-            if (defaults.getBoolean(Constants.AUTO_EXIT, false) && intent != null
+            if (settings.getBoolean(Constants.AUTO_EXIT, false) && intent != null
                     && Intent.ACTION_SEND.equals(intent.getAction())) {
                 finish();
             }
@@ -476,8 +470,7 @@ public class PasswordActivity extends Activity {
     }
 
     private void showMasterKeyDigest(CharSequence key) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if (key.length() > 0 && prefs.getBoolean(Constants.SHOW_MASTER_KEY_DIGEST, true)) {
+        if (key.length() > 0 && settings.getBoolean(Constants.SHOW_MASTER_KEY_DIGEST, true)) {
             try {
                 final MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
                 masterKeyOverlay.setText(Base64.toBase64(sha1.digest(key.toString().getBytes("UTF-8"))).subSequence(0, 2));
