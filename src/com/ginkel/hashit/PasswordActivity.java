@@ -199,7 +199,7 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
                             publishSiteTag(this, site);
                             focus = FocusRequest.MASTER_KEY;
                         } else {
-                            Log.d(Constants.LOG_TAG, "host = " + host);
+                            Log.d(LOG_TAG, "host = " + host);
                             Matcher siteExtractor = SITE_PATTERN.matcher(host);
                             if (siteExtractor.matches()) {
                                 site = siteExtractor.group(1);
@@ -212,7 +212,7 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
                             }
                         }
                     } catch (Exception e) {
-                        Log.e(Constants.LOG_TAG, "Failed to retrieve intent URI", e);
+                        Log.e(LOG_TAG, "Failed to retrieve intent URI", e);
                         Toast.makeText(getBaseContext(), R.string.Message_SiteTagFailure,
                                 Toast.LENGTH_LONG).show();
                     }
@@ -443,7 +443,7 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
 
             if (originalHost != null) {
                 // save site tag for host name
-                settings.edit().putString(String.format(Constants.SITE_MAP, originalHost), originalTag).commit();
+                settings.edit().putString(String.format(SITE_MAP, originalHost), originalTag).commit();
             }
 
             if (settings.getBoolean(ENABLE_HISTORY, true)) {
@@ -471,10 +471,8 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
             Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard, Toast.LENGTH_LONG).show();
 
             Intent intent = getIntent();
-            if (settings.getBoolean(Constants.AUTO_EXIT, false) && intent != null
-                    && Intent.ACTION_SEND.equals(intent.getAction())) {
+            if (settings.getBoolean(AUTO_EXIT, false) && intent != null && Intent.ACTION_SEND.equals(intent.getAction()))
                 finish();
-            }
         }
     }
 

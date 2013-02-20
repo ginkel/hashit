@@ -38,6 +38,7 @@ import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
+import static com.ginkel.hashit.Constants.*;
 import static com.ginkel.hashit.util.ThemeUtil.applyTheme;
 
 /**
@@ -93,8 +94,7 @@ public class SettingsActivity extends ParametersActivity {
             prefScreen.addPreference(lookAndFeel);
 
             final Preference useDarkTheme = addCheckBoxPreference(lookAndFeel,
-                    Constants.USE_DARK_THEME, R.string.CheckBox_UseDarkTheme, defaults,
-                    false);
+                    USE_DARK_THEME, R.string.CheckBox_UseDarkTheme, defaults, false);
             useDarkTheme.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -110,8 +110,7 @@ public class SettingsActivity extends ParametersActivity {
         prefScreen.addPreference(convenience);
 
         final Preference enableHistory = addCheckBoxPreference(convenience,
-                Constants.ENABLE_HISTORY, R.string.CheckBox_EnableHistory, defaults,
-                true);
+                ENABLE_HISTORY, R.string.CheckBox_EnableHistory, defaults, true);
         enableHistory.setSummary(R.string.Summary_EnableHistory);
 
         final boolean enableClear = historyManager != null && !historyManager.isEmpty();
@@ -128,12 +127,12 @@ public class SettingsActivity extends ParametersActivity {
         clear.setSummary(enableClear ? R.string.Summary_ClearHistory
                 : R.string.Summary_ClearHistory_Empty);
 
-        final Preference autoExit = addCheckBoxPreference(convenience, Constants.AUTO_EXIT,
+        final Preference autoExit = addCheckBoxPreference(convenience, AUTO_EXIT,
                 R.string.CheckBox_AutoExit, defaults, false);
         autoExit.setSummary(R.string.Summary_AutoExit);
 
         final ListPreference cacheDuration = addListPreference(convenience,
-                Constants.CACHE_DURATION, R.string.Label_CacheMasterKey,
+                CACHE_DURATION, R.string.Label_CacheMasterKey,
                 R.string.Header_CacheDuration, R.array.Array_CacheDuration,
                 R.array.Array_CacheDuration_Values, defaults, -1);
         cacheDuration.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -148,9 +147,9 @@ public class SettingsActivity extends ParametersActivity {
         });
         updateSummary(cacheDuration, cacheDuration.getValue());
 
-        final Preference showMasterKeyDigest = addCheckBoxPreference(convenience,
-                Constants.SHOW_MASTER_KEY_DIGEST, R.string.CheckBox_ShowMasterKeyDigest, defaults,
-                true);
+        final Preference showMasterKeyDigest;
+        showMasterKeyDigest = addCheckBoxPreference(convenience,
+                SHOW_MASTER_KEY_DIGEST, R.string.CheckBox_ShowMasterKeyDigest, defaults, true);
         showMasterKeyDigest.setSummary(R.string.Summary_ShowMasterKeyDigest);
 
         if (savedState != null) {
@@ -173,8 +172,9 @@ public class SettingsActivity extends ParametersActivity {
     @Override
     protected void populateSecurityCategory(final PreferenceCategory security,
                                             final SharedPreferences defaults) {
-        final Preference compatibilityMode = addCheckBoxPreference(security,
-                Constants.COMPATIBILITY_MODE, R.string.CheckBox_CompatibilityMode, defaults, true);
+        final Preference compatibilityMode;
+        compatibilityMode = addCheckBoxPreference(security,
+                COMPATIBILITY_MODE, R.string.CheckBox_CompatibilityMode, defaults, true);
         compatibilityMode.setSummary(R.string.Summary_CompatibilityMode);
         compatibilityMode.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
