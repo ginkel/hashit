@@ -56,7 +56,7 @@ import java.util.regex.Pattern;
 
 import static com.ginkel.hashit.Constants.*;
 
-public class PasswordActivity extends Activity {
+public class PasswordActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener{
     private EditText siteTag;
     private AutoCompleteTextView autoCompleteSiteTag;
     private boolean ignoreTagChange;
@@ -90,6 +90,7 @@ public class PasswordActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        settings.registerOnSharedPreferenceChangeListener(this);
 
         setContentView(R.layout.main);
 
@@ -309,6 +310,14 @@ public class PasswordActivity extends Activity {
         HashItApplication.getApp(this).getHistoryManager().save();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (settings != null)
+            settings.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
     private static boolean getBool(String key, SharedPreferences prefs, SharedPreferences defaults,
                                    boolean def) {
         return prefs.getBoolean(key, defaults != null ? defaults.getBoolean(key, def) : def);
@@ -470,7 +479,7 @@ public class PasswordActivity extends Activity {
     }
 
     private void showMasterKeyDigest(CharSequence key) {
-        if (key.length() > 0 && settings.getBoolean(Constants.SHOW_MASTER_KEY_DIGEST, true)) {
+        if (key.length() > 0 && settings.getBoolean(SHOW_MASTER_KEY_DIGEST, true)) {
             try {
                 final MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
                 masterKeyOverlay.setText(Base64.toBase64(sha1.digest(key.toString().getBytes("UTF-8"))).subSequence(0, 2));
@@ -479,5 +488,11 @@ public class PasswordActivity extends Activity {
             }
         } else
             masterKeyOverlay.setText("");
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (SHOW_MASTER_KEY_DIGEST.equals(key))
+            showMasterKeyDigest(masterKey.getText());
     }
 }
