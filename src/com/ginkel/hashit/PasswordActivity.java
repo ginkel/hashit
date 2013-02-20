@@ -41,10 +41,7 @@ import android.widget.*;
 import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
 import com.ginkel.hashit.Constants.*;
-import com.ginkel.hashit.util.Base64;
-import com.ginkel.hashit.util.HistoryManager;
-import com.ginkel.hashit.util.NullAdapter;
-import com.ginkel.hashit.util.SeedHelper;
+import com.ginkel.hashit.util.*;
 import com.ginkel.hashit.util.cache.MemoryCacheService;
 import com.ginkel.hashit.util.cache.MemoryCacheServiceImpl;
 
@@ -56,7 +53,7 @@ import java.util.regex.Pattern;
 
 import static com.ginkel.hashit.Constants.*;
 
-public class PasswordActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class PasswordActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private EditText siteTag;
     private AutoCompleteTextView autoCompleteSiteTag;
     private boolean ignoreTagChange;

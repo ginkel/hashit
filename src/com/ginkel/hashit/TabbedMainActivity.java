@@ -23,8 +23,10 @@ package com.ginkel.hashit;
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.text.method.LinkMovementMethod;
 import android.view.*;
 import android.widget.TabHost;
@@ -32,12 +34,18 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import static com.ginkel.hashit.Constants.ACTION_GLOBAL_PREFS;
+import static com.ginkel.hashit.Constants.USE_DARK_THEME;
 import static com.ginkel.hashit.util.ThemeUtil.applyTheme;
 
-public class TabbedMainActivity extends TabActivity {
+public class TabbedMainActivity extends TabActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private SharedPreferences settings;
 
+    @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        settings.registerOnSharedPreferenceChangeListener(this);
 
         applyTheme(this);
 
@@ -76,6 +84,14 @@ public class TabbedMainActivity extends TabActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (settings != null)
+            settings.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
@@ -106,5 +122,11 @@ public class TabbedMainActivity extends TabActivity {
                 });
 
         return true;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (USE_DARK_THEME.equals(key))
+            recreate();
     }
 }
