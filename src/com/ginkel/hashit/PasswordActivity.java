@@ -474,7 +474,7 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
 
     private void showMasterKeyDigest(CharSequence key) {
         if (masterKeyOverlay != null)
-            if (key.length() > 0 && settings.getBoolean(SHOW_MASTER_KEY_DIGEST, true)) {
+            if (key != null && key.length() > 0 && settings.getBoolean(SHOW_MASTER_KEY_DIGEST, true)) {
                 try {
                     final MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
                     masterKeyOverlay.setText(Base64.toBase64(sha1.digest(key.toString().getBytes("UTF-8"))).subSequence(0, 2));
