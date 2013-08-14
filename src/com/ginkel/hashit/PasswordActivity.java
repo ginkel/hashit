@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.pm.PackageInfo;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -86,6 +87,8 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Typeface monospacedTypeface = Typeface.createFromAsset(getAssets(), "fonts/SourceCodePro-Regular.ttf");
+
         settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         settings.registerOnSharedPreferenceChangeListener(this);
 
@@ -140,10 +143,12 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
                     showMasterKeyDigest(masterKey.getText());
                 }
             });
+            masterKeyOverlay.setTypeface(monospacedTypeface);
         }
 
         hashWord = (EditText) findViewById(R.id.HashWord);
         hashWord.setEnabled(false);
+        hashWord.setTypeface(monospacedTypeface);
 
         hashPassword = (Button) findViewById(R.id.Calculate);
         hashPassword.setOnClickListener(new OnClickListener() {
