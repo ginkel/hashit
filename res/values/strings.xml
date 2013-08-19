@@ -74,7 +74,7 @@
 	</string-array>
 	<string name="Text_Introduction">Welcome to <b>Hash It!</b>!</string>
 	<string name="Text_About"><b>Hash It! for Android</b>
-\n<small>Version 1.6.0
+\n<small>Version 1.7.0
 \n
 \nCopyright © 2009-2011\nThilo-Alexander Ginkel.
 \nCopyright © 2011-2013 TG Byte Software GmbH.
@@ -117,8 +117,8 @@
 \n
 \n<b>What\'s New?</b>
 \n<ul>
-\n<li>Display a cryptographic digest of the Master Key to ease detecting typographic errors (can be turned off in Settings)</li>
-\n<li>Switch between dark and light theme (Android 3.0+)</li>
+\n<li>Use a better readable font to facilitate manually reading and typing the hash word (e.g., when not using the clipboard)</li>
+\n<li>Add an option to disable using the clipboard</li>
 \n</ul>
 \n
 \n<b>Usage</b>
@@ -130,7 +130,7 @@
 \n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
 	<string name="Title_Welcome"><b>Hash It! for Android</b>
-\n<small>Version 1.6.0</small></string>
+\n<small>Version 1.7.0</small></string>
 	<string name="Header_LookAndFeel">Look &amp; Feel</string>
 	<string name="CheckBox_UseDarkTheme">Use Dark Theme</string>
 	<string name="Header_Convenience">Convenience</string>
