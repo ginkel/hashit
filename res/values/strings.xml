@@ -174,8 +174,10 @@
 	<string name="Summary_ChangeSeed">Changes the private key. Note that this invalidates any passwords that were generated with the previous Private Key.</string>
 	<string name="Title_ChangeSeed"><b>Change Private Key</b></string>
 	<string name="Title_SeedWarning"><b>Disable Compatibility Mode</b></string>
+	<string name="CheckBox_DisableClipboard">Disable Clipboard Usage</string>
+	<string name="Summary_DisableClipboard">Disables usage of the system clipboard (which may be monitored by arbitrary applications), i.e., does not copy the Hash Word to the clipboard. Selecting this option disables the "Return to Browser" setting.</string>
 	<string name="Message_SeedWarning">You have chosen to disable Compatibility Mode. Note that this mode is only compatible with the Password Hasher Plus extension for Google Chrome, but <b>not</b> with the original Password Hasher extension for Firefox.\n\nIf you want this to work correctly, also make sure that you use the same Private Key on all your devices.</string>
 	<string name="Summary_GlobalCompatibilityMode">Compatibility Mode is globally enabled. Change this in the settings.</string>
-    <string name="CheckBox_ShowMasterKeyDigest">Show Master Key Digest</string>
-    <string name="Summary_ShowMasterKeyDigest">Displays a cryptographic digest of the Master Key to ease detecting typographic errors.</string>
+	<string name="CheckBox_ShowMasterKeyDigest">Show Master Key Digest</string>
+	<string name="Summary_ShowMasterKeyDigest">Displays a cryptographic digest of the Master Key to ease detecting typographic errors.</string>
 </resources>

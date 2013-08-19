@@ -48,6 +48,8 @@ public interface Constants {
     final String COMPATIBILITY_PREFIX = "compatible:";
     final String SEED = "Seed";
 
+    final String DISABLE_CLIPBOARD = "DisableClipboard";
+
     final String APP_VERSION = "AppVersion";
     final String CREATION_DATE = "CreationDate";
 

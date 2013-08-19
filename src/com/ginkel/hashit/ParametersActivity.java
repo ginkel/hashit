@@ -238,7 +238,7 @@ public class ParametersActivity extends PreferenceActivity {
      * @param key
      * @param dependencies a set of dependencies to be disabled if the given preference is set to "true"
      */
-    private void disableConflictingPreferences(String key, String... dependencies) {
+    protected void disableConflictingPreferences(String key, String... dependencies) {
         disableConflictingPreferences(getPreferenceManager().findPreference(key)
                 .getSharedPreferences().getBoolean(key, false), false, dependencies);
     }
@@ -249,8 +249,8 @@ public class ParametersActivity extends PreferenceActivity {
      * @param disable      indicates whether the preferences should be disabled
      * @param dependencies the preferences to be disabled
      */
-    private void disableConflictingPreferences(boolean disable, boolean reset,
-                                               String... dependencies) {
+    protected void disableConflictingPreferences(boolean disable, boolean reset,
+                                                 String... dependencies) {
         for (String dep : dependencies) {
             if (disable || reset) {
                 getPreferenceManager().findPreference(dep).setEnabled(!disable);

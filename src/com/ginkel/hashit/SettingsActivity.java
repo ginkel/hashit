@@ -49,6 +49,7 @@ import static com.ginkel.hashit.util.ThemeUtil.applyTheme;
  */
 public class SettingsActivity extends ParametersActivity {
     private static final String PREF_LIST_STATE = "PrefListState";
+    private static final String[] DEPS_DISABLE_CLIPBOARD = {Constants.AUTO_EXIT};
 
     private Bundle savedState;
 
@@ -152,6 +153,8 @@ public class SettingsActivity extends ParametersActivity {
                 SHOW_MASTER_KEY_DIGEST, R.string.CheckBox_ShowMasterKeyDigest, defaults, true);
         showMasterKeyDigest.setSummary(R.string.Summary_ShowMasterKeyDigest);
 
+        disableConflictingPreferences(DISABLE_CLIPBOARD, DEPS_DISABLE_CLIPBOARD);
+
         if (savedState != null) {
             final Parcelable listState = savedState.getParcelable(PREF_LIST_STATE);
             if (listState != null) {
@@ -172,8 +175,7 @@ public class SettingsActivity extends ParametersActivity {
     @Override
     protected void populateSecurityCategory(final PreferenceCategory security,
                                             final SharedPreferences defaults) {
-        final Preference compatibilityMode;
-        compatibilityMode = addCheckBoxPreference(security,
+        final Preference compatibilityMode = addCheckBoxPreference(security,
                 COMPATIBILITY_MODE, R.string.CheckBox_CompatibilityMode, defaults, true);
         compatibilityMode.setSummary(R.string.Summary_CompatibilityMode);
         compatibilityMode.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -216,6 +218,22 @@ public class SettingsActivity extends ParametersActivity {
                     }
                 }, true);
         setPrivateKey.setSummary(R.string.Summary_ChangeSeed);
+        final Preference disableClipboard = addCheckBoxPreference(security,
+                DISABLE_CLIPBOARD, R.string.CheckBox_DisableClipboard, defaults, false);
+        disableClipboard.setSummary(R.string.Summary_DisableClipboard);
+        disableClipboard.setOnPreferenceChangeListener(
+                new OnPreferenceChangeListener() {
+
+                    public boolean onPreferenceChange(Preference preference, Object newVal) {
+                        Boolean newValue = (Boolean) newVal;
+
+                        disableConflictingPreferences(newValue, true, DEPS_DISABLE_CLIPBOARD);
+                        if (newValue)
+                            ((CheckBoxPreference) findPreference(AUTO_EXIT)).setChecked(false);
+
+                        return true;
+                    }
+                });
     }
 
     private static class DummyOnClickListener implements DialogInterface.OnClickListener {

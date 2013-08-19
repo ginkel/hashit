@@ -440,15 +440,16 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
             hashWord.setText(hash, BufferType.NORMAL);
 
             boolean copiedToClipboard = false;
-            try {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                clipboard.setText(hash);
-                copiedToClipboard = true;
-                Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard, Toast.LENGTH_LONG).show();
-            } catch (NullPointerException e) {
-                // catches Samsung clipboard bug -- cf. http://veetipaananen.fi/dear-samsung-please-fix-your-clipboard/
-                Toast.makeText(getBaseContext(), R.string.Message_ClipboardError, Toast.LENGTH_LONG).show();
-            }
+            if (!settings.getBoolean(DISABLE_CLIPBOARD, false))
+                try {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                    clipboard.setText(hash);
+                    copiedToClipboard = true;
+                    Toast.makeText(getBaseContext(), R.string.Message_HashCopiedToClipboard, Toast.LENGTH_LONG).show();
+                } catch (NullPointerException e) {
+                    // catches Samsung clipboard bug -- cf. http://veetipaananen.fi/dear-samsung-please-fix-your-clipboard/
+                    Toast.makeText(getBaseContext(), R.string.Message_ClipboardError, Toast.LENGTH_LONG).show();
+                }
 
             if (originalHost != null) {
                 // save site tag for host name
