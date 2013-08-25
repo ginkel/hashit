@@ -403,13 +403,12 @@ public class PasswordActivity extends Activity implements SharedPreferences.OnSh
             Toast.makeText(getBaseContext(), R.string.Message_MasterKeyEmpty, Toast.LENGTH_LONG).show();
             masterKey.requestFocus();
         } else {
-
             boolean compatibility = tag.startsWith(COMPATIBILITY_PREFIX);
             if (compatibility) {
                 tag = tag.substring(COMPATIBILITY_PREFIX.length());
             }
 
-            SharedPreferences prefs = getSharedPreferences(tag, MODE_PRIVATE);
+            SharedPreferences prefs = getSharedPreferences(HashItApplication.normalizeSiteTag(tag), MODE_PRIVATE);
             if (!compatibility) {
                 compatibility = prefs.getBoolean(COMPATIBILITY_MODE,
                         prefs.getInt(APP_VERSION, -1) < 19 && prefs.getAll().size() > 0)

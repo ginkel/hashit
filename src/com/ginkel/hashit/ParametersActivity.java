@@ -65,7 +65,7 @@ public class ParametersActivity extends PreferenceActivity {
         Intent intent = getIntent();
         if (Constants.ACTION_SITE_PREFS.equals(intent.getAction())) {
             HashItApplication app = (HashItApplication) getApplication();
-            prefManager.setSharedPreferencesName(app.getSiteTag());
+            prefManager.setSharedPreferencesName(HashItApplication.normalizeSiteTag(app.getSiteTag()));
         }
 
         /*

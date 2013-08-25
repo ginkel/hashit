@@ -48,6 +48,10 @@ public class HashItApplication extends Application {
         siteTag = newSiteTag;
     }
 
+    protected static String normalizeSiteTag(String tag) {
+        return tag.replace('/', '_');
+    }
+
     protected HistoryManager getHistoryManager() {
         return siteTagHistory;
     }
