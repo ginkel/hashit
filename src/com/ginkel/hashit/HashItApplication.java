@@ -49,6 +49,9 @@ public class HashItApplication extends Application {
     }
 
     protected static String normalizeSiteTag(String tag) {
+        if (tag == null)
+            return "";
+
         return tag.replace('/', '_');
     }
 
