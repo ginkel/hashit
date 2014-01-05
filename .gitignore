@@ -3,3 +3,4 @@ bin/*
 out/*
 target/*
 .idea/workspace.xml
+gen/*
