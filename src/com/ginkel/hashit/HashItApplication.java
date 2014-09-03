@@ -49,7 +49,10 @@ public class HashItApplication extends Application {
     }
 
     protected static String normalizeSiteTag(String tag) {
-        return tag.replace('/', '_');
+        if (tag != null)
+            return tag.replace('/', '_');
+        else
+            return null;
     }
 
     protected HistoryManager getHistoryManager() {
