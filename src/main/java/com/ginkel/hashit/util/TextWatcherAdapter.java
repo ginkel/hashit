@@ -2,7 +2,7 @@
  * This file is part of Hash It!.
  *
  * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
- * Copyright (C) 2011-2013 TG Byte Software GmbH.
+ * Copyright (C) 2011-2014 TG Byte Software GmbH.
  *
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

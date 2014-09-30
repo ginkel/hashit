@@ -3,7 +3,7 @@
  * This file is part of Hash It!.
  * 
  * Copyright (C) 2009-2011 Thilo-Alexander Ginkel.
- * Copyright (C) 2011-2013 TG Byte Software GmbH.
+ * Copyright (C) 2011-2014 TG Byte Software GmbH.
  * 
  * Hash It! is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,10 +74,10 @@
 	</string-array>
 	<string name="Text_Introduction">Welcome to <b>Hash It!</b>!</string>
 	<string name="Text_About"><b>Hash It! for Android</b>
-\n<small>Version 1.7.1
+\n<small>Version 1.7.2
 \n
 \nCopyright © 2009-2011\nThilo-Alexander Ginkel.
-\nCopyright © 2011-2013 TG Byte Software GmbH.
+\nCopyright © 2011-2014 TG Byte Software GmbH.
 \n
 \nPortions based upon Password Hasher by Steve Cooper.
 \nCopyright © 2006 Steve Cooper.
@@ -116,6 +116,10 @@
 \nHash It! eases using unique passwords per web site without overloading your brain by generating site-specific passwords derived from a secret Master Key. You will only have to remember a single or few Master Keys whereas Hash It! will make sure that no two web sites will use the same password.
 \n
 \n<b>What\'s New?</b>
+\nVersion 1.7.2:
+<ul>
+\n<li>Fixed crash</li>
+</ul>
 \nVersion 1.7.1:
 <ul>
 \n<li>Do not crash if the Site Tag contains a slash (\"/\")</li>
@@ -135,7 +139,7 @@
 \n<b>Further Information / Changelog</b>
 \n<a href="http://android.ginkel.com/">http://android.ginkel.com/</a></small></string>
 	<string name="Title_Welcome"><b>Hash It! for Android</b>
-\n<small>Version 1.7.1</small></string>
+\n<small>Version 1.7.2</small></string>
 	<string name="Header_LookAndFeel">Look &amp; Feel</string>
 	<string name="CheckBox_UseDarkTheme">Use Dark Theme</string>
 	<string name="Header_Convenience">Convenience</string>
